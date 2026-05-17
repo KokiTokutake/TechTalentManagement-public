@@ -2,7 +2,6 @@
   <main class="container">
     <header class="page-header">
       <h1>自己評価</h1>
-      <p v-if="!userId" class="warn">URL に ?userId=... を付けてアクセスしてください（認証未実装）</p>
     </header>
 
     <div v-if="store.loading" class="loading">読み込み中…</div>
@@ -39,7 +38,7 @@
 
         <button
           class="btn-submit"
-          :disabled="submitting || !userId"
+          :disabled="submitting"
           @click="handleSubmit"
         >
           {{ submitting ? '提出中…' : '自己評価を提出する' }}
@@ -52,23 +51,23 @@
 <script setup lang="ts">
 const route = useRoute()
 const periodId = route.params.periodId as string
-const userId = route.query.userId as string | undefined
+const auth = useAuthStore()
+const userId = computed(() => auth.currentUser!.id)
 
 const store = useSelfEvaluationStore()
 const goalsApi = useGoalsApi()
 const submitting = ref(false)
 
 onMounted(async () => {
-  if (!userId) return
-  const goals = await goalsApi.fetchGoals(periodId, userId)
-  await store.load(periodId, userId, goals)
+  const goals = await goalsApi.fetchGoals(periodId, userId.value)
+  await store.load(periodId, userId.value, goals)
 })
 
 function onScoreChange(goalId: string, score: number) {
   const item = store.formItems.find(i => i.goalId === goalId)
   if (item) {
     item.achievementScore = score
-    store.scheduleAutoSave(periodId, userId!)
+    store.scheduleAutoSave(periodId, userId.value)
   }
 }
 
@@ -76,14 +75,13 @@ function onCommentChange(goalId: string, comment: string) {
   const item = store.formItems.find(i => i.goalId === goalId)
   if (item) {
     item.comment = comment
-    store.scheduleAutoSave(periodId, userId!)
+    store.scheduleAutoSave(periodId, userId.value)
   }
 }
 
 async function handleSubmit() {
-  if (!userId) return
   submitting.value = true
-  await store.submitEvaluation(periodId, userId)
+  await store.submitEvaluation(periodId, userId.value)
   submitting.value = false
 }
 </script>
