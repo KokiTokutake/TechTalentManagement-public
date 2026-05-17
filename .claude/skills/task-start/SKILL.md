@@ -2,6 +2,9 @@
 
 **使う場面**: 工程4・5（タスク管理・実装）。タスクの実装を開始するとき。ブランチ作成から仕様書読み込みまで一気に準備する。
 
+> ⛔ **このスキルを実行せずに実装を開始してはならない（CLAUDE.md 必須ルール）。**
+> ブランチが作成されるまでコードを一切書いてはならない。
+
 ---
 
 ## 目的
@@ -12,6 +15,21 @@
 ---
 
 ## 実行手順
+
+### STEP 0: 現在のgit状態チェック（必須ゲート）
+
+```bash
+git branch --show-current
+git status --short
+```
+
+**以下の状態を確認し、問題があれば中断する:**
+
+| 状態 | 対応 |
+|------|------|
+| mainブランチ以外にいる | 「現在 `[branch]` ブランチにいます。別タスクが進行中ですか？」と確認してから続行 |
+| 未コミット変更がある | 「未コミットの変更があります。コミットしてからタスクを開始してください」と警告して中断 |
+| mainブランチ + 変更なし | 正常。STEP 1 へ進む |
 
 ### STEP 1: タスクの選択
 
@@ -38,27 +56,32 @@
 - 関連する設計書（`docs/design/`）
 - Constitution.md のコーディングルールセクション
 
-### STEP 3: ブランチの作成
+### STEP 3: ブランチの作成（必須・スキップ不可）
+
+GitHub Issue 番号の有無にかかわらず、**必ずブランチを作成する**。
 
 ```bash
-# タスクの GitHub Issue 番号を確認してブランチ作成
 git checkout main
 git pull origin main
+
+# Issue番号がある場合
 git checkout -b feat/[issue番号]-[タスク概要]
 
-# 例:
-git checkout -b feat/42-login-api-endpoint
+# Issue番号がない場合（タスクIDを使う）
+git checkout -b feat/T-[タスク番号]-[タスク概要]
+# 例: feat/T-012-user-skill-api
 ```
 
-Issue 番号がわからない場合は「GitHub Issue 番号は何ですか？わからない場合はスキップします」と確認する。
+ブランチ作成が完了したことを確認してから STEP 4 へ進む。
+**ブランチが作成できない場合は実装を開始しない。**
 
 ### STEP 4: 作業コンテキストのサマリー表示
 
 ```markdown
-## 🚀 タスク開始: TASK-001
+## タスク開始: TASK-001
 
 ### 作業ブランチ
-feat/42-login-api-endpoint
+feat/T-001-login-api（作成済み）
 
 ### 対応仕様書
 SPEC-AUTH-001: ログイン機能（docs/spec/auth/spec-auth-001-login.md）
@@ -68,7 +91,7 @@ SPEC-AUTH-001: ログイン機能（docs/spec/auth/spec-auth-001-login.md）
 - メールアドレス + パスワードの認証処理
 - JWT トークンの発行
 
-### ✅ 完了条件（受入基準）
+### 完了条件（受入基準）
 Given: 正しいメールアドレスとパスワードが入力された
 When:  POST /api/auth/login を実行する
 Then:  HTTP 200 と JWT トークンが返る
@@ -80,16 +103,14 @@ Then:  HTTP 401 と "認証に失敗しました" メッセージが返る
 ### 関連する設計
 docs/design/component-design.md → AuthService クラス
 
-### ⚠️ 注意事項
+### 注意事項
 - パスワードは bcrypt でハッシュ化すること（Constitution.md: セキュリティ原則）
 - エラーメッセージは仕様書の文言を使用すること
 ```
 
-### STEP 5: task-list.md のステータス更新
+### STEP 5: task-list.md のステータス自動更新
 
-```
-tasks/task-list.md の TASK-001 ステータスを「未着手」→「進行中」に更新しますか？
-```
+確認なしに `tasks/task-list.md` の該当タスクのステータスを「未着手」→「🏃 進行中」に更新する。
 
 ---
 
@@ -97,5 +118,5 @@ tasks/task-list.md の TASK-001 ステータスを「未着手」→「進行中
 
 ```
 /impl-guide → 実装の具体的なガイダンスを取得
-/task-done  → 実装完了後に PR を作成
+/task-done  → 実装完了後に PR を作成（必須）
 ```
