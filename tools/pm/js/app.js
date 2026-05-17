@@ -964,6 +964,7 @@ function bindViewEvents(view) {
     $('btn-reset')?.addEventListener('click', () => {
       if (confirm('本当にデータをリセットしますか？この操作は元に戻せません。')) {
         SDD.store.reset();
+        SDD.app.updateSidebarProjectName();
         navigate('dashboard');
       }
     });
