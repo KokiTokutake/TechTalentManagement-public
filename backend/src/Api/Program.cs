@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGoalRepository, GoalRepository>();
 builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<ISelfEvaluationRepository, SelfEvaluationRepository>();
@@ -34,6 +35,14 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// 起動時にマイグレーション適用＆シードデータ投入
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.MigrateAsync();
+    await DataSeeder.SeedAsync(db);
+}
 
 app.UseCors();
 app.UseAuthorization();

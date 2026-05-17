@@ -2,8 +2,6 @@
   <main class="container">
     <header class="page-header">
       <h1>目標設定</h1>
-      <!-- T-002（認証）実装まで userId はクエリパラメータで受け取る暫定仕様 -->
-      <p v-if="!userId" class="warn">URL に ?userId=... を付けてアクセスしてください（認証未実装）</p>
     </header>
 
     <div v-if="store.loading" class="loading">読み込み中…</div>
@@ -20,7 +18,7 @@
             {{ cat.value }}
           </span>
           <h2>{{ cat.label }}</h2>
-          <button class="btn-add" :disabled="!userId" @click="openCreate(cat.value)">
+          <button class="btn-add" @click="openCreate(cat.value)">
             ＋ 追加
           </button>
         </div>
@@ -55,7 +53,8 @@ import type { Goal, WillCanMust, CreateGoalRequest, UpdateGoalRequest } from '~/
 
 const route = useRoute()
 const periodId = route.params.periodId as string
-const userId = route.query.userId as string | undefined
+const auth = useAuthStore()
+const userId = computed(() => auth.currentUser!.id)
 
 const CATEGORIES: { value: WillCanMust; label: string }[] = [
   { value: 'Will', label: 'やりたいこと（Will）' },
@@ -66,9 +65,7 @@ const CATEGORIES: { value: WillCanMust; label: string }[] = [
 const store = useGoalsStore()
 
 onMounted(async () => {
-  if (userId) {
-    await store.load(periodId, userId)
-  }
+  await store.load(periodId, userId.value)
 })
 
 const showForm = ref(false)
@@ -88,16 +85,15 @@ function openEdit(goal: Goal) {
 }
 
 async function handleSaved(payload: CreateGoalRequest | UpdateGoalRequest & { category: WillCanMust }) {
-  if (!userId) return
   try {
     if (editTarget.value) {
-      await store.update(periodId, userId, editTarget.value.id, {
+      await store.update(periodId, userId.value, editTarget.value.id, {
         title: payload.title,
         description: payload.description,
         displayOrder: payload.displayOrder,
       })
     } else {
-      await store.add(periodId, userId, payload as CreateGoalRequest)
+      await store.add(periodId, userId.value, payload as CreateGoalRequest)
     }
     showForm.value = false
   } catch {
@@ -106,8 +102,7 @@ async function handleSaved(payload: CreateGoalRequest | UpdateGoalRequest & { ca
 }
 
 async function handleDelete(goalId: string) {
-  if (!userId) return
-  await store.remove(periodId, userId, goalId)
+  await store.remove(periodId, userId.value, goalId)
 }
 </script>
 
