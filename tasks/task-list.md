@@ -22,15 +22,15 @@
 
 - **ゴール**: 上長評価API・FE3画面・Phase 1 結合テスト（Phase 1 後半）
 - **期間**: 2026-05-24 〜 2026-05-30
-- **進捗**: 11 / 17 SP 完了
+- **進捗**: 17 / 17 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-006 | [BE] 上長評価 API（入力・確定） | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-006-manager-evaluation-api |
 | TASK-007 | [FE] 目標設定画面 UI | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-007-goal-setting-ui |
 | TASK-008 | [FE] 自己評価入力画面 UI（自動下書き保存） | ✅ done | @KokiTokutake | 5 | SPEC-EVAL-001 | — | — | feat/T-008-self-evaluation-ui |
-| TASK-009 | [FE] 上長評価入力画面 UI | 🔵 in_progress | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-009-manager-evaluation-ui |
-| TASK-010 | [TEST] Phase 1 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-010-phase1-integration-test |
+| TASK-009 | [FE] 上長評価入力画面 UI | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-009-manager-evaluation-ui |
+| TASK-010 | [TEST] Phase 1 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-010-phase1-integration-test |
 
 ---
 
@@ -39,7 +39,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 10 |
-| 完了 | 7 |
-| 進行中 | 1 |
-| 未着手 | 2 |
+| 完了 | 9 |
+| 進行中 | 0 |
+| 未着手 | 1 |
 | レビュー中 | 0 |
