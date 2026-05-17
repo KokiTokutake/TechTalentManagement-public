@@ -751,7 +751,7 @@ function renderSettings() {
           <hr style="border:none;border-top:1px solid var(--border)">
           <div>
             <div style="font-weight:600;margin-bottom:6px;font-size:13px;color:var(--col-high)">データリセット</div>
-            <div class="text-muted text-sm" style="margin-bottom:8px">全データをデモデータに戻します。この操作は元に戻せません。</div>
+            <div class="text-muted text-sm" style="margin-bottom:8px">全データを初期状態に戻します（init-config.js が存在する場合はプロジェクト設定で初期化。存在しない場合はデモデータ）。この操作は元に戻せません。</div>
             <button class="btn btn-danger" id="btn-reset">データをリセット</button>
           </div>
         </div>
