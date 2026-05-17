@@ -13,7 +13,7 @@
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | ブランチ | 備考 |
 |----|---------|-----------|--------|:--:|--------|----------|------|
 | T-001 | [INFRA] Nuxt.js + ASP.NET Core プロジェクト骨格セットアップ | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | feat/T-001-project-scaffold | docker compose up でFE・BE・DBが起動することが完了条件 |
-| T-002 | [INFRA] Entra ID SSO 認証・ロールベースアクセス制御（BE+FE） | ⬜ pending | @KokiTokutake | 5 | SPEC-EVAL-001 | feat/T-002-entra-id-auth | Azure Portal でのアプリ登録が必要。Key Vault にシークレットを格納すること。 |
+| T-002 | [INFRA] Entra ID SSO 認証・ロールベースアクセス制御（BE+FE） | 🔴 blocked | @KokiTokutake | 5 | SPEC-EVAL-001 | feat/T-002-entra-id-auth | Azure Portal でのアプリ登録が必要。Azure 利用可能になったら着手。 |
 | T-003 | [BE] DBスキーマ設計・EF Core マイグレーション | ⬜ pending | @KokiTokutake | 3 | SPEC-EVAL-001 | feat/T-003-db-schema | EvaluationPeriod / Goal / SelfEvaluation / ManagerEvaluation テーブルを定義 |
 | T-004 | [BE] 目標設定 API（CRUD） | ⬜ pending | @KokiTokutake | 3 | SPEC-EVAL-001 | feat/T-004-goal-api | REQ-01対応。登録期間外アクセスは403を返すこと。 |
 | T-005 | [BE] 自己評価 API（下書き保存・提出） | ⬜ pending | @KokiTokutake | 3 | SPEC-EVAL-001 | feat/T-005-self-evaluation-api | REQ-02対応。提出後は編集不可（409）。評価内容はログに出力しないこと。 |
