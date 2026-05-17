@@ -40,7 +40,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-011 | [BE] スキルマスター管理 API（SkillCategory / SkillItem CRUD） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-011 | [BE] スキルマスター管理 API（SkillCategory / SkillItem CRUD） | ✅ done | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | feat/T-011-skill-master-api |
 | TASK-012 | [BE] ユーザースキル CRUD API（追加・編集・削除・一覧） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
 | TASK-013 | [BE] スキル承認・差し戻し API | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
 | TASK-014 | [BE] 組織スキルマップ API | ⬜ pending | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
