@@ -353,19 +353,38 @@ window.SDD.store = {
         const parsed = JSON.parse(raw);
         if ((parsed._version || 0) < DATA_VERSION) {
           console.info(`SDD: data version ${parsed._version||0} → ${DATA_VERSION}, resetting to seed.`);
-          this.data = JSON.parse(JSON.stringify(SEED_DATA));
+          this.data = this._buildInitialData();
         } else {
           this.data = parsed;
         }
       } else {
-        this.data = JSON.parse(JSON.stringify(SEED_DATA));
+        this.data = this._buildInitialData();
       }
       this.save();
     } catch(e) {
       console.warn('SDD: localStorage parse error, resetting.', e);
-      this.data = JSON.parse(JSON.stringify(SEED_DATA));
+      this.data = this._buildInitialData();
       this.save();
     }
+  },
+
+  /* init-config.js が存在する場合はその設定を優先して初期データを構築する */
+  _buildInitialData() {
+    const cfg = window.SDD_INIT_CONFIG;
+    if (!cfg) return JSON.parse(JSON.stringify(SEED_DATA));
+
+    const base = JSON.parse(JSON.stringify(SEED_DATA));
+    base.project = Object.assign({}, base.project, cfg.project);
+    if (cfg.initialSpecs)   base.specs   = cfg.initialSpecs;
+    if (cfg.initialTasks)   base.tasks   = cfg.initialTasks;
+    if (cfg.initialSprints) base.sprints = cfg.initialSprints;
+    base.retros = [];
+    base.issues = [];
+    base.activityLog = [
+      { timestamp: new Date().toISOString(), type: 'project_init', text: 'プロジェクトを初期化しました（/pm-setup）', user: cfg.project.members[0] || '@owner' }
+    ];
+    base._version = DATA_VERSION;
+    return base;
   },
 
   save() {
