@@ -17,7 +17,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.8")
+                .HasAnnotation("ProductVersion", "8.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -211,6 +211,65 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("SelfEvaluationItems");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SkillCategories");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("SkillItems");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -246,6 +305,84 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.HasIndex("ManagerId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("ApprovedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("ApprovedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RejectedReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("SkillItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SkillItemId");
+
+                    b.HasIndex("UserId", "SkillItemId")
+                        .IsUnique();
+
+                    b.ToTable("UserSkills");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkillHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("ChangedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("ChangedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserSkillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserSkillId");
+
+                    b.ToTable("UserSkillHistories");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
@@ -324,6 +461,17 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("SelfEvaluation");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillItem", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.SkillCategory", "Category")
+                        .WithMany("Items")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.User", "DirectManager")
@@ -332,6 +480,36 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DirectManager");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkill", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.SkillItem", "SkillItem")
+                        .WithMany()
+                        .HasForeignKey("SkillItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SkillItem");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkillHistory", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.UserSkill", "UserSkill")
+                        .WithMany()
+                        .HasForeignKey("UserSkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserSkill");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
@@ -351,6 +529,11 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Items");
 
                     b.Navigation("ManagerEvaluation");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillCategory", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
