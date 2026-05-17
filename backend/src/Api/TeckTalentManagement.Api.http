@@ -1,0 +1,6 @@
+@TeckTalentManagement.Api_HostAddress = http://localhost:5108
+
+GET {{TeckTalentManagement.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
