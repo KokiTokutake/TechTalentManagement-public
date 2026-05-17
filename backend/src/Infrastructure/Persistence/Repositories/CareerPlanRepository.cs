@@ -1,0 +1,35 @@
+using Microsoft.EntityFrameworkCore;
+using TeckTalentManagement.Application.CareerPlan;
+using TeckTalentManagement.Domain.Entities;
+
+namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+
+public class CareerPlanRepository(AppDbContext db) : ICareerPlanRepository
+{
+    public Task<CareerPlan?> FindByUserAndYearAsync(Guid userId, int year, CancellationToken ct) =>
+        db.CareerPlans
+            .Include(p => p.Comments)
+            .FirstOrDefaultAsync(p => p.UserId == userId && p.PeriodYear == year, ct);
+
+    public Task<CareerPlan?> FindAsync(Guid id, CancellationToken ct) =>
+        db.CareerPlans.FindAsync([id], ct).AsTask();
+
+    public async Task<IReadOnlyList<int>> GetYearsAsync(Guid userId, CancellationToken ct) =>
+        await db.CareerPlans
+            .Where(p => p.UserId == userId)
+            .OrderByDescending(p => p.PeriodYear)
+            .Select(p => p.PeriodYear)
+            .ToListAsync(ct);
+
+    public Task<User?> FindUserAsync(Guid userId, CancellationToken ct) =>
+        db.Users.FindAsync([userId], ct).AsTask();
+
+    public Task<bool> IsManagerOfAsync(Guid managerId, Guid userId, CancellationToken ct) =>
+        db.Users.AnyAsync(u => u.Id == userId && u.ManagerId == managerId, ct);
+
+    public async Task AddAsync(CareerPlan plan, CancellationToken ct) =>
+        await db.CareerPlans.AddAsync(plan, ct);
+
+    public Task SaveChangesAsync(CancellationToken ct) =>
+        db.SaveChangesAsync(ct);
+}

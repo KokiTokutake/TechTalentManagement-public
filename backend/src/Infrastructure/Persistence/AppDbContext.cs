@@ -15,6 +15,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<SkillItem> SkillItems => Set<SkillItem>();
     public DbSet<UserSkill> UserSkills => Set<UserSkill>();
     public DbSet<UserSkillHistory> UserSkillHistories => Set<UserSkillHistory>();
+    public DbSet<CareerPlan> CareerPlans => Set<CareerPlan>();
+    public DbSet<CareerPlanComment> CareerPlanComments => Set<CareerPlanComment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
