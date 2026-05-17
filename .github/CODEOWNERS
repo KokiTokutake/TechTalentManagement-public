@@ -1,67 +1,21 @@
 # CODEOWNERS
-#
 # 領域別の責任者（レビュアー）を定義します。
 # PR が作成されると、対象ファイルの CODEOWNER に自動でレビュー依頼が届きます。
-#
-# 書式: [パターン]  [GitHub ユーザー or チーム]
-# 詳細: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
-#
-# ────────────────────────────────────────
-# 【必ず設定すること】
-# 実際のユーザー名・チーム名に置き換えてください。
-# チームは @org/team-name の形式で指定します。
-# ────────────────────────────────────────
 
-# ──────────────────────────────────────
-# 仕様書・ドキュメント（最重要）
-# 仕様書の変更は必ず指定レビュアーの承認が必要
-# ──────────────────────────────────────
-
-# プロジェクト憲章（全員のレビューを推奨）
-.constitution/                  @org/tech-leads @org/product-owners
+# プロジェクト憲章（最重要・変更禁止）
+.constitution/                  @KokiTokutake
 
 # 仕様書全体
-docs/spec/                      @org/product-owners @org/tech-leads
-
-# 機能仕様書（機能ごとに担当を分ける場合はコメントを外して調整）
-# docs/spec/auth/               @handle-auth-owner
-# docs/spec/payment/            @handle-payment-owner
+docs/spec/                      @KokiTokutake
 
 # 設計ドキュメント
-docs/design/                    @org/tech-leads
+docs/design/                    @KokiTokutake
 
-# 運用ガイド・ランブック
-docs/guides/                    @org/tech-leads
+# 運用ガイド
+docs/guides/                    @KokiTokutake
 
-# ──────────────────────────────────────
-# ソースコード
-# ──────────────────────────────────────
+# CI/CD・インフラ設定
+.github/                        @KokiTokutake
 
 # デフォルト（上記で一致しない場合）
-*                               @org/tech-leads
-
-# CI/CD・インフラ設定（変更コストが高いため慎重に）
-.github/                        @org/tech-leads
-.github/workflows/              @org/tech-leads
-
-# セキュリティ関連（厳重に管理）
-# *secret*                      @org/security-team
-# *credential*                  @org/security-team
-
-# ──────────────────────────────────────
-# 規模別の設定例
-# ──────────────────────────────────────
-
-# 【小規模（3〜5人）の場合】
-# シンプルに全ファイルを1〜2人でカバーする
-# *    @tech-lead @product-owner
-
-# 【中規模（6〜30人）の場合】
-# 領域ごとにチームを分けてレビューを分散させる
-# docs/spec/   @org/product-team
-# src/         @org/dev-team
-# .github/     @org/platform-team
-
-# 【大規模（50人以上）の場合】
-# さらに細かく機能・コンポーネント単位で分割する
-# docs/spec/[domain]/   @org/[domain]-team
+*                               @KokiTokutake
