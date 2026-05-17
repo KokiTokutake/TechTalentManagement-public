@@ -67,7 +67,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-020 | [BE] キャリアプラン CRUD API（作成・編集・年度別履歴） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-CAREER-001 | #3 | — | feat/3-career-plan-crud-api |
+| TASK-020 | [BE] キャリアプラン CRUD API（作成・編集・年度別履歴） | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #3 | #10 | feat/3-career-plan-crud-api |
 | TASK-021 | [BE] Will-Can-Must 統合ビュー API（Goal・Skill 集約） | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #4 | — | — |
 | TASK-022 | [BE] 上長コメント API（追記・一覧） | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #5 | — | — |
 | TASK-023 | [BE] 組織キャリアプラン俯瞰 API | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #6 | — | — |
