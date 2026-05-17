@@ -396,8 +396,7 @@ window.SDD.store = {
   },
 
   reset() {
-    this.data = JSON.parse(JSON.stringify(SEED_DATA));
-    this.data._version = DATA_VERSION;
+    this.data = this._buildInitialData();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
     if (window.SDD && window.SDD.fs && window.SDD.fs.dirHandle) {
       window.SDD.fs.autoSync().catch(() => {});
