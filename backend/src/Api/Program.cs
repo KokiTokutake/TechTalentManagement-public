@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TeckTalentManagement.Application.Goals;
 using TeckTalentManagement.Application.ManagerEvaluations;
 using TeckTalentManagement.Application.SelfEvaluations;
+using TeckTalentManagement.Application.SkillMaster;
 using TeckTalentManagement.Infrastructure.Persistence;
 using TeckTalentManagement.Infrastructure.Persistence.Repositories;
 
@@ -17,6 +18,8 @@ builder.Services.AddScoped<ISelfEvaluationRepository, SelfEvaluationRepository>(
 builder.Services.AddScoped<ISelfEvaluationService, SelfEvaluationService>();
 builder.Services.AddScoped<IManagerEvaluationRepository, ManagerEvaluationRepository>();
 builder.Services.AddScoped<IManagerEvaluationService, ManagerEvaluationService>();
+builder.Services.AddScoped<ISkillMasterRepository, SkillMasterRepository>();
+builder.Services.AddScoped<ISkillMasterService, SkillMasterService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()

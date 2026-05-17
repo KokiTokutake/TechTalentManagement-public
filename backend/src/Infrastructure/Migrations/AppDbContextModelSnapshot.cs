@@ -17,7 +17,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.8")
+                .HasAnnotation("ProductVersion", "8.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -211,6 +211,65 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("SelfEvaluationItems");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SkillCategories");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("SkillItems");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -324,6 +383,17 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("SelfEvaluation");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillItem", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.SkillCategory", "Category")
+                        .WithMany("Items")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.User", "DirectManager")
@@ -351,6 +421,11 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Items");
 
                     b.Navigation("ManagerEvaluation");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillCategory", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
