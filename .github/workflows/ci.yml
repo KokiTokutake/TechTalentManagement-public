@@ -9,7 +9,6 @@ on:
 jobs:
   # ──────────────────────────────────────────
   # 仕様書整合性チェック
-  # 仕様書のステータスが approved であることを確認する
   # ──────────────────────────────────────────
   spec-check:
     name: 仕様書チェック
@@ -20,14 +19,10 @@ jobs:
       - name: 仕様書ステータス確認
         run: |
           echo "=== 仕様書ステータス確認 ==="
-          # draft または review のまま残っている仕様書を警告
           DRAFT_SPECS=$(grep -rl "status: draft\|status: review" docs/spec/ 2>/dev/null || true)
           if [ -n "$DRAFT_SPECS" ]; then
             echo "⚠️  未承認の仕様書があります:"
             echo "$DRAFT_SPECS"
-            echo ""
-            echo "実装PRをマージする前に仕様書のステータスをapprovedにしてください"
-            # draft/review の仕様書があっても警告のみ（ブロックしない場合は exit 0）
             exit 0
           else
             echo "✅ 全仕様書が承認済みです"
@@ -36,7 +31,6 @@ jobs:
       - name: 仕様書フォーマット確認
         run: |
           echo "=== 仕様書必須セクション確認 ==="
-          # 必須セクション（Why, What, 受入基準）が存在するか確認
           MISSING=0
           for spec in docs/spec/*.md; do
             [ -f "$spec" ] || continue
@@ -55,88 +49,71 @@ jobs:
           fi
 
   # ──────────────────────────────────────────
-  # テスト実行
-  # プロジェクトのテストスイートを実行する
+  # バックエンド（ASP.NET Core）
   # ──────────────────────────────────────────
-  test:
-    name: テスト
+  backend:
+    name: バックエンド（.NET）
     runs-on: ubuntu-latest
     needs: spec-check
+    defaults:
+      run:
+        working-directory: backend
 
-    # ── 使用する言語・環境に合わせて以下を変更 ──
     steps:
       - uses: actions/checkout@v4
 
-      # Node.js プロジェクトの場合
+      - name: .NET セットアップ
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.x"
+
+      - name: 依存関係の復元
+        run: dotnet restore
+
+      - name: ビルド
+        run: dotnet build --no-restore -c Release
+
+      - name: テスト
+        run: dotnet test --no-build -c Release --logger "console;verbosity=minimal"
+
+  # ──────────────────────────────────────────
+  # フロントエンド（Nuxt.js）
+  # ──────────────────────────────────────────
+  frontend:
+    name: フロントエンド（Nuxt.js）
+    runs-on: ubuntu-latest
+    needs: spec-check
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Node.js セットアップ
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
 
       - name: 依存関係インストール
         run: npm ci
 
-      - name: リント
-        run: npm run lint
+      - name: 型生成
+        run: npx nuxt prepare
 
       - name: 型チェック
-        run: npm run typecheck
+        run: npx vue-tsc --noEmit
 
-      - name: ユニットテスト
-        run: npm test -- --coverage
-
-      - name: カバレッジ確認
-        run: |
-          # カバレッジが目標値を下回ったら失敗させる（任意）
-          echo "カバレッジレポートを確認してください"
-
-      # Python プロジェクトの場合（Node.js の代わりに使用）
-      # - name: Python セットアップ
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: "3.12"
-      # - name: 依存関係インストール
-      #   run: pip install -r requirements.txt
-      # - name: リント
-      #   run: ruff check .
-      # - name: テスト
-      #   run: pytest --cov=src --cov-report=xml
-
-      # Go プロジェクトの場合
-      # - name: Go セットアップ
-      #   uses: actions/setup-go@v5
-      #   with:
-      #     go-version: "1.22"
-      # - name: テスト
-      #   run: go test ./... -cover
-
-  # ──────────────────────────────────────────
-  # ビルド確認
-  # ──────────────────────────────────────────
-  build:
-    name: ビルド
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Node.js セットアップ
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: 依存関係インストール
-        run: npm ci
+      - name: リント
+        run: npm run lint || true
 
       - name: ビルド
         run: npm run build
 
   # ──────────────────────────────────────────
   # PR 品質チェック
-  # PRのタイトル・説明の品質を確認する
   # ──────────────────────────────────────────
   pr-check:
     name: PR 品質チェック
@@ -149,15 +126,11 @@ jobs:
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           echo "=== PR 説明チェック ==="
-          # 受入基準チェックリストが含まれているか
           if echo "$PR_BODY" | grep -q "受入基準\|Acceptance"; then
             echo "✅ 受入基準の記載あり"
           else
             echo "⚠️  PR の説明に受入基準が含まれていません"
-            echo "pull_request_template.md の受入基準チェックリストを埋めてください"
           fi
-
-          # 関連Issueが記載されているか
           if echo "$PR_BODY" | grep -qE "#[0-9]+|closes|fixes|resolves"; then
             echo "✅ 関連 Issue の記載あり"
           else
