@@ -2,8 +2,8 @@
 
 <!-- 
 spec-id: SPEC-EVAL-001
-status: draft
-version: 1.0.0
+status: approved
+version: 1.1.0
 last-updated: 2026-05-17
 owner: @KokiTokutake
 -->
@@ -11,8 +11,8 @@ owner: @KokiTokutake
 | 項目 | 内容 |
 |------|------|
 | Spec ID | SPEC-EVAL-001 |
-| ステータス | draft |
-| バージョン | 1.0.0 |
+| ステータス | **approved** |
+| バージョン | 1.1.0 |
 | 最終更新 | 2026-05-17 |
 | オーナー | @KokiTokutake |
 | 関連 Issue | 未設定 |
