@@ -3,9 +3,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@pinia/nuxt', '@nuxt/eslint'],
   runtimeConfig: {
-    apiBaseUrl: process.env.NUXT_API_BASE_URL || 'http://localhost:5000',
+    // NUXT_API_BASE_URL 環境変数で上書き可能
+    apiBaseUrl: '',
     public: {
-      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:5000'
+      // NUXT_PUBLIC_API_BASE_URL 環境変数で上書き可能
+      apiBaseUrl: 'http://localhost:5000'
     }
   },
   typescript: {
