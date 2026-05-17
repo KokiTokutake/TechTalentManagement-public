@@ -3,7 +3,7 @@
 <!-- 
 spec-id: SPEC-SKILL-001
 status: approved
-version: 1.1.0
+version: 1.1.1
 last-updated: 2026-05-17
 owner: @KokiTokutake
 -->
@@ -12,7 +12,7 @@ owner: @KokiTokutake
 |------|------|
 | Spec ID | SPEC-SKILL-001 |
 | ステータス | **approved** |
-| バージョン | 1.1.0 |
+| バージョン | 1.1.1 |
 | 最終更新 | 2026-05-17 |
 | オーナー | @KokiTokutake |
 | 関連 Issue | 未設定 |
@@ -214,8 +214,8 @@ Given: 管理者がログインしている
 When:  スキル種別を新規追加する（カテゴリ選択・スキル名入力）
 Then:  スキル種別が作成され、タレントがスキル追加時に選択できるようになる
 
-Given: タレントが使用中のスキル種別を削除しようとする
-When:  管理者が削除操作を実行する
+Given: 1件以上のタレントが使用中のスキル種別がある
+When:  管理者がそのスキル種別の削除操作を実行する
 Then:  「使用中のスキルがあります」エラーが表示され、削除できない
 ```
 
