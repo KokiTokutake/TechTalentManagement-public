@@ -18,7 +18,7 @@
 | TASK-004 | [BE] 目標設定 API（CRUD） | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-004-goal-api |
 | TASK-005 | [BE] 自己評価 API（下書き保存・提出） | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-005-self-evaluation-api |
 
-## Sprint 2 📋 計画中
+## Sprint 2 📋 完了
 
 - **ゴール**: 上長評価API・FE3画面・Phase 1 結合テスト（Phase 1 後半）
 - **期間**: 2026-05-24 〜 2026-05-30
@@ -32,14 +32,41 @@
 | TASK-009 | [FE] 上長評価入力画面 UI | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-009-manager-evaluation-ui |
 | TASK-010 | [TEST] Phase 1 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-010-phase1-integration-test |
 
+## Sprint 3 📋 計画中
+
+- **ゴール**: スキル管理機能 バックエンド全実装
+- **期間**: 2026-05-31 〜 2026-06-06
+- **進捗**: 0 / 11 SP 完了
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-011 | [BE] スキルマスター管理 API（SkillCategory / SkillItem CRUD） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-012 | [BE] ユーザースキル CRUD API（追加・編集・削除・一覧） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-013 | [BE] スキル承認・差し戻し API | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-014 | [BE] 組織スキルマップ API | ⬜ pending | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
+
+## Sprint 4 📋 計画中
+
+- **ゴール**: スキル管理機能 フロントエンド全画面・結合テスト
+- **期間**: 2026-06-07 〜 2026-06-13
+- **進捗**: 0 / 13 SP 完了
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-015 | [FE] スキルマスター管理画面 UI（Admin） | ⬜ pending | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
+| TASK-016 | [FE] 自分のスキル管理画面 UI（一覧・追加・編集・削除） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-017 | [FE] スキル承認・差し戻し画面 UI（上長向け） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-018 | [FE] 組織スキルマップ画面 UI | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
+| TASK-019 | [TEST] スキル管理 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
+
 ---
 
 ## サマリー
 
 | 項目 | 値 |
 |------|----|
-| 総タスク数 | 10 |
+| 総タスク数 | 19 |
 | 完了 | 9 |
 | 進行中 | 0 |
-| 未着手 | 1 |
+| 未着手 | 10 |
 | レビュー中 | 0 |
