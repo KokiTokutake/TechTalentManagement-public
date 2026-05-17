@@ -13,6 +13,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ManagerEvaluation> ManagerEvaluations => Set<ManagerEvaluation>();
     public DbSet<SkillCategory> SkillCategories => Set<SkillCategory>();
     public DbSet<SkillItem> SkillItems => Set<SkillItem>();
+    public DbSet<UserSkill> UserSkills => Set<UserSkill>();
+    public DbSet<UserSkillHistory> UserSkillHistories => Set<UserSkillHistory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -3,6 +3,8 @@ using TeckTalentManagement.Application.Goals;
 using TeckTalentManagement.Application.ManagerEvaluations;
 using TeckTalentManagement.Application.SelfEvaluations;
 using TeckTalentManagement.Application.SkillMaster;
+using TeckTalentManagement.Application.SkillMap;
+using TeckTalentManagement.Application.UserSkills;
 using TeckTalentManagement.Infrastructure.Persistence;
 using TeckTalentManagement.Infrastructure.Persistence.Repositories;
 
@@ -20,6 +22,10 @@ builder.Services.AddScoped<IManagerEvaluationRepository, ManagerEvaluationReposi
 builder.Services.AddScoped<IManagerEvaluationService, ManagerEvaluationService>();
 builder.Services.AddScoped<ISkillMasterRepository, SkillMasterRepository>();
 builder.Services.AddScoped<ISkillMasterService, SkillMasterService>();
+builder.Services.AddScoped<IUserSkillRepository, UserSkillRepository>();
+builder.Services.AddScoped<IUserSkillService, UserSkillService>();
+builder.Services.AddScoped<ISkillMapRepository, SkillMapRepository>();
+builder.Services.AddScoped<ISkillMapService, SkillMapService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()

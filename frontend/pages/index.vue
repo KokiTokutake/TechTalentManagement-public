@@ -34,6 +34,42 @@
         <span class="menu-title">自己評価</span>
         <span class="menu-desc">目標ごとの達成度を入力・提出する</span>
       </NuxtLink>
+
+      <NuxtLink to="/skills/my" class="menu-card">
+        <span class="menu-icon">🛠</span>
+        <span class="menu-title">スキル管理</span>
+        <span class="menu-desc">自分のスキルを登録・編集する</span>
+      </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Manager' || auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
+        to="/skills/approval"
+        class="menu-card"
+      >
+        <span class="menu-icon">✅</span>
+        <span class="menu-title">スキル承認</span>
+        <span class="menu-desc">部下のスキル申請を承認・差し戻しする</span>
+      </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
+        to="/skills/map"
+        class="menu-card"
+      >
+        <span class="menu-icon">🗺</span>
+        <span class="menu-title">組織スキルマップ</span>
+        <span class="menu-desc">全エンジニアのスキル分布を確認する</span>
+      </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Admin'"
+        to="/admin/skill-master"
+        class="menu-card"
+      >
+        <span class="menu-icon">⚙</span>
+        <span class="menu-title">スキルマスター管理</span>
+        <span class="menu-desc">カテゴリとスキル種別を管理する</span>
+      </NuxtLink>
     </div>
 
     <p class="api-status">

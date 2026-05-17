@@ -46,9 +46,8 @@ public class SkillMasterRepository(AppDbContext db) : ISkillMasterRepository
         return Task.CompletedTask;
     }
 
-    // TASK-012 で UserSkill 追加後に実装
     public Task<bool> IsItemInUseAsync(Guid itemId, CancellationToken ct) =>
-        Task.FromResult(false);
+        db.UserSkills.AnyAsync(s => s.SkillItemId == itemId, ct);
 
     public Task SaveChangesAsync(CancellationToken ct) =>
         db.SaveChangesAsync(ct);
