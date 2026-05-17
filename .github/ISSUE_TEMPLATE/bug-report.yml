@@ -1,0 +1,80 @@
+name: バグ報告（仕様との不一致）
+description: 実装が仕様書と異なる場合や、仕様上の矛盾を報告する
+title: "[Bug] "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## バグ = 仕様との不一致
+        仕様駆動開発では、バグは「実装が仕様書と異なる状態」と定義します。
+        報告する際は、**どの仕様書のどの記述**と食い違っているかを明記してください。
+
+  - type: input
+    id: spec-ref
+    attributes:
+      label: 関連仕様書
+      description: 仕様書のパスと該当セクションを記入してください。
+      placeholder: "docs/spec/user-authentication.md#受入基準"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 仕様書上の期待動作
+      description: 仕様書にはどのような動作が定義されていますか？
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+      description: 実際にはどのような動作になっていますか？
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      placeholder: |
+        1. 〇〇画面を開く
+        2. △△を入力する
+        3. □□ボタンをクリックする
+        4. → エラーが発生する（期待: 〇〇が表示される）
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 環境情報
+      placeholder: |
+        - OS: Windows 11 / macOS 14 / Ubuntu 22.04
+        - ブラウザ: Chrome 120 / Firefox 121
+        - バージョン: v1.2.3
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 深刻度
+      options:
+        - Critical（サービス停止・データ損失）
+        - High（主要機能が使えない）
+        - Medium（一部機能に影響、回避策あり）
+        - Low（軽微・見た目の問題）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: spec-or-impl
+    attributes:
+      label: 原因の所在（判断できる場合）
+      options:
+        - 実装が仕様に従っていない（実装バグ）
+        - 仕様自体に矛盾・不備がある（仕様バグ）
+        - 判断できない

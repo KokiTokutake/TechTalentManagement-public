@@ -1,0 +1,82 @@
+name: 仕様変更
+description: 既存の仕様書の変更を提案する
+title: "[Spec] "
+labels: ["spec-change"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ⚠️ 仕様変更は慎重に
+        仕様変更は関連するコード・テスト・ドキュメントすべてに影響します。
+        変更の影響範囲を十分に確認した上で提案してください。
+
+  - type: input
+    id: spec-id
+    attributes:
+      label: 対象 Spec ID
+      placeholder: "SPEC-AUTH-001"
+    validations:
+      required: true
+
+  - type: input
+    id: spec-path
+    attributes:
+      label: 対象仕様書パス
+      placeholder: "docs/spec/user-authentication.md"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 現在の仕様
+      description: 変更前の仕様を引用してください。
+      placeholder: |
+        現在: 〇〇という仕様になっている
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: 変更後の仕様（案）
+      description: どのように変更したいか。
+      placeholder: |
+        変更案: △△という仕様に変更したい
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 変更理由（Why）
+      description: なぜこの変更が必要か。ビジネス上・技術上の理由を記述してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影響範囲
+      description: この変更によって影響を受けるもの（コード・テスト・他仕様書・運用）を列挙してください。
+      placeholder: |
+        - [ ] コード: src/auth/
+        - [ ] テスト: tests/auth/
+        - [ ] 関連仕様: SPEC-USER-001
+        - [ ] ドキュメント: docs/guides/
+    validations:
+      required: true
+
+  - type: dropdown
+    id: change-size
+    attributes:
+      label: 変更規模（Constitution.md の変更管理ルール参照）
+      options:
+        - マイナー（誤字修正・表現の明確化）
+        - スモール（既存機能の小規模変更）
+        - メジャー（新機能追加・大規模変更）
+        - 憲章変更（Constitution.md の変更）
+    validations:
+      required: true

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDD ハーネス クイックスタートガイド</title>
+<style>
+:root {
+  --indigo: #1A237E; --indigo-m: #3949AB; --indigo-l: #E8EAF6;
+  --teal:   #006064; --teal-m:   #00838F; --teal-l:   #E0F7FA;
+  --orange: #E65100; --orange-m: #F57C00; --orange-l: #FFF3E0;
+  --green:  #1B5E20; --green-m:  #388E3C; --green-l:  #E8F5E9;
+  --purple: #4A148C; --purple-m: #7B1FA2; --purple-l: #F3E5F5;
+  --red:    #B71C1C; --red-m:    #C62828; --red-l:    #FFEBEE;
+  --blue:   #0D47A1; --blue-m:   #1565C0; --blue-l:   #E3F2FD;
+  --brown:  #3E2723; --brown-m:  #5D4037; --brown-l:  #EFEBE9;
+  --muted: #546E7A; --border: #CFD8DC; --bg: #ECEFF1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic UI', Meiryo, sans-serif;
+  background: var(--bg); color: #263238; font-size: 13px; line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #1565C0 100%);
+  color: #fff; padding: 40px 48px 36px;
+}
+.site-header h1 { font-size: 26px; font-weight: 700; letter-spacing: .04em; margin-bottom: 6px; }
+.site-header .subtitle { font-size: 14px; opacity: .85; margin-bottom: 28px; }
+.header-meta {
+  display: flex; gap: 24px; flex-wrap: wrap;
+}
+.meta-chip {
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  border-radius: 20px; padding: 5px 14px; font-size: 11px; font-weight: 600;
+}
+
+/* ── LAYOUT ── */
+.content { max-width: 1100px; margin: 0 auto; padding: 32px 48px 64px; }
+.section { margin-bottom: 40px; }
+.section-title {
+  font-size: 17px; font-weight: 700; color: var(--indigo);
+  border-left: 4px solid var(--blue-m); padding-left: 12px; margin-bottom: 18px;
+}
+.section-subtitle {
+  font-size: 13px; font-weight: 700; color: var(--muted);
+  margin-bottom: 12px; margin-top: 20px; letter-spacing: .04em;
+  text-transform: uppercase; font-size: 11px;
+}
+
+/* ── CARD ── */
+.card {
+  background: #fff; border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07); overflow: hidden;
+}
+.card-pad { padding: 20px 24px; }
+
+/* ── PHASE OVERVIEW STEPS ── */
+.phase-list {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+}
+.phase-card {
+  border-radius: 8px; overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.phase-card-head {
+  color: #fff; padding: 10px 12px 8px; font-weight: 700;
+}
+.phase-card-head .ph-num { font-size: 10px; opacity: .8; }
+.phase-card-head .ph-label { font-size: 13px; margin-top: 1px; }
+.phase-card-head .ph-en { font-size: 10px; opacity: .7; margin-top: 1px; font-weight: 400; }
+.phase-card-body { background: #fff; padding: 10px 12px; font-size: 11px; color: var(--muted); }
+.phase-card-body .artifact { font-weight: 700; color: #263238; margin-bottom: 2px; }
+
+/* ── INSTALLATION STEPS ── */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 0; position: relative;
+}
+.step:not(:last-child)::after {
+  content: ''; position: absolute; left: 19px; top: 40px; bottom: 0;
+  width: 2px; background: #CFD8DC; z-index: 0;
+}
+.step-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; color: #fff; flex-shrink: 0;
+  position: relative; z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
+.step-body { padding: 0 0 28px 16px; flex: 1; }
+.step-title { font-weight: 700; font-size: 14px; color: #263238; margin-bottom: 6px; padding-top: 8px; }
+.step-desc { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+/* ── CODE BLOCK ── */
+.code {
+  background: #263238; color: #ECEFF1; border-radius: 8px;
+  padding: 14px 16px; font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 12px; line-height: 1.7; overflow-x: auto;
+  white-space: pre;
+}
+.code .comment { color: #78909C; }
+.code .cmd { color: #80DEEA; }
+.code .path { color: #A5D6A7; }
+.code .flag { color: #FFE082; }
+.code .string { color: #F48FB1; }
+.code-inline {
+  background: #263238; color: #80DEEA;
+  border-radius: 4px; padding: 2px 7px;
+  font-family: 'Courier New', monospace; font-size: 11px;
+}
+
+/* ── SKILL BADGE ── */
+.skill {
+  display: inline-block; background: var(--indigo); color: #fff;
+  border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700;
+  font-family: 'Courier New', monospace; margin: 2px 2px 0 0;
+}
+.skill.phase1 { background: #4527A0; }
+.skill.phase2 { background: #00695C; }
+.skill.phase3 { background: #E65100; }
+.skill.phase4 { background: #1565C0; }
+.skill.phase5 { background: #2E7D32; }
+.skill.phase6 { background: #283593; }
+.skill.phase7 { background: #6A1B9A; }
+.skill.learn  { background: #37474F; }
+.skill.pm     { background: #4E342E; }
+.skill.setup  { background: #37474F; }
+
+/* ── PREREQUISITE TABLE ── */
+.prereq-table { width: 100%; border-collapse: collapse; }
+.prereq-table th {
+  background: var(--indigo); color: #fff; padding: 9px 14px;
+  font-size: 11px; text-align: left; font-weight: 700;
+}
+.prereq-table td {
+  padding: 9px 14px; border-bottom: 1px solid #ECEFF1;
+  font-size: 12px; vertical-align: middle;
+}
+.prereq-table tr:last-child td { border-bottom: none; }
+.tag-required { background: #FFEBEE; color: #B71C1C; border-radius: 12px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+.tag-optional { background: #E8F5E9; color: #2E7D32; border-radius: 12px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+.check-cmd { font-family: 'Courier New', monospace; font-size: 11px; color: var(--muted); }
+
+/* ── HOOKS TABLE ── */
+.hooks-table { width: 100%; border-collapse: collapse; }
+.hooks-table th {
+  background: #37474F; color: #fff; padding: 9px 14px;
+  font-size: 11px; text-align: left;
+}
+.hooks-table td {
+  padding: 9px 14px; border-bottom: 1px solid #ECEFF1; font-size: 12px;
+}
+.hooks-table tr:last-child td { border-bottom: none; }
+.guard-badge {
+  display: inline-block; border-radius: 12px; padding: 1px 8px;
+  font-size: 10px; font-weight: 700;
+}
+.guard-block { background: #FFEBEE; color: #B71C1C; }
+.guard-warn  { background: #FFF3E0; color: #E65100; }
+.guard-allow { background: #E8F5E9; color: #2E7D32; }
+
+/* ── TIPS ── */
+.tip {
+  border-left: 3px solid; border-radius: 0 6px 6px 0;
+  padding: 10px 14px; margin: 10px 0; font-size: 12px;
+}
+.tip-info  { border-color: var(--blue-m);   background: var(--blue-l);   color: #1A237E; }
+.tip-warn  { border-color: var(--orange-m); background: var(--orange-l); color: var(--orange); }
+.tip-ok    { border-color: var(--green-m);  background: var(--green-l);  color: var(--green); }
+.tip strong { font-weight: 700; }
+
+/* ── FLOW ARROWS ── */
+.flow-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0;
+}
+.flow-arrow { color: #90A4AE; font-size: 14px; }
+
+/* ── GRID 2COL ── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 7px 0; font-size: 12px; border-bottom: 1px solid #ECEFF1;
+  cursor: pointer; transition: background .1s;
+  border-radius: 4px; padding-left: 4px; padding-right: 4px;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li:hover { background: #F5F5F5; }
+.checklist li input[type="checkbox"] {
+  margin-top: 1px; flex-shrink: 0;
+  width: 15px; height: 15px; cursor: pointer;
+  accent-color: var(--green-m);
+}
+.checklist li.checked .item-text {
+  text-decoration: line-through; color: #90A4AE;
+}
+.checklist li .item-text { flex: 1; line-height: 1.5; }
+.checklist-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.checklist-progress {
+  font-size: 11px; font-weight: 700; color: var(--green-m);
+}
+.checklist-reset {
+  font-size: 10px; color: var(--muted); background: none; border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 8px; cursor: pointer;
+}
+.checklist-reset:hover { background: #ECEFF1; }
+
+/* ── DIRECTORY TREE ── */
+.dir-tree {
+  background: #263238; color: #ECEFF1; border-radius: 8px;
+  padding: 16px 18px; font-family: 'Courier New', monospace; font-size: 12px;
+  line-height: 1.8; white-space: pre;
+}
+.dir-tree .dir  { color: #80DEEA; font-weight: 700; }
+.dir-tree .file { color: #E0E0E0; }
+.dir-tree .desc { color: #78909C; margin-left: 6px; }
+.dir-tree .new  { color: #A5D6A7; }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: #263238; color: #90A4AE; text-align: center;
+  padding: 24px; font-size: 11px; margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <h1>SDD ハーネス — クイックスタートガイド</h1>
+  <p class="subtitle">新規プロジェクトへの仕様駆動開発（Spec-Driven Development）導入手順</p>
+  <div class="header-meta">
+    <span class="meta-chip">⏱ 初期セットアップ 30〜60分</span>
+    <span class="meta-chip">31スキル同梱</span>
+    <span class="meta-chip">Claude Code 必須</span>
+    <span class="meta-chip">GitHub CLI 必須</span>
+  </div>
+</header>
+
+<div class="content">
+
+  <!-- ── 0. WHAT IS SDD ── -->
+  <section class="section">
+    <h2 class="section-title">SDD ハーネスとは</h2>
+    <div class="card card-pad">
+      <p style="font-size:13px; line-height:1.8; color:#455A64; margin-bottom:14px;">
+        仕様駆動開発（SDD）は「コードより先に仕様を書く」開発手法です。本ハーネスはその実践に必要な
+        <strong>テンプレート・Claude Code スキル・PM ツール・Hooks ガード</strong> を一式パッケージ化したものです。
+        新規プロジェクトにコピーするだけで SDD ワークフローがすぐに使えます。
+      </p>
+      <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:12px;">
+        <div style="background:var(--indigo-l); border-radius:8px; padding:12px 14px;">
+          <div style="font-size:20px; margin-bottom:6px;">📄</div>
+          <div style="font-weight:700; font-size:12px; color:var(--indigo); margin-bottom:3px;">Spec-as-Code</div>
+          <div style="font-size:11px; color:var(--muted);">仕様書を Markdown で Git 管理。唯一の信頼できる情報源</div>
+        </div>
+        <div style="background:var(--teal-l); border-radius:8px; padding:12px 14px;">
+          <div style="font-size:20px; margin-bottom:6px;">🤖</div>
+          <div style="font-weight:700; font-size:12px; color:var(--teal); margin-bottom:3px;">31 AI スキル</div>
+          <div style="font-size:11px; color:var(--muted);">Claude Code の /コマンドで各工程を自動化</div>
+        </div>
+        <div style="background:var(--orange-l); border-radius:8px; padding:12px 14px;">
+          <div style="font-size:20px; margin-bottom:6px;">🛡️</div>
+          <div style="font-weight:700; font-size:12px; color:var(--orange); margin-bottom:3px;">Hooks ガード</div>
+          <div style="font-size:11px; color:var(--muted);">危険操作・仕様書無断編集を Claude Code hooks で自動ブロック</div>
+        </div>
+        <div style="background:var(--green-l); border-radius:8px; padding:12px 14px;">
+          <div style="font-size:20px; margin-bottom:6px;">🧠</div>
+          <div style="font-weight:700; font-size:12px; color:var(--green); margin-bottom:3px;">継続学習</div>
+          <div style="font-size:11px; color:var(--muted);">PR レビューを自動解析し指摘パターンを蓄積・活用</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 1. PREREQUISITES ── -->
+  <section class="section">
+    <h2 class="section-title">前提条件</h2>
+    <div class="card">
+      <table class="prereq-table">
+        <thead>
+          <tr>
+            <th style="width:180px">ツール</th>
+            <th style="width:90px">区分</th>
+            <th style="width:200px">確認コマンド</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Claude Code</strong></td>
+            <td><span class="tag-required">必須</span></td>
+            <td class="check-cmd">claude --version</td>
+            <td>スキル実行・AI コードレビューに使用</td>
+          </tr>
+          <tr>
+            <td><strong>Git</strong></td>
+            <td><span class="tag-required">必須</span></td>
+            <td class="check-cmd">git --version</td>
+            <td>バージョン管理・ブランチ保護</td>
+          </tr>
+          <tr>
+            <td><strong>GitHub CLI (gh)</strong></td>
+            <td><span class="tag-required">必須</span></td>
+            <td class="check-cmd">gh auth status</td>
+            <td>PR 作成・Issue 連携・PR レビュー学習に使用</td>
+          </tr>
+          <tr>
+            <td><strong>Python 3</strong></td>
+            <td><span class="tag-required">必須</span></td>
+            <td class="check-cmd">python3 --version</td>
+            <td>Hooks スクリプトの JSON 解析に使用</td>
+          </tr>
+          <tr>
+            <td><strong>Node.js / npm</strong></td>
+            <td><span class="tag-optional">推奨</span></td>
+            <td class="check-cmd">node --version</td>
+            <td>Playwright テスト自動化に使用</td>
+          </tr>
+          <tr>
+            <td><strong>GitHub リポジトリ</strong></td>
+            <td><span class="tag-required">必須</span></td>
+            <td class="check-cmd">gh repo view</td>
+            <td>PR レビュー・Branch Protection の前提</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip tip-info" style="margin-top:12px;">
+      <strong>macOS / Linux:</strong> bash が標準で使えます。<strong>Windows:</strong> Git Bash または WSL2 を使用してください。PowerShell 環境では hooks の bash スクリプトが動作しません。
+    </div>
+  </section>
+
+  <!-- ── 2. INSTALLATION ── -->
+  <section class="section">
+    <h2 class="section-title">インストール手順</h2>
+    <div class="card card-pad">
+      <div class="steps">
+
+        <!-- STEP 1 -->
+        <div class="step">
+          <div class="step-num" style="background:var(--blue-m);">1</div>
+          <div class="step-body">
+            <div class="step-title">ハーネスをプロジェクトにコピーする</div>
+            <div class="step-desc">SDD ハーネスリポジトリをクローンし、<code class="code-inline">templates/</code> の中身をプロジェクトルートにコピーします。</div>
+            <div class="code"><span class="comment"># ハーネスを取得（初回のみ）</span>
+<span class="cmd">git clone</span> <span class="string">https://github.com/KokiTokutake/SpecDrivenDevelopmentHarness.git</span> <span class="path">~/sdd-harness</span>
+
+<span class="comment"># プロジェクトルートに移動してテンプレートをコピー</span>
+<span class="cmd">cd</span> <span class="path">/your/project/root</span>
+<span class="cmd">cp -r</span> <span class="path">~/sdd-harness/templates/.</span> <span class="path">.</span>
+
+<span class="comment"># hooks に実行権限を付与</span>
+<span class="cmd">chmod +x</span> <span class="path">.claude/hooks/*.sh</span></div>
+            <div class="tip tip-warn" style="margin-top:10px;">
+              <strong>注意:</strong> コピー先に同名ファイルが存在する場合は上書きされます。<code class="code-inline">git status</code> で変更を確認してください。
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step">
+          <div class="step-num" style="background:var(--indigo-m);">2</div>
+          <div class="step-body">
+            <div class="step-title">Claude Code でプロジェクトを開き /sdd-start を実行する</div>
+            <div class="step-desc">プロジェクトルートで Claude Code を起動し、セットアップウィザードを実行します。所要時間：約15〜30分。</div>
+            <div class="code"><span class="comment"># プロジェクトルートで Claude Code を起動</span>
+<span class="cmd">claude</span>
+
+<span class="comment"># Claude Code のプロンプトで実行</span>
+<span class="string">/sdd-start</span></div>
+            <div style="margin-top:10px;">
+              <div class="section-subtitle">ウィザードが実施すること</div>
+              <ul style="font-size:12px; color:var(--muted); list-style:none; padding:0;">
+                <li style="padding:3px 0 3px 18px; position:relative;"><span style="position:absolute;left:0">①</span> プロジェクト基本情報の収集（名前・技術スタック・チーム規模）</li>
+                <li style="padding:3px 0 3px 18px; position:relative;"><span style="position:absolute;left:0">②</span> <code class="code-inline">.constitution/Constitution.md</code> の初版生成・確認</li>
+                <li style="padding:3px 0 3px 18px; position:relative;"><span style="position:absolute;left:0">③</span> <code class="code-inline">CLAUDE.md</code> の技術スタック・コマンドを設定</li>
+                <li style="padding:3px 0 3px 18px; position:relative;"><span style="position:absolute;left:0">④</span> <code class="code-inline">.claude/hooks/</code> の存在確認・セットアップ</li>
+                <li style="padding:3px 0 3px 18px; position:relative;"><span style="position:absolute;left:0">⑤</span> GitHub Branch Protection の設定チェックリスト表示</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step">
+          <div class="step-num" style="background:var(--green-m);">3</div>
+          <div class="step-body">
+            <div class="step-title">GitHub Branch Protection を設定する</div>
+            <div class="step-desc">main ブランチを保護し、仕様書なしの直接コミットを防ぎます。</div>
+            <div class="code"><span class="comment"># GitHub CLI で設定（要 admin 権限）</span>
+<span class="cmd">gh api</span> repos/{owner}/{repo}/branches/main/protection \
+  <span class="flag">--method PUT</span> \
+  <span class="flag">--field</span> <span class="string">'required_pull_request_reviews={"required_approving_review_count":1}'</span> \
+  <span class="flag">--field</span> <span class="string">'enforce_admins=true'</span></div>
+            <div class="tip tip-info" style="margin-top:10px;">
+              GitHub の Settings → Branches → Branch protection rules からGUI でも設定できます。
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step">
+          <div class="step-num" style="background:var(--orange-m);">4</div>
+          <div class="step-body">
+            <div class="step-title">最初の仕様書を作成して動作確認する</div>
+            <div class="step-desc">小さな機能の仕様書を1本書いて、スキルが正しく動くか確認します。</div>
+            <div class="code"><span class="comment"># 仕様書の作成（対話型ウィザード）</span>
+<span class="string">/spec-write</span>
+
+<span class="comment"># 仕様書のレビュー</span>
+<span class="string">/spec-review</span></div>
+            <div class="tip tip-ok" style="margin-top:10px;">
+              <strong>完了の確認:</strong> <code class="code-inline">docs/spec/</code> に仕様書ファイルが生成され、<code class="code-inline">status: approved</code> になれば導入完了です。
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step" style="margin-bottom:0;">
+          <div class="step-num" style="background:var(--purple-m);">5</div>
+          <div class="step-body" style="padding-bottom:0;">
+            <div class="step-title">PM ツールをブラウザで開く（任意）</div>
+            <div class="step-desc">スプリント・タスク・KPI をブラウザで管理します。ファイルをダブルクリックするだけで起動します。</div>
+            <div class="code"><span class="comment"># ブラウザで PM ツールを開く</span>
+<span class="cmd">open</span> <span class="path">tools/pm/index.html</span>   <span class="comment"># macOS</span>
+<span class="cmd">start</span> <span class="path">tools/pm/index.html</span>  <span class="comment"># Windows</span></div>
+            <div class="tip tip-info" style="margin-top:10px;">
+              PM ツールの「設定」タブからプロジェクトフォルダと接続すると <code class="code-inline">tasks/pm-data.json</code> と自動同期します（Chrome / Edge のみ）。
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. DIRECTORY STRUCTURE ── -->
+  <section class="section">
+    <h2 class="section-title">コピー後のディレクトリ構成</h2>
+    <div class="card card-pad">
+      <div class="dir-tree">
+<span class="dir">project/</span>
+├── <span class="dir new">.claude/</span>                      <span class="desc">← ハーネスが追加（Claude Code 設定）</span>
+│   ├── <span class="file new">settings.json</span>             <span class="desc">← Hooks 設定（PreToolUse ガード）</span>
+│   ├── <span class="dir new">hooks/</span>
+│   │   ├── <span class="file new">guard-dangerous-bash.sh</span>  <span class="desc">← 危険操作ブロック</span>
+│   │   └── <span class="file new">guard-spec-edit.sh</span>      <span class="desc">← 仕様書無断編集ブロック</span>
+│   └── <span class="dir new">skills/</span>                   <span class="desc">← 31スキル（/コマンドで呼び出し）</span>
+│       ├── <span class="file">sdd-start/SKILL.md</span>
+│       ├── <span class="file">spec-write/SKILL.md</span>
+│       └── <span class="file">... （29スキル）</span>
+├── <span class="dir new">.constitution/</span>
+│   └── <span class="file new">Constitution.md</span>           <span class="desc">← /sdd-start で生成するプロジェクト憲章</span>
+├── <span class="dir new">docs/</span>
+│   ├── <span class="dir new">spec/</span>                     <span class="desc">← 仕様書 (Spec-as-Code)</span>
+│   ├── <span class="dir new">design/</span>                   <span class="desc">← 設計ドキュメント</span>
+│   └── <span class="dir new">guides/</span>
+│       └── <span class="file">review-patterns.md</span>      <span class="desc">← /review-learn でPRから学習・蓄積</span>
+├── <span class="dir new">tasks/</span>                        <span class="desc">← タスク一覧・PM ツールデータ</span>
+├── <span class="dir new">tests/</span>
+│   └── <span class="dir new">e2e/</span>                      <span class="desc">← /test-write で自動生成する Playwright テスト</span>
+├── <span class="dir new">tools/</span>
+│   └── <span class="dir new">pm/</span>                       <span class="desc">← ブラウザ PM ツール（index.html）</span>
+└── <span class="file">CLAUDE.md</span>                     <span class="desc">← /sdd-start で設定するプロジェクト固有ルール</span>
+      </div>
+      <div class="tip tip-info" style="margin-top:12px;">
+        <strong>緑色のパス</strong> がハーネスによって追加されるファイル/ディレクトリです。既存ファイルには影響しません（同名ファイルのみ要確認）。
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. HOOKS GUARD ── -->
+  <section class="section">
+    <h2 class="section-title">自動保護ガード（Hooks）</h2>
+    <p style="font-size:12px; color:var(--muted); margin-bottom:14px;">
+      <code class="code-inline">.claude/settings.json</code> に設定された hooks は、Claude Code がツールを実行する前に自動的に発動します。
+    </p>
+    <div class="grid2">
+      <div class="card">
+        <div style="background:#37474F; color:#fff; padding:10px 16px; font-weight:700; font-size:12px;">
+          🛡️ guard-dangerous-bash.sh — 危険コマンドのブロック
+        </div>
+        <table class="hooks-table">
+          <thead>
+            <tr><th>操作パターン</th><th style="width:70px">判定</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code class="code-inline">rm -rf /</code> <code class="code-inline">rm -rf *</code></td><td><span class="guard-badge guard-block">ブロック</span></td></tr>
+            <tr><td><code class="code-inline">git push --force</code> to main/master</td><td><span class="guard-badge guard-block">ブロック</span></td></tr>
+            <tr><td><code class="code-inline">git reset --hard</code></td><td><span class="guard-badge guard-block">ブロック</span></td></tr>
+            <tr><td><code class="code-inline">git clean -fd</code></td><td><span class="guard-badge guard-block">ブロック</span></td></tr>
+            <tr><td><code class="code-inline">git checkout -- .</code> / <code class="code-inline">git restore .</code></td><td><span class="guard-badge guard-block">ブロック</span></td></tr>
+            <tr><td><code class="code-inline">DROP TABLE</code> / <code class="code-inline">DROP DATABASE</code></td><td><span class="guard-badge guard-block">ブロック</span></td></tr>
+            <tr><td><code class="code-inline">git push --force</code> to feature branch</td><td><span class="guard-badge guard-warn">警告</span></td></tr>
+            <tr><td>通常のコマンド</td><td><span class="guard-badge guard-allow">許可</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div style="background:#4A148C; color:#fff; padding:10px 16px; font-weight:700; font-size:12px;">
+          📄 guard-spec-edit.sh — 仕様書無断編集のブロック
+        </div>
+        <table class="hooks-table">
+          <thead>
+            <tr><th>条件</th><th style="width:70px">判定</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code class="code-inline">docs/spec/</code> 内のファイル<br>
+                かつ <code class="code-inline">status: approved</code><br>
+                かつ 実装タスクが進行中
+              </td>
+              <td><span class="guard-badge guard-block">ブロック</span></td>
+            </tr>
+            <tr>
+              <td>
+                <code class="code-inline">/spec-change</code> ワークフロー経由<br>（status を under_review に変更）
+              </td>
+              <td><span class="guard-badge guard-allow">許可</span></td>
+            </tr>
+            <tr><td>status: draft / under_review の仕様書</td><td><span class="guard-badge guard-allow">許可</span></td></tr>
+            <tr><td>実装タスクが未開始の場合</td><td><span class="guard-badge guard-allow">許可</span></td></tr>
+            <tr><td><code class="code-inline">docs/spec/</code> 以外のファイル</td><td><span class="guard-badge guard-allow">許可</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 14px; font-size:11px; color:var(--muted);">
+          → ブロック時は <span class="skill phase2">/spec-change</span> の実行を案内します
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. WORKFLOW ── -->
+  <section class="section">
+    <h2 class="section-title">基本ワークフロー（7工程）</h2>
+    <div class="phase-list">
+      <div class="phase-card">
+        <div class="phase-card-head" style="background:#4527A0;">
+          <div class="ph-num">工程 1</div>
+          <div class="ph-label">原則決定</div>
+          <div class="ph-en">Constitution</div>
+        </div>
+        <div class="phase-card-body">
+          <div class="artifact">Constitution.md</div>
+          <div style="margin-bottom:6px;">プロジェクトの原則・制約・用語集を定義</div>
+          <span class="skill phase1">/charter-create</span>
+          <span class="skill phase1">/charter-review</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card-head" style="background:#006064;">
+          <div class="ph-num">工程 2</div>
+          <div class="ph-label">要件定義</div>
+          <div class="ph-en">Specify</div>
+        </div>
+        <div class="phase-card-body">
+          <div class="artifact">仕様書 (docs/spec/)</div>
+          <div style="margin-bottom:6px;">Why・What・受入基準を Markdown で記述</div>
+          <span class="skill phase2">/spec-write</span>
+          <span class="skill phase2">/spec-review</span>
+          <span class="skill phase2">/spec-list</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card-head" style="background:#E65100;">
+          <div class="ph-num">工程 3</div>
+          <div class="ph-label">設計計画</div>
+          <div class="ph-en">Plan</div>
+        </div>
+        <div class="phase-card-body">
+          <div class="artifact">設計書 (docs/design/)</div>
+          <div style="margin-bottom:6px;">6エージェントによる多角的レビュー付き</div>
+          <span class="skill phase3">/design-create</span>
+          <span class="skill phase3">/design-review</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card-head" style="background:#1565C0;">
+          <div class="ph-num">工程 4</div>
+          <div class="ph-label">タスク分割</div>
+          <div class="ph-en">Tasks</div>
+        </div>
+        <div class="phase-card-body">
+          <div class="artifact">tasks/task-list.md</div>
+          <div style="margin-bottom:6px;">仕様書からスプリントタスクに分割</div>
+          <span class="skill phase4">/tasks-plan</span>
+          <span class="skill phase4">/task-board</span>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card-head" style="background:#2E7D32;">
+          <div class="ph-num">工程 5</div>
+          <div class="ph-label">実装</div>
+          <div class="ph-en">Implement</div>
+        </div>
+        <div class="phase-card-body">
+          <div class="artifact">コード・PR</div>
+          <div style="margin-bottom:6px;">仕様書に従って実装。テスト自動化も</div>
+          <span class="skill phase5">/task-start</span>
+          <span class="skill phase5">/impl-guide</span>
+          <span class="skill phase5">/impl-check</span>
+          <span class="skill phase5">/test-write</span>
+        </div>
+      </div>
+    </div>
+    <div class="tip tip-info" style="margin-top:14px;">
+      工程は<strong>線形ではなく反復的</strong>です。実装中に仕様の不備を発見したら <span class="skill phase2">/spec-change</span> で仕様書を更新してから実装を修正します。
+    </div>
+  </section>
+
+  <!-- ── 6. SKILL INDEX ── -->
+  <section class="section">
+    <h2 class="section-title">スキル早見表（全31スキル）</h2>
+    <div class="card">
+      <table style="width:100%; border-collapse:collapse; font-size:12px;">
+        <thead>
+          <tr>
+            <th style="background:var(--indigo); color:#fff; padding:9px 14px; text-align:left; width:180px;">スキル</th>
+            <th style="background:var(--indigo); color:#fff; padding:9px 14px; text-align:left; width:100px;">工程</th>
+            <th style="background:var(--indigo); color:#fff; padding:9px 14px; text-align:left;">使う場面</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- セットアップ -->
+          <tr><td colspan="3" style="background:#ECEFF1; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:var(--muted);">🚀 導入・セットアップ</td></tr>
+          <tr><td><span class="skill setup">/sdd-start</span></td><td>—</td><td>新プロジェクトへのSDD導入ウィザード（最初の一回）</td></tr>
+          <tr><td><span class="skill setup">/sdd-health</span></td><td>—</td><td>SDD遵守状況の健全性チェック</td></tr>
+          <tr><td><span class="skill setup">/sdd-skills</span></td><td>—</td><td>スキル一覧を表示</td></tr>
+          <!-- 工程1 -->
+          <tr><td colspan="3" style="background:#EDE7F6; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#4527A0;">工程1: 原則決定</td></tr>
+          <tr><td><span class="skill phase1">/charter-create</span></td><td>工程1</td><td>Constitution.md を対話型で作成</td></tr>
+          <tr><td><span class="skill phase1">/charter-review</span></td><td>工程1</td><td>Constitution.md を5観点でレビュー</td></tr>
+          <!-- 工程2 -->
+          <tr><td colspan="3" style="background:#E0F7FA; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#006064;">工程2: 要件定義</td></tr>
+          <tr><td><span class="skill phase2">/spec-write</span></td><td>工程2</td><td>仕様書を対話型で作成（コーディング前に必ず）</td></tr>
+          <tr><td><span class="skill phase2">/spec-review</span></td><td>工程2</td><td>仕様書を5軸レビュー（approved 前に）</td></tr>
+          <tr><td><span class="skill phase2">/spec-list</span></td><td>工程2</td><td>仕様書一覧とステータス確認</td></tr>
+          <tr><td><span class="skill phase2">/spec-change</span></td><td>工程2/5</td><td>実装中に仕様変更が必要になったとき</td></tr>
+          <!-- 工程3 -->
+          <tr><td colspan="3" style="background:#FFF3E0; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#E65100;">工程3: 設計計画</td></tr>
+          <tr><td><span class="skill phase3">/design-create</span></td><td>工程3</td><td>アーキテクチャ・コンポーネント設計書を作成</td></tr>
+          <tr><td><span class="skill phase3">/design-review</span></td><td>工程3</td><td>6専門エージェントによる多角的設計レビュー（自動改善ループ付き）</td></tr>
+          <!-- 工程4 -->
+          <tr><td colspan="3" style="background:#E3F2FD; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#1565C0;">工程4: タスク分割</td></tr>
+          <tr><td><span class="skill phase4">/tasks-plan</span></td><td>工程4</td><td>承認済み仕様書からスプリントタスクを分割</td></tr>
+          <tr><td><span class="skill phase4">/task-board</span></td><td>工程4</td><td>タスク進捗確認（朝会・進捗確認）</td></tr>
+          <!-- 工程5 -->
+          <tr><td colspan="3" style="background:#E8F5E9; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#2E7D32;">工程5: 実装</td></tr>
+          <tr><td><span class="skill phase5">/task-start</span></td><td>工程5</td><td>タスクを選んで実装開始（ブランチ作成）</td></tr>
+          <tr><td><span class="skill phase5">/impl-guide</span></td><td>工程5</td><td>実装ガイダンス取得</td></tr>
+          <tr><td><span class="skill phase5">/impl-check</span></td><td>工程5</td><td>実装が受入基準を満たしているか確認（PR前）</td></tr>
+          <tr><td><span class="skill phase5">/task-done</span></td><td>工程5</td><td>タスク完了・PR作成・レビュー依頼</td></tr>
+          <!-- テスト -->
+          <tr><td colspan="3" style="background:#E8EAF6; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#283593;">工程5→6: テスト自動化</td></tr>
+          <tr><td><span class="skill phase6">/test-write</span></td><td>工程5→6</td><td>仕様書の受入基準からPlaywrightテストを自動生成</td></tr>
+          <tr><td><span class="skill phase6">/test-run</span></td><td>工程5→6</td><td>Playwrightテストを実行して結果確認</td></tr>
+          <tr><td><span class="skill phase6">/test-report</span></td><td>工程5→6</td><td>テスト結果レポートを生成・仕様書へ反映</td></tr>
+          <!-- 工程6 -->
+          <tr><td colspan="3" style="background:#F3E5F5; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#6A1B9A;">工程6: 検証・受入</td></tr>
+          <tr><td><span class="skill phase7">/accept-run</span></td><td>工程6</td><td>受入テスト実施・POサインオフ取得</td></tr>
+          <tr><td><span class="skill phase7">/spec-trace</span></td><td>工程6</td><td>仕様書と実装コードの対応関係確認</td></tr>
+          <!-- 工程7 -->
+          <tr><td colspan="3" style="background:#EFEBE9; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#4E342E;">工程7: 運用</td></tr>
+          <tr><td><span class="skill pm">/release-prep</span></td><td>工程7</td><td>リリース準備（リリースノート・デプロイチェックリスト）</td></tr>
+          <tr><td><span class="skill pm">/incident-handle</span></td><td>工程7</td><td>インシデント対応ガイド</td></tr>
+          <tr><td><span class="skill pm">/retro-run</span></td><td>工程7</td><td>レトロスペクティブの実施</td></tr>
+          <!-- PM ツール -->
+          <tr><td colspan="3" style="background:#E0F2F1; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#00695C;">🖥️ PM ツール</td></tr>
+          <tr><td><span class="skill pm" style="background:#00695C;">/pm-setup</span></td><td>—</td><td>SDD PM ツールの初期設定</td></tr>
+          <tr><td><span class="skill pm" style="background:#00695C;">/sprint-start</span></td><td>—</td><td>新スプリントの開始</td></tr>
+          <tr><td><span class="skill pm" style="background:#00695C;">/sprint-end</span></td><td>—</td><td>スプリント完了・ふりかえりへの引継ぎ</td></tr>
+          <tr><td><span class="skill pm" style="background:#00695C;">/pm-sync</span></td><td>—</td><td>PMツール ↔ プロジェクトファイル双方向同期</td></tr>
+          <!-- 継続学習 -->
+          <tr><td colspan="3" style="background:#ECEFF1; padding:6px 14px; font-weight:700; font-size:11px; letter-spacing:.06em; color:#37474F;">🧠 継続学習</td></tr>
+          <tr><td><span class="skill learn">/review-learn</span></td><td>—</td><td>マージ済みPRのレビュー指摘を自動抽出・パターンDB蓄積</td></tr>
+          <tr><td><span class="skill learn">/review-patterns</span></td><td>—</td><td>蓄積パターンの閲覧・検索・事前チェックリスト表示</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 7. QUICK REFERENCE ── -->
+  <section class="section">
+    <h2 class="section-title">よく使うコマンド早見表</h2>
+    <div class="grid2">
+      <div class="card">
+        <div style="background:var(--indigo); color:#fff; padding:9px 14px; font-weight:700; font-size:12px;">開発サイクル</div>
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+          <thead>
+            <tr>
+              <th style="background:#E8EAF6; color:var(--indigo); padding:7px 12px; text-align:left; font-size:11px; width:110px;">場面</th>
+              <th style="background:#E8EAF6; color:var(--indigo); padding:7px 12px; text-align:left; font-size:11px;">スキルの流れ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">要件定義</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill phase2">/spec-write</span> → <span class="skill phase2">/spec-review</span> → <span style="font-size:11px; color:var(--green-m); font-weight:700;">approved</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">設計</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill phase3">/design-create</span> → <span class="skill phase3">/design-review</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">タスク管理</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill phase4">/tasks-plan</span> → <span class="skill phase4">/task-board</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">実装</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill phase5">/task-start</span> → <span class="skill phase5">/impl-guide</span> → <span class="skill phase5">/impl-check</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">テスト</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill phase6">/test-write</span> → <span class="skill phase6">/test-run</span> → <span class="skill phase6">/test-report</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; color:var(--muted); font-weight:600;">リリース</td>
+              <td style="padding:8px 12px;"><span class="skill phase7">/accept-run</span> → <span class="skill phase5">/task-done</span> → <span class="skill pm">/release-prep</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div style="background:#37474F; color:#fff; padding:9px 14px; font-weight:700; font-size:12px;">よくある状況</div>
+        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+          <thead>
+            <tr>
+              <th style="background:#ECEFF1; color:#37474F; padding:7px 12px; text-align:left; font-size:11px; width:140px;">状況</th>
+              <th style="background:#ECEFF1; color:#37474F; padding:7px 12px; text-align:left; font-size:11px;">使うスキル</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">初回導入</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill setup">/sdd-start</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">仕様変更が必要</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill phase2">/spec-change</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">スプリント管理</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill pm" style="background:#00695C;">/sprint-start</span> → <span class="skill pm" style="background:#00695C;">/sprint-end</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">問題が起きた</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill pm">/incident-handle</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">振り返り</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill pm">/retro-run</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1; color:var(--muted); font-weight:600;">学習・改善</td>
+              <td style="padding:8px 12px; border-bottom:1px solid #ECEFF1;"><span class="skill learn">/review-learn</span> → <span class="skill learn">/review-patterns</span></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px; color:var(--muted); font-weight:600;">迷ったとき</td>
+              <td style="padding:8px 12px;"><span class="skill setup">/sdd-health</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 8. CHECKLIST ── -->
+  <section class="section">
+    <h2 class="section-title">導入チェックリスト</h2>
+    <div class="grid2">
+      <div class="card card-pad">
+        <div class="checklist-header">
+          <div class="section-subtitle" style="margin:0;">初日（Day 1）</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="checklist-progress" id="prog-day1">0 / 6</span>
+            <button class="checklist-reset" onclick="resetList('day1')">リセット</button>
+          </div>
+        </div>
+        <ul class="checklist" id="list-day1">
+          <li data-id="day1-0"><input type="checkbox"><span class="item-text">ハーネスをプロジェクトにコピー完了</span></li>
+          <li data-id="day1-1"><input type="checkbox"><span class="item-text"><code class="code-inline">chmod +x .claude/hooks/*.sh</code> 実行済み</span></li>
+          <li data-id="day1-2"><input type="checkbox"><span class="item-text"><code class="code-inline">/sdd-start</code> でウィザード完了</span></li>
+          <li data-id="day1-3"><input type="checkbox"><span class="item-text"><code class="code-inline">Constitution.md</code> の内容をチーム全員が確認</span></li>
+          <li data-id="day1-4"><input type="checkbox"><span class="item-text">GitHub Branch Protection 設定済み</span></li>
+          <li data-id="day1-5"><input type="checkbox"><span class="item-text">PM ツールが開けることを確認</span></li>
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <div class="checklist-header">
+          <div class="section-subtitle" style="margin:0;">第1スプリント開始前</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="checklist-progress" id="prog-sprint1">0 / 6</span>
+            <button class="checklist-reset" onclick="resetList('sprint1')">リセット</button>
+          </div>
+        </div>
+        <ul class="checklist" id="list-sprint1">
+          <li data-id="sprint1-0"><input type="checkbox"><span class="item-text">最初の機能の <code class="code-inline">/spec-write</code> 完了・approved</span></li>
+          <li data-id="sprint1-1"><input type="checkbox"><span class="item-text"><code class="code-inline">/design-create</code> → <code class="code-inline">/design-review</code> 完了（80点以上）</span></li>
+          <li data-id="sprint1-2"><input type="checkbox"><span class="item-text"><code class="code-inline">/tasks-plan</code> でタスク分割完了</span></li>
+          <li data-id="sprint1-3"><input type="checkbox"><span class="item-text"><code class="code-inline">/sprint-start</code> でスプリントゴール設定</span></li>
+          <li data-id="sprint1-4"><input type="checkbox"><span class="item-text">チームに <code class="code-inline">/sdd-skills</code> のスキル一覧を共有</span></li>
+          <li data-id="sprint1-5"><input type="checkbox"><span class="item-text">Playwright インストール完了（<code class="code-inline">npx playwright install</code>）</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip tip-ok" style="margin-top:14px;">
+      <strong>スプリント終了時の推奨:</strong>
+      <span class="skill pm">/sprint-end</span> → <span class="skill learn">/review-learn</span> → <span class="skill pm">/retro-run</span>
+      の順で実行すると、PRレビューの学習がレトロスペクティブに反映されます。
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  SDD ハーネス — 仕様駆動開発 実践入門 | 31スキル | Claude Code 対応
+</footer>
+
+<script>
+const STORAGE_KEY = 'sdd-quickstart-checklist';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function updateProgress(listId) {
+  const items = document.querySelectorAll(`#list-${listId} li`);
+  const checked = document.querySelectorAll(`#list-${listId} li.checked`).length;
+  const prog = document.getElementById(`prog-${listId}`);
+  if (!prog) return;
+  prog.textContent = `${checked} / ${items.length}`;
+  prog.style.color = checked === items.length ? 'var(--green-m)' : 'var(--muted)';
+}
+
+function initChecklist(listId) {
+  const state = loadState();
+  const items = document.querySelectorAll(`#list-${listId} li`);
+  items.forEach(li => {
+    const id = li.dataset.id;
+    const cb = li.querySelector('input[type="checkbox"]');
+    if (state[id]) { li.classList.add('checked'); cb.checked = true; }
+
+    li.addEventListener('click', e => {
+      if (e.target.tagName === 'A') return;
+      cb.checked = !cb.checked;
+      li.classList.toggle('checked', cb.checked);
+      const s = loadState();
+      s[id] = cb.checked;
+      saveState(s);
+      updateProgress(listId);
+    });
+  });
+  updateProgress(listId);
+}
+
+function resetList(listId) {
+  const state = loadState();
+  document.querySelectorAll(`#list-${listId} li`).forEach(li => {
+    li.classList.remove('checked');
+    li.querySelector('input[type="checkbox"]').checked = false;
+    delete state[li.dataset.id];
+  });
+  saveState(state);
+  updateProgress(listId);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initChecklist('day1');
+  initChecklist('sprint1');
+});
+</script>
+</body>
+</html>

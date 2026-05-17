@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仕様駆動開発（SDD）業務フロー</title>
+<style>
+:root {
+  --c1: #4527A0; --c1l: #EDE7F6; --c1m: #7E57C2;
+  --c2: #006064; --c2l: #E0F7FA; --c2m: #00ACC1;
+  --c3: #E65100; --c3l: #FFF3E0; --c3m: #FB8C00;
+  --c4: #B71C1C; --c4l: #FFEBEE; --c4m: #EF5350;
+  --c5: #1B5E20; --c5l: #E8F5E9; --c5m: #43A047;
+  --c6: #0D47A1; --c6l: #E3F2FD; --c6m: #1E88E5;
+  --c7: #4A148C; --c7l: #F3E5F5; --c7m: #8E24AA;
+  --actor-bg: #E3F2FD;
+  --actor-head: #1565C0;
+  --system-bg: #F3E5F5;
+  --system-head: #6A1B9A;
+  --border: #B0BEC5;
+  --text: #1A237E;
+  --muted: #546E7A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic UI', 'Meiryo', sans-serif;
+  background: #ECEFF1;
+  color: #263238;
+  font-size: 13px;
+  line-height: 1.5;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #1565C0 100%);
+  color: #fff;
+  padding: 40px 48px 32px;
+}
+.site-header h1 { font-size: 28px; font-weight: 700; letter-spacing: .04em; margin-bottom: 6px; }
+.site-header .subtitle { font-size: 14px; opacity: .85; margin-bottom: 20px; }
+.principle-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 24px;
+}
+.principle-card {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px; padding: 12px 14px;
+}
+.principle-card .num { font-size: 10px; opacity: .7; font-weight: 600; letter-spacing: .08em; }
+.principle-card .title { font-size: 13px; font-weight: 700; margin: 4px 0 2px; }
+.principle-card .desc { font-size: 11px; opacity: .8; }
+
+/* ── SECTION ── */
+.section { padding: 32px 48px; }
+.section-title {
+  font-size: 18px; font-weight: 700; color: #1A237E;
+  border-left: 4px solid #1565C0; padding-left: 12px; margin-bottom: 20px;
+}
+
+/* ── CYCLE DIAGRAM ── */
+.cycle-wrap {
+  background: #fff; border-radius: 12px; padding: 28px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  overflow-x: auto;
+}
+.cycle {
+  display: flex; align-items: flex-start; gap: 0; min-width: 900px;
+  position: relative;
+}
+.cycle-phase {
+  display: flex; flex-direction: column; align-items: center; flex: 1; position: relative;
+}
+.phase-bubble {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-weight: 700; color: #fff; position: relative; z-index: 2;
+  box-shadow: 0 3px 10px rgba(0,0,0,.2);
+}
+.phase-bubble .num { font-size: 11px; opacity: .9; }
+.phase-bubble .en  { font-size: 10px; opacity: .8; margin-top: 2px; }
+.phase-bubble .ja  { font-size: 11px; font-weight: 700; }
+.cycle-arrow {
+  flex: 0 0 28px; display: flex; align-items: center; justify-content: center;
+  margin-top: 24px; color: #90A4AE; font-size: 18px; z-index: 2;
+}
+.phase-label {
+  font-size: 10px; color: var(--muted); text-align: center;
+  margin-top: 8px; width: 80px; line-height: 1.3;
+}
+.feedback-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin-top: 16px; padding: 8px 0;
+  background: #F9FBE7; border: 1px dashed #C5E1A5; border-radius: 8px;
+  font-size: 11px; color: #558B2F; font-weight: 600;
+}
+.feedback-row .arrow-left { color: #7CB342; font-size: 14px; }
+.tech-tags {
+  display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+}
+.tech-tag {
+  background: #E8EAF6; border: 1px solid #9FA8DA; border-radius: 20px;
+  padding: 4px 12px; font-size: 11px; color: #283593; font-weight: 600;
+}
+
+/* ── SKILL BADGES ── */
+.skill-badge {
+  display: inline-block; background: #1A237E; color: #fff;
+  border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700;
+  font-family: 'Courier New', monospace; letter-spacing: .02em;
+  margin: 2px 2px 0 0; cursor: default;
+}
+.skill-badge:hover { background: #283593; }
+.skill-badges-row {
+  display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px;
+}
+.phase-skills {
+  font-size: 10px; color: var(--muted); text-align: center;
+  margin-top: 6px; width: 90px;
+}
+.phase-skills .skill-badge { font-size: 9px; padding: 1px 5px; }
+/* Skills index table */
+.skills-table {
+  width: 100%; border-collapse: collapse; background: #fff;
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+.skills-table th {
+  padding: 10px 14px; font-size: 11px; text-align: left; color: #fff;
+}
+.skills-table td {
+  padding: 8px 14px; border-bottom: 1px solid #ECEFF1;
+  font-size: 11px; vertical-align: middle;
+}
+.skills-table tr:last-child td { border-bottom: none; }
+.skills-table .group-header td {
+  font-weight: 700; font-size: 11px; letter-spacing: .06em;
+  padding: 6px 14px; border-bottom: 1px solid #ECEFF1;
+}
+.skill-name { font-family: 'Courier New', monospace; font-weight: 700; font-size: 12px; }
+.skill-phase-tag {
+  display: inline-block; border-radius: 12px; padding: 1px 8px;
+  font-size: 9px; font-weight: 700; color: #fff; white-space: nowrap;
+}
+
+/* ── SWIM LANE ── */
+.swim-wrap {
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  overflow-x: auto;
+}
+.swim-table {
+  border-collapse: collapse; width: 100%; min-width: 1100px;
+}
+/* Column widths */
+.swim-table colgroup col:first-child { width: 130px; }
+.swim-table colgroup col { width: 140px; }
+
+/* Phase row header */
+.phase-row-header {
+  color: #fff; font-weight: 700; font-size: 12px; padding: 10px 12px;
+  vertical-align: middle; writing-mode: horizontal-tb; border: none;
+}
+.phase-row-header .ph-num { font-size: 10px; opacity: .85; }
+.phase-row-header .ph-en  { font-size: 11px; opacity: .9; font-weight: 600; }
+.phase-row-header .ph-ja  { font-size: 13px; font-weight: 700; }
+
+/* Actor header row */
+.lane-header-actor {
+  background: var(--actor-head); color: #fff;
+  font-size: 11px; font-weight: 700; padding: 8px 10px;
+  text-align: center; letter-spacing: .04em;
+}
+.lane-header-system {
+  background: var(--system-head); color: #fff;
+  font-size: 11px; font-weight: 700; padding: 8px 10px;
+  text-align: center; letter-spacing: .04em;
+}
+.actor-label {
+  background: var(--actor-bg); border-right: 1px solid var(--border);
+  padding: 8px 10px; vertical-align: top;
+  font-size: 11px; font-weight: 700; color: var(--actor-head);
+  text-align: center;
+}
+.system-label {
+  background: var(--system-bg); border-right: 1px solid var(--border);
+  padding: 8px 10px; vertical-align: top;
+  font-size: 11px; font-weight: 700; color: var(--system-head);
+  text-align: center;
+}
+.actor-label .role-icon { font-size: 16px; display: block; margin-bottom: 2px; }
+.system-label .role-icon { font-size: 16px; display: block; margin-bottom: 2px; }
+
+/* Activity cell */
+.cell {
+  vertical-align: top; padding: 8px 10px;
+  border: 1px solid #ECEFF1; font-size: 11px;
+}
+.cell-actor { background: #FAFAFA; }
+.cell-system { background: #FAF5FF; }
+.cell-empty { background: #F5F5F5; color: #B0BEC5; font-size: 10px; text-align: center; vertical-align: middle; }
+.activity {
+  display: flex; align-items: flex-start; gap: 5px;
+  margin-bottom: 5px; color: #263238;
+}
+.activity:last-child { margin-bottom: 0; }
+.activity-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+}
+.activity-text { line-height: 1.4; }
+.artifact-tag {
+  display: inline-block; background: #FFF8E1; border: 1px solid #FFD54F;
+  border-radius: 4px; padding: 1px 5px; font-size: 9px;
+  color: #E65100; font-weight: 600; margin-top: 3px;
+}
+.system-tag {
+  display: inline-block; background: #EDE7F6; border: 1px solid #CE93D8;
+  border-radius: 4px; padding: 1px 5px; font-size: 9px;
+  color: #6A1B9A; font-weight: 600; margin-top: 3px;
+}
+/* section divider within table */
+.divider-row td {
+  background: linear-gradient(to right, #E8EAF6, #F3E5F5);
+  border-top: 2px solid #9FA8DA;
+  border-bottom: 2px solid #CE93D8;
+  padding: 4px 12px;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em;
+  color: #4527A0;
+}
+.divider-row td:first-child { border-radius: 0; }
+
+/* ── PHASE DETAIL CARDS ── */
+.phase-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.phase-card {
+  background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+.phase-card-head {
+  color: #fff; padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.phase-card-head .num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; flex-shrink: 0;
+}
+.phase-card-head .name { font-weight: 700; font-size: 14px; }
+.phase-card-head .name-en { font-size: 10px; opacity: .85; }
+.phase-card-body { padding: 14px 16px; }
+.detail-row { display: flex; gap: 12px; margin-bottom: 10px; }
+.detail-label {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  letter-spacing: .06em; white-space: nowrap; padding-top: 2px; min-width: 60px;
+}
+.detail-items { flex: 1; }
+.detail-item {
+  font-size: 11px; color: #37474F; margin-bottom: 3px;
+  display: flex; align-items: flex-start; gap: 5px;
+}
+.detail-item::before { content: '▸'; color: #90A4AE; flex-shrink: 0; }
+.artifact-list { display: flex; flex-wrap: wrap; gap: 5px; }
+.artifact-pill {
+  background: #FFF8E1; border: 1px solid #FFD54F;
+  border-radius: 12px; padding: 2px 8px;
+  font-size: 10px; color: #E65100; font-weight: 600;
+}
+
+/* ── ARTIFACTS TABLE ── */
+.artifacts-table {
+  width: 100%; border-collapse: collapse; background: #fff;
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+.artifacts-table th {
+  background: #1A237E; color: #fff;
+  padding: 10px 14px; font-size: 11px; text-align: left;
+}
+.artifacts-table td {
+  padding: 9px 14px; border-bottom: 1px solid #ECEFF1;
+  font-size: 11px; vertical-align: top;
+}
+.artifacts-table tr:last-child td { border-bottom: none; }
+.artifacts-table tr:nth-child(even) td { background: #FAFAFA; }
+.phase-badge {
+  display: inline-block; border-radius: 4px; padding: 2px 7px;
+  font-size: 10px; font-weight: 700; color: #fff;
+}
+
+/* ── LEGEND ── */
+.legend { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.legend-box { width: 14px; height: 14px; border-radius: 3px; }
+
+/* Helpers */
+.mt12 { margin-top: 12px; }
+.mt20 { margin-top: 20px; }
+.bg-white { background: #fff; }
+.rounded { border-radius: 10px; }
+.shadow { box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+.p16 { padding: 16px; }
+.note {
+  background: #E8F5E9; border-left: 4px solid #43A047;
+  border-radius: 0 8px 8px 0; padding: 10px 14px;
+  font-size: 11px; color: #1B5E20; margin-bottom: 16px;
+}
+
+/* Phase colors applied via class */
+.p1 { background-color: var(--c1); } .p1l { background-color: var(--c1l); }
+.p2 { background-color: var(--c2); } .p2l { background-color: var(--c2l); }
+.p3 { background-color: var(--c3); } .p3l { background-color: var(--c3l); }
+.p4 { background-color: var(--c4); } .p4l { background-color: var(--c4l); }
+.p5 { background-color: var(--c5); } .p5l { background-color: var(--c5l); }
+.p6 { background-color: var(--c6); } .p6l { background-color: var(--c6l); }
+.p7 { background-color: var(--c7); } .p7l { background-color: var(--c7l); }
+
+.d1 { background-color: var(--c1m); }
+.d2 { background-color: var(--c2m); }
+.d3 { background-color: var(--c3m); }
+.d4 { background-color: var(--c4m); }
+.d5 { background-color: var(--c5m); }
+.d6 { background-color: var(--c6m); }
+.d7 { background-color: var(--c7m); }
+
+/* Print */
+@media print {
+  body { background: #fff; font-size: 10px; }
+  .section { padding: 16px 24px; }
+  .swim-table { min-width: auto; font-size: 9px; }
+  .phase-cards { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="site-header">
+  <p style="font-size:11px;opacity:.7;letter-spacing:.1em;margin-bottom:6px;">SPEC-DRIVEN DEVELOPMENT</p>
+  <h1>仕様駆動開発（SDD）業務フロー</h1>
+  <p class="subtitle">「仕様駆動開発 実践入門 〜 AIで実現する開発方法論」に基づく、アクター別・工程別の業務フローリファレンス</p>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;">
+    <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:8px 14px;font-size:11px;">
+      <span style="opacity:.7;">対象ツール</span>
+      <span style="font-weight:700;margin-left:8px;">Claude Code CLI / GitHub Copilot / GitHub Actions</span>
+    </div>
+    <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:8px 14px;font-size:11px;">
+      <span style="opacity:.7;">対象フェーズ</span>
+      <span style="font-weight:700;margin-left:8px;">Constitution → Specify → Plan → Tasks → Implement → Verify → Operation</span>
+    </div>
+  </div>
+
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="num">原則 01</div>
+      <div class="title">生きたドキュメント</div>
+      <div class="desc">仕様書は実装と並走して継続更新する</div>
+    </div>
+    <div class="principle-card">
+      <div class="num">原則 02</div>
+      <div class="title">唯一の情報源（SSoT）</div>
+      <div class="desc">仕様書が Single Source of Truth</div>
+    </div>
+    <div class="principle-card">
+      <div class="num">原則 03</div>
+      <div class="title">変更と反復が前提</div>
+      <div class="desc">仕様は変わる。変更プロセスを設計する</div>
+    </div>
+    <div class="principle-card">
+      <div class="num">原則 04</div>
+      <div class="title">AIでコスト削減</div>
+      <div class="desc">AI活用で仕様作成・レビュー・実装を加速</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ OVERALL CYCLE ══════════ -->
+<section class="section">
+  <div class="section-title">全体サイクル — 7つの工程</div>
+
+  <div class="note">
+    ⚠️ SDDの7工程は<strong>線形ではなく反復的</strong>です。実装中に仕様の不備を発見したら前の工程に戻り、運用フェーズのフィードバックが次の企画工程を起動します。
+  </div>
+
+  <div class="cycle-wrap">
+    <div class="cycle">
+      <div class="cycle-phase">
+        <div class="phase-bubble p1">
+          <span class="num">工程 1</span>
+          <span class="ja">原則決定</span>
+          <span class="en">Constitution</span>
+        </div>
+        <div class="phase-label">プロジェクト憲章<br>用語集の制定</div>
+        <div class="phase-skills"><span class="skill-badge">/charter-create</span><br><span class="skill-badge">/charter-review</span></div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-phase">
+        <div class="phase-bubble p2">
+          <span class="num">工程 2</span>
+          <span class="ja">要件定義</span>
+          <span class="en">Specify</span>
+        </div>
+        <div class="phase-label">仕様書作成<br>GitHub Issue</div>
+        <div class="phase-skills"><span class="skill-badge">/spec-write</span><br><span class="skill-badge">/spec-review</span><br><span class="skill-badge">/spec-list</span></div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-phase">
+        <div class="phase-bubble p3">
+          <span class="num">工程 3</span>
+          <span class="ja">設計計画</span>
+          <span class="en">Plan</span>
+        </div>
+        <div class="phase-label">アーキテクチャ<br>技術スタック</div>
+        <div class="phase-skills"><span class="skill-badge">/design-create</span><br><span class="skill-badge">/design-review</span></div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-phase">
+        <div class="phase-bubble p4">
+          <span class="num">工程 4</span>
+          <span class="ja">タスク分割</span>
+          <span class="en">Tasks</span>
+        </div>
+        <div class="phase-label">1PR=80分以内<br>スプリント計画</div>
+        <div class="phase-skills"><span class="skill-badge">/tasks-plan</span><br><span class="skill-badge">/task-board</span></div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-phase">
+        <div class="phase-bubble p5">
+          <span class="num">工程 5</span>
+          <span class="ja">実装</span>
+          <span class="en">Implement</span>
+        </div>
+        <div class="phase-label">仕様書→コード<br>AI支援・PR</div>
+        <div class="phase-skills"><span class="skill-badge">/task-start</span><br><span class="skill-badge">/impl-guide</span><br><span class="skill-badge">/impl-check</span><br><span class="skill-badge">/task-done</span></div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-phase">
+        <div class="phase-bubble p6">
+          <span class="num">工程 6</span>
+          <span class="ja">検証・受入</span>
+          <span class="en">Verify</span>
+        </div>
+        <div class="phase-label">受入テスト<br>PO サインオフ</div>
+        <div class="phase-skills"><span class="skill-badge">/accept-run</span><br><span class="skill-badge">/spec-trace</span></div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-phase">
+        <div class="phase-bubble p7">
+          <span class="num">工程 7</span>
+          <span class="ja">移行・運用</span>
+          <span class="en">Operation</span>
+        </div>
+        <div class="phase-label">デプロイ・監視<br>レトロスペクティブ</div>
+        <div class="phase-skills"><span class="skill-badge">/release-prep</span><br><span class="skill-badge">/incident-handle</span><br><span class="skill-badge">/retro-run</span></div>
+      </div>
+    </div>
+
+    <div class="feedback-row mt12">
+      <span class="arrow-left">↩</span>
+      <span>運用フェーズで得たフィードバックは次サイクルの<strong>企画・要件定義工程（Specify）</strong>に引き継がれる</span>
+      <span class="arrow-left">↩</span>
+    </div>
+
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #ECEFF1;">
+      <div style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.08em;margin-bottom:8px;">3つの技術要素</div>
+      <div class="tech-tags">
+        <div class="tech-tag">📝 Markdown — 仕様記述の標準形式</div>
+        <div class="tech-tag">🔀 Git / GitHub — バージョン管理・合意形成・ワークフロー基盤</div>
+        <div class="tech-tag">🤖 Claude Code CLI / Codex — 仕様からのコード生成・レビュー支援</div>
+        <div class="tech-tag">🔒 Human-in-the-Loop — AI出力は必ず人間がレビュー・承認</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SWIM LANE ══════════ -->
+<section class="section">
+  <div class="section-title">スイムレーン — アクター別・工程別フロー</div>
+
+  <div style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-box" style="background:var(--actor-head)"></div> 人間アクター（ビジネス・開発チーム）</div>
+      <div class="legend-item"><div class="legend-box" style="background:var(--system-head)"></div> システムサポート（ツール・自動化）</div>
+      <div class="legend-item"><div class="legend-box" style="background:#FFF8E1;border:1px solid #FFD54F"></div> 主要成果物</div>
+      <div class="legend-item"><div class="legend-box" style="background:#EDE7F6;border:1px solid #CE93D8"></div> 自動チェック・ツール操作</div>
+    </div>
+  </div>
+
+  <div class="swim-wrap">
+    <table class="swim-table">
+      <colgroup>
+        <col style="width:100px"><!-- Phase -->
+        <!-- Human Actors -->
+        <col style="width:130px"><!-- Manager -->
+        <col style="width:140px"><!-- PO -->
+        <col style="width:140px"><!-- Tech Lead -->
+        <col style="width:140px"><!-- Developer -->
+        <col style="width:120px"><!-- QA -->
+        <!-- Systems -->
+        <col style="width:140px"><!-- GitHub -->
+        <col style="width:150px"><!-- Claude AI -->
+        <col style="width:130px"><!-- CI/CD -->
+      </colgroup>
+
+      <!-- Header Row -->
+      <thead>
+        <tr>
+          <th style="background:#37474F;color:#fff;padding:10px;font-size:11px;text-align:center;">工程</th>
+          <th class="lane-header-actor">👔<br>経営層<br>マネージャー</th>
+          <th class="lane-header-actor">📋<br>プロダクト<br>オーナー（PO）</th>
+          <th class="lane-header-actor">🏗️<br>テック<br>リード</th>
+          <th class="lane-header-actor">💻<br>開発者</th>
+          <th class="lane-header-actor">🧪<br>QA<br>テスター</th>
+          <th class="lane-header-system">🐙<br>GitHub</th>
+          <th class="lane-header-system">🤖<br>Claude Code CLI<br>/ AI ツール</th>
+          <th class="lane-header-system">⚙️<br>CI/CD<br>パイプライン</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- ── PHASE 1 ── -->
+        <tr>
+          <td class="phase-row-header p1" rowspan="1" style="text-align:center;border:none;">
+            <div class="ph-num">工程 1</div>
+            <div class="ph-ja">原則決定</div>
+            <div class="ph-en">Constitution</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/sdd-start</span>
+              <span class="skill-badge">/charter-create</span>
+              <span class="skill-badge">/charter-review</span>
+            </div>
+          </td>
+          <!-- Manager -->
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">ビジネス目標・スコープの共有</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">リスク・制約の提示</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">変更管理ルールの承認</div></div>
+          </td>
+          <!-- PO -->
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">Why（目的）の言語化</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">ステークホルダーの整理</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">成功の定義（KPI）設定</div></div>
+            <div class="artifact-tag">Constitution.md 草稿</div>
+          </td>
+          <!-- Tech Lead -->
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">技術的制約の定義</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">用語集（ユビキタス言語）整備</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">CODEOWNERS の初期設定</div></div>
+            <div class="artifact-tag">Constitution.md 完成</div>
+          </td>
+          <!-- Developer -->
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">参加・フィードバック提供</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">開発環境セットアップ</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">AI ツールの導入</div></div>
+          </td>
+          <!-- QA -->
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">品質基準の合意</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c1m)"></div><div class="activity-text">受入条件の原則確認</div></div>
+          </td>
+          <!-- GitHub -->
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">リポジトリ作成</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">Branch Protection 設定</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">Constitution.md の PR・レビュー・マージ</div></div>
+            <div class="system-tag">main 保護ルール有効化</div>
+          </td>
+          <!-- Claude AI -->
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">憲章の草稿生成支援</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">矛盾・漏れの検出レビュー</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">用語定義の一貫性確認</div></div>
+            <div class="system-tag">プロンプト: 5軸レビュー</div>
+          </td>
+          <!-- CI/CD -->
+          <td class="cell cell-empty">（この工程では未使用。設定のみ準備）</td>
+        </tr>
+
+        <!-- ── PHASE 2 ── -->
+        <tr>
+          <td class="phase-row-header p2" style="text-align:center;border:none;">
+            <div class="ph-num">工程 2</div>
+            <div class="ph-ja">要件定義</div>
+            <div class="ph-en">Specify</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/spec-write</span>
+              <span class="skill-badge">/spec-review</span>
+              <span class="skill-badge">/spec-list</span>
+              <span class="skill-badge">/spec-change</span>
+            </div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">優先度・リソース承認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">スコープ変更の最終判断</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">仕様書作成（Why / What / 受入基準）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">Spec ID 付与（SPEC-XXX-001）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">MoSCoW 優先度の設定</div></div>
+            <div class="artifact-tag">feature-spec.md</div>
+            <div class="artifact-tag">api-spec.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">5軸レビュー（明確性・完全性・一貫性・実装可能性・将来性）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">技術的実現可能性の確認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">ステータスを approved に更新</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">仕様書レビュー参加</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">実装可能性フィードバック</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">曖昧な点を Issue で質問</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">受入基準のテスト可能性確認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c2m)"></div><div class="activity-text">Given-When-Then 形式か確認</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">spec/ PR の作成・レビュー</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">Issue 作成・ラベル管理</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">CODEOWNERS により PO・TL へ自動レビュー依頼</div></div>
+            <div class="system-tag">spec-change ラベル</div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書の草稿・改善支援</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">受入基準を GWT 形式に変換</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書の5軸レビュー支援</div></div>
+            <div class="system-tag">プロンプト: spec_review</div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書フォーマット自動チェック</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">ステータス検証（draft/review/approved）</div></div>
+            <div class="system-tag">ci.yml: spec-check ジョブ</div>
+          </td>
+        </tr>
+
+        <!-- ── PHASE 3 ── -->
+        <tr>
+          <td class="phase-row-header p3" style="text-align:center;border:none;">
+            <div class="ph-num">工程 3</div>
+            <div class="ph-ja">設計計画</div>
+            <div class="ph-en">Plan</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/design-create</span>
+              <span class="skill-badge">/design-review</span>
+            </div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">技術スタック選択の承認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">予算・スケジュールの承認</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">設計と仕様の整合性確認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">ビジネス要件の見落とし確認</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">システムアーキテクチャ設計</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">技術スタック選択・<strong>不採用理由も記録</strong></div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">セキュリティ脅威・対策の設計</div></div>
+            <div class="artifact-tag">architecture.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">コンポーネント詳細設計</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">インターフェース・型定義</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">DB スキーマ設計</div></div>
+            <div class="artifact-tag">component-design.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">テスト戦略・方針の検討</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c3m)"></div><div class="activity-text">テスト種別（単体/結合/受入）の設計</div></div>
+            <div class="artifact-tag">test-plan.md 初版</div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">design/ PR のバージョン管理</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">アーキテクチャ図のレビュー</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">設計レビュー・トレードオフ分析</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書との整合性チェック支援</div></div>
+            <div class="system-tag">プロンプト: design_review</div>
+          </td>
+          <td class="cell cell-empty">（この工程では未使用）</td>
+        </tr>
+
+        <!-- ── PHASE 4 ── -->
+        <tr>
+          <td class="phase-row-header p4" style="text-align:center;border:none;">
+            <div class="ph-num">工程 4</div>
+            <div class="ph-ja">タスク分割</div>
+            <div class="ph-en">Tasks</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/tasks-plan</span>
+              <span class="skill-badge">/task-board</span>
+            </div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">スプリント計画の承認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">リソース配分の確定</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">バックログ優先度の最終決定</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">スコープ内外の最終確認</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">タスク粒度レビュー<br>（1タスク = 1PR = 80分以内）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">タスク依存関係の整理</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">タスクを Spec ID × Issue に紐付け分割</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">ストーリーポイント見積もり（1/2/3/5/8）</div></div>
+            <div class="artifact-tag">task-list.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">テストタスクの組み込み確認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c4m)"></div><div class="activity-text">テストカバレッジ目標の設定</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">Issue 一括作成</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">マイルストーン設定</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">Project Board へのタスク登録</div></div>
+            <div class="system-tag">GitHub Projects</div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書からタスク分割支援</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">依存関係・並列化可能性の分析</div></div>
+            <div class="system-tag">プロンプト: task_split</div>
+          </td>
+          <td class="cell cell-empty">（この工程では未使用）</td>
+        </tr>
+
+        <!-- System divider -->
+        <tr class="divider-row">
+          <td colspan="9">▼ &nbsp;&nbsp; 実装・検証・運用フェーズへ &nbsp; — &nbsp; CI/CD 自動化が本格稼働</td>
+        </tr>
+
+        <!-- ── PHASE 5 ── -->
+        <tr>
+          <td class="phase-row-header p5" style="text-align:center;border:none;">
+            <div class="ph-num">工程 5</div>
+            <div class="ph-ja">実装</div>
+            <div class="ph-en">Implement</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/task-start</span>
+              <span class="skill-badge">/impl-guide</span>
+              <span class="skill-badge">/spec-change</span>
+              <span class="skill-badge">/impl-check</span>
+              <span class="skill-badge">/task-done</span>
+            </div>
+          </td>
+          <td class="cell cell-empty">（通常は関与なし）</td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">仕様疑問への即時回答</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">仕様変更判断（spec-change）</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">コードレビュー（アーキテクチャ遵守）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">セキュリティレビュー</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">AI生成コードの最終確認</div></div>
+          </td>
+          <td class="cell cell-actor" style="background:#F1F8E9;">
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text"><strong>① 仕様書（approved）を読む</strong></div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text"><strong>② コーディング（AI支援）</strong></div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text"><strong>③ テスト作成・実行</strong></div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text"><strong>④ PR 作成（仕様書リンク記載）</strong></div></div>
+            <div class="artifact-tag">実装コード + テスト</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">テストコードのレビュー</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c5m)"></div><div class="activity-text">テストカバレッジの確認</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">feat/ ブランチ管理</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">PR 作成・CODEOWNERS 自動レビュー依頼</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">レビュー → 承認 → マージ</div></div>
+            <div class="system-tag">feat/[#]-[name]</div>
+          </td>
+          <td class="cell cell-system" style="background:#EDE7F6;">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書読み込み→コード生成</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">コードレビュー・改善提案</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">テストコード自動生成</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">リファクタリング支援</div></div>
+            <div class="system-tag">★ 最も活用される工程</div>
+          </td>
+          <td class="cell cell-system" style="background:#EDE7F6;">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">自動テスト実行</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">仕様書フォーマットチェック</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">リントチェック・ビルド</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">テスト通過が必須（PR ブロック）</div></div>
+            <div class="system-tag">ci.yml: test / build</div>
+          </td>
+        </tr>
+
+        <!-- ── PHASE 6 ── -->
+        <tr>
+          <td class="phase-row-header p6" style="text-align:center;border:none;">
+            <div class="ph-num">工程 6</div>
+            <div class="ph-ja">検証・受入</div>
+            <div class="ph-en">Verify</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/accept-run</span>
+              <span class="skill-badge">/spec-trace</span>
+            </div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">リリース判断（Go / No-Go）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">ビジネスリスクの最終確認</div></div>
+          </td>
+          <td class="cell cell-actor" style="background:#E3F2FD;">
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">受入確認の実施</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text"><strong>サインオフ（acceptance-checklist.md）</strong></div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">仕様書ステータスを更新</div></div>
+            <div class="artifact-tag">acceptance-checklist.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">最終技術レビュー</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">セキュリティ・パフォーマンス確認</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">発覚バグの修正</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">仕様との差異の対応</div></div>
+          </td>
+          <td class="cell cell-actor" style="background:#E3F2FD;">
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">受入テスト実施・結果記録</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">仕様との不一致を bug Issue 登録</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c6m)"></div><div class="activity-text">リグレッションテスト実施</div></div>
+            <div class="artifact-tag">テスト結果レポート</div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">PR マージ</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">リリースタグ付け（v1.0.0）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">マイルストーン完了</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">テストケース生成支援</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">バグの原因分析支援</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">受入テスト自動実行</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">テストカバレッジ測定・レポート</div></div>
+            <div class="system-tag">ci.yml: acceptance</div>
+          </td>
+        </tr>
+
+        <!-- ── PHASE 7 ── -->
+        <tr>
+          <td class="phase-row-header p7" style="text-align:center;border:none;">
+            <div class="ph-num">工程 7</div>
+            <div class="ph-ja">移行・運用</div>
+            <div class="ph-en">Operation</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:center;">
+              <span class="skill-badge">/release-prep</span>
+              <span class="skill-badge">/incident-handle</span>
+              <span class="skill-badge">/retro-run</span>
+            </div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">リリース承認・KPI 確認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">次サイクルの優先度判断</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">リリースノートの確認</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">ユーザーフィードバック収集</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">次サイクルの仕様書改善提案</div></div>
+            <div class="artifact-tag">release-notes.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">運用設計・モニタリング設定</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">障害対応リード（P1〜P4）</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">アクセス権限棚卸し（四半期）</div></div>
+            <div class="artifact-tag">operation-runbook.md</div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">本番デプロイの実施</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">障害対応・ロールバック</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">仕様書を運用結果で更新</div></div>
+          </td>
+          <td class="cell cell-actor">
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">本番確認テスト</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--c7m)"></div><div class="activity-text">不具合監視・報告</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">リリースタグ・マイルストーン完了</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">次サイクルの Issue 作成</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">Dependabot によるセキュリティ更新</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">障害原因分析の支援</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">次サイクル仕様書改善提案</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">レトロスペクティブ支援</div></div>
+          </td>
+          <td class="cell cell-system">
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">本番デプロイ自動化</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">監視アラート</div></div>
+            <div class="activity"><div class="activity-dot" style="background:var(--system-head)"></div><div class="activity-text">ロールバック対応</div></div>
+            <div class="system-tag">Deploy to Production</div>
+          </td>
+        </tr>
+
+        <!-- Feedback -->
+        <tr>
+          <td colspan="9" style="background:#F9FBE7;border-top:2px dashed #C5E1A5;padding:10px 16px;font-size:11px;color:#558B2F;">
+            <strong>↩ フィードバックループ</strong> — 工程7（運用）で得た学びは次サイクルの工程2（要件定義）へ引き継がれます。
+            レトロスペクティブ（retrospective.md）のアクションアイテムを次スプリントの仕様書改善 Issue として登録してください。
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════ PHASE DETAIL CARDS ══════════ -->
+<section class="section">
+  <div class="section-title">各工程の詳細 — 入口・成果物・出口</div>
+  <div class="phase-cards">
+
+    <!-- Phase 1 -->
+    <div class="phase-card">
+      <div class="phase-card-head p1">
+        <div class="num">1</div>
+        <div><div class="name">原則決定工程</div><div class="name-en">Constitution</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div class="detail-row">
+          <div class="detail-label">入口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">プロジェクト開始の意思決定がある</div>
+            <div class="detail-item">主要ステークホルダーが揃っている</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">主な活動</div>
+          <div class="detail-items">
+            <div class="detail-item">プロジェクト憲章（Constitution.md）の作成</div>
+            <div class="detail-item">目的・スコープ・制約の明文化</div>
+            <div class="detail-item">用語集（ユビキタス言語）の制定</div>
+            <div class="detail-item">変更管理ルールの合意</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">成果物</div>
+          <div class="detail-items">
+            <div class="artifact-list">
+              <div class="artifact-pill">.constitution/Constitution.md</div>
+              <div class="artifact-pill">CODEOWNERS（初版）</div>
+              <div class="artifact-pill">GitHub 設定完了</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">出口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">チーム全員が Constitution.md に合意・署名</div>
+            <div class="detail-item">main ブランチが保護されている</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-card">
+      <div class="phase-card-head p2">
+        <div class="num">2</div>
+        <div><div class="name">企画・要件定義工程</div><div class="name-en">Specify</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div class="detail-row">
+          <div class="detail-label">入口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">Constitution.md が approved 状態</div>
+            <div class="detail-item">開発する機能の優先度が決まっている</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">主な活動</div>
+          <div class="detail-items">
+            <div class="detail-item">機能仕様書の作成（Why / What / 受入基準）</div>
+            <div class="detail-item">Spec ID の付与（SPEC-XXX-001）</div>
+            <div class="detail-item">5軸レビュー（明確性・完全性・一貫性・実装可能性・将来性）</div>
+            <div class="detail-item">AI による草稿支援・受入基準の GWT 変換</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">成果物</div>
+          <div class="detail-items">
+            <div class="artifact-list">
+              <div class="artifact-pill">docs/spec/feature-spec.md</div>
+              <div class="artifact-pill">docs/spec/api-spec.md</div>
+              <div class="artifact-pill">GitHub Issues</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">出口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">仕様書ステータスが <code>approved</code></div>
+            <div class="detail-item">全受入基準がテスト可能な形式で記述</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-card">
+      <div class="phase-card-head p3">
+        <div class="num">3</div>
+        <div><div class="name">設計計画工程</div><div class="name-en">Plan</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div class="detail-row">
+          <div class="detail-label">入口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">仕様書が approved 状態</div>
+            <div class="detail-item">チームのスキルセットが確認済み</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">主な活動</div>
+          <div class="detail-items">
+            <div class="detail-item">システムアーキテクチャの設計</div>
+            <div class="detail-item">技術スタック選択（採用・不採用の理由を記録）</div>
+            <div class="detail-item">コンポーネント設計・DB スキーマ</div>
+            <div class="detail-item">セキュリティ脅威と対策の設計</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">成果物</div>
+          <div class="detail-items">
+            <div class="artifact-list">
+              <div class="artifact-pill">docs/design/architecture.md</div>
+              <div class="artifact-pill">docs/design/component-design.md</div>
+              <div class="artifact-pill">test-plan.md（初版）</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">出口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">仕様書の全要件が設計に反映されている</div>
+            <div class="detail-item">テックリードが設計を承認</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-card">
+      <div class="phase-card-head p4">
+        <div class="num">4</div>
+        <div><div class="name">タスク分割工程</div><div class="name-en">Tasks</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div class="detail-row">
+          <div class="detail-label">入口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">設計ドキュメントが承認済み</div>
+            <div class="detail-item">スプリントのゴールが設定済み</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">主な活動</div>
+          <div class="detail-items">
+            <div class="detail-item">仕様書 × 設計書からタスクを導出</div>
+            <div class="detail-item">1タスク = 1PR = レビュー80分以内の粒度に分割</div>
+            <div class="detail-item">Spec ID × Issue 番号での紐付け</div>
+            <div class="detail-item">ストーリーポイント見積もり（1/2/3/5/8）</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">成果物</div>
+          <div class="detail-items">
+            <div class="artifact-list">
+              <div class="artifact-pill">tasks/task-list.md</div>
+              <div class="artifact-pill">GitHub Issues（全タスク）</div>
+              <div class="artifact-pill">マイルストーン</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">出口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">全タスクに Spec ID と担当者が設定済み</div>
+            <div class="detail-item">スプリント総ポイントが許容範囲内</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase-card">
+      <div class="phase-card-head p5">
+        <div class="num">5</div>
+        <div><div class="name">実装工程</div><div class="name-en">Implement</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div class="detail-row">
+          <div class="detail-label">入口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">対象タスクに紐付く仕様書が <code>approved</code></div>
+            <div class="detail-item">設計ドキュメントが参照可能</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">主な活動</div>
+          <div class="detail-items">
+            <div class="detail-item">仕様書を読んでからコーディング開始（必須）</div>
+            <div class="detail-item">Claude Code CLI で仕様書読み込み→コード生成</div>
+            <div class="detail-item">テストと実装をセットでコミット</div>
+            <div class="detail-item">PR 作成（仕様書リンク必須）→ CI 自動チェック → レビュー → マージ</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">成果物</div>
+          <div class="detail-items">
+            <div class="artifact-list">
+              <div class="artifact-pill">実装コード（PR マージ済み）</div>
+              <div class="artifact-pill">テストコード</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">出口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">全受入基準に対応するテストが通過</div>
+            <div class="detail-item">テックリードのコードレビュー承認</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="phase-card">
+      <div class="phase-card-head p6">
+        <div class="num">6</div>
+        <div><div class="name">検証・受入工程</div><div class="name-en">Verify / Accept</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div class="detail-row">
+          <div class="detail-label">入口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">スプリントの全タスクが実装完了</div>
+            <div class="detail-item">CI が全通過</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">主な活動</div>
+          <div class="detail-items">
+            <div class="detail-item">受入チェックリスト（仕様書の受入基準を転記）の実施</div>
+            <div class="detail-item">PO による受入確認・サインオフ</div>
+            <div class="detail-item">仕様との不一致は bug Issue として登録</div>
+            <div class="detail-item">リグレッションテスト実施</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">成果物</div>
+          <div class="detail-items">
+            <div class="artifact-list">
+              <div class="artifact-pill">acceptance-checklist.md</div>
+              <div class="artifact-pill">テスト結果レポート</div>
+              <div class="artifact-pill">リリースタグ</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">出口条件</div>
+          <div class="detail-items">
+            <div class="detail-item">PO のサインオフ完了</div>
+            <div class="detail-item">High 以上のバグが 0 件</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 7 -->
+    <div class="phase-card" style="grid-column: span 2;">
+      <div class="phase-card-head p7">
+        <div class="num">7</div>
+        <div><div class="name">移行・運用工程</div><div class="name-en">Migration / Operation</div></div>
+      </div>
+      <div class="phase-card-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div>
+            <div class="detail-row">
+              <div class="detail-label">入口条件</div>
+              <div class="detail-items">
+                <div class="detail-item">PO のサインオフ完了</div>
+                <div class="detail-item">本番デプロイ準備完了（運用ランブック作成済み）</div>
+              </div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">主な活動</div>
+              <div class="detail-items">
+                <div class="detail-item">本番デプロイ・動作確認</div>
+                <div class="detail-item">監視・アラート設定の確認</div>
+                <div class="detail-item">リリースノートの公開</div>
+                <div class="detail-item">障害対応（P1〜P4 定義に従う）</div>
+                <div class="detail-item">スプリントレトロスペクティブ（KPT）</div>
+                <div class="detail-item">次サイクルへのフィードバック記録</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="detail-row">
+              <div class="detail-label">成果物</div>
+              <div class="detail-items">
+                <div class="artifact-list">
+                  <div class="artifact-pill">operation-runbook.md</div>
+                  <div class="artifact-pill">release-notes.md</div>
+                  <div class="artifact-pill">retrospective.md</div>
+                  <div class="artifact-pill">次サイクル Issues</div>
+                </div>
+              </div>
+            </div>
+            <div class="detail-row" style="margin-top:12px;">
+              <div class="detail-label">出口条件</div>
+              <div class="detail-items">
+                <div class="detail-item">本番サービスが安定稼働している</div>
+                <div class="detail-item">レトロスペクティブのアクションアイテムが設定済み</div>
+                <div class="detail-item">次サイクルのフィードバックが Issue 化されている</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /phase-cards -->
+</section>
+
+<!-- ══════════ ARTIFACTS TABLE ══════════ -->
+<section class="section">
+  <div class="section-title">成果物リファレンス</div>
+  <table class="artifacts-table">
+    <thead>
+      <tr>
+        <th style="width:180px;">成果物</th>
+        <th style="width:80px;">工程</th>
+        <th style="width:100px;">作成者</th>
+        <th>用途・説明</th>
+        <th style="width:200px;">ファイルパス（テンプレート）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Constitution.md</strong></td>
+        <td><span class="phase-badge p1">工程1</span></td>
+        <td>PO + TL</td>
+        <td>プロジェクト憲章。全工程の判断基準。変更には全ステークホルダーの承認が必要。</td>
+        <td><code>.constitution/Constitution.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>機能仕様書</strong></td>
+        <td><span class="phase-badge p2">工程2</span></td>
+        <td>PO</td>
+        <td>Why / What / 受入基準（GWT形式）を記述。Spec ID で管理。実装の唯一の情報源。</td>
+        <td><code>docs/spec/feature-spec.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>API 仕様書</strong></td>
+        <td><span class="phase-badge p2">工程2</span></td>
+        <td>PO + TL</td>
+        <td>エンドポイント・リクエスト・レスポンス・エラー形式の定義。</td>
+        <td><code>docs/spec/api-spec.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>アーキテクチャ設計書</strong></td>
+        <td><span class="phase-badge p3">工程3</span></td>
+        <td>TL</td>
+        <td>システム構成・技術スタック・不採用技術の理由・セキュリティ設計を記録。</td>
+        <td><code>docs/design/architecture.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>タスク一覧</strong></td>
+        <td><span class="phase-badge p4">工程4</span></td>
+        <td>Developer + TL</td>
+        <td>Spec ID × Issue 番号で紐付けたタスク。1タスク=1PR=80分以内が原則。</td>
+        <td><code>tasks/task-list.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>CLAUDE.md</strong></td>
+        <td><span class="phase-badge p5">工程5</span></td>
+        <td>TL</td>
+        <td>Claude Code CLI への指示。仕様書の場所・コーディングルール・ブランチ規則を定義。</td>
+        <td><code>CLAUDE.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>受入チェックリスト</strong></td>
+        <td><span class="phase-badge p6">工程6</span></td>
+        <td>QA + PO</td>
+        <td>仕様書の受入基準を転記してテスト実施。PO のサインオフ欄あり。</td>
+        <td><code>docs/guides/acceptance-checklist.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>運用ランブック</strong></td>
+        <td><span class="phase-badge p7">工程7</span></td>
+        <td>TL + Developer</td>
+        <td>P1〜P4 アラートレベル定義・障害対応フロー・定期メンテナンス手順。</td>
+        <td><code>docs/guides/operation-runbook.md</code></td>
+      </tr>
+      <tr>
+        <td><strong>レトロスペクティブ</strong></td>
+        <td><span class="phase-badge p7">工程7</span></td>
+        <td>全員</td>
+        <td>KPT 形式でスプリントを振り返り、次サイクルへのフィードバックを記録。</td>
+        <td><code>docs/guides/retrospective.md</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════ KEY RULES ══════════ -->
+<section class="section">
+  <div class="section-title">重要ルール — Human-in-the-Loop</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+    <div class="bg-white rounded shadow p16" style="border-top:3px solid var(--c5);">
+      <div style="font-weight:700;font-size:13px;color:var(--c5);margin-bottom:8px;">🤖 AI は道具、判断は人間</div>
+      <div style="font-size:11px;color:#546E7A;line-height:1.6;">
+        Claude Code が生成したコード・仕様書草稿は、<strong>必ず人間がレビューしてから</strong>使用する。
+        AI の出力をそのまま PR にマージしてはならない。最終責任は人間が負う。
+      </div>
+    </div>
+    <div class="bg-white rounded shadow p16" style="border-top:3px solid var(--c2);">
+      <div style="font-weight:700;font-size:13px;color:var(--c2);margin-bottom:8px;">📋 仕様書なしの実装禁止</div>
+      <div style="font-size:11px;color:#546E7A;line-height:1.6;">
+        仕様書のステータスが <code>approved</code> になる前にコーディングを開始してはならない。
+        仕様の不備を発見した場合、勝手に解釈せず Issue で報告してオーナーの判断を待つ。
+      </div>
+    </div>
+    <div class="bg-white rounded shadow p16" style="border-top:3px solid var(--c4);">
+      <div style="font-weight:700;font-size:13px;color:var(--c4);margin-bottom:8px;">🔄 仕様変更はコードより先に</div>
+      <div style="font-size:11px;color:#546E7A;line-height:1.6;">
+        実装中に仕様変更が必要になった場合、<strong>まず仕様書を更新（PR → レビュー → マージ）</strong>し、
+        その後でコードを変更する。コードが仕様書に先行してはならない。
+      </div>
+    </div>
+    <div class="bg-white rounded shadow p16" style="border-top:3px solid var(--c6);">
+      <div style="font-weight:700;font-size:13px;color:var(--c6);margin-bottom:8px;">🌀 工程は反復する</div>
+      <div style="font-size:11px;color:#546E7A;line-height:1.6;">
+        7工程は1度きりの直線ではない。実装中の発見が設計工程への差し戻しを生み、
+        運用のフィードバックが次の企画工程を起動する。反復を恐れず、早期に前の工程に戻る。
+      </div>
+    </div>
+    <div class="bg-white rounded shadow p16" style="border-top:3px solid var(--c7);">
+      <div style="font-weight:700;font-size:13px;color:var(--c7);margin-bottom:8px;">📏 1タスク = 1PR = 80分</div>
+      <div style="font-size:11px;color:#546E7A;line-height:1.6;">
+        タスクはレビュアーが80分以内でレビューできる粒度に分割する。
+        大きすぎるPRはレビュー品質を下げる。細かく分割してレビューサイクルを高速化する。
+      </div>
+    </div>
+    <div class="bg-white rounded shadow p16" style="border-top:3px solid var(--c3);">
+      <div style="font-weight:700;font-size:13px;color:var(--c3);margin-bottom:8px;">🏛️ Constitution が最高権威</div>
+      <div style="font-size:11px;color:#546E7A;line-height:1.6;">
+        全ての仕様書・設計・実装は Constitution.md の原則に従う。
+        Constitution.md の変更は最も厳格なレビューを要し、全ステークホルダーの承認が必要。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SKILLS INDEX ══════════ -->
+<section class="section">
+  <div class="section-title">スキルインデックス — 29スキル完全リスト</div>
+
+  <div class="note">
+    スキルは <code>.claude/skills/[スキル名]/SKILL.md</code> に定義されています。
+    Claude Code で <code>/[スキル名]</code> と入力して実行します。
+    <strong>/sdd-skills</strong> でこの一覧をいつでも確認できます。
+  </div>
+
+  <table class="skills-table">
+    <thead>
+      <tr>
+        <th style="background:#1A237E;width:200px;">スキル名</th>
+        <th style="background:#1A237E;width:80px;">工程</th>
+        <th style="background:#1A237E;">使う場面・目的</th>
+        <th style="background:#1A237E;width:120px;">対話型</th>
+        <th style="background:#1A237E;width:160px;">主な出力</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 導入 -->
+      <tr class="group-header"><td colspan="5" style="background:#E8EAF6;color:#1A237E;">🚀 導入・共通</td></tr>
+      <tr>
+        <td><span class="skill-name">/sdd-start</span></td>
+        <td><span class="skill-phase-tag" style="background:#37474F;">全体</span></td>
+        <td>新プロジェクトへのSDD導入ウィザード。最初の一回だけ実行する。</td>
+        <td>✅ 対話型（プロジェクト情報収集）</td>
+        <td>Constitution.md, CLAUDE.md</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/sdd-health</span></td>
+        <td><span class="skill-phase-tag" style="background:#37474F;">全体</span></td>
+        <td>SDD遵守状況の健全性チェック。スコア付きで問題点を診断する。</td>
+        <td>自動診断</td>
+        <td>健全性レポート（100点満点）</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/sdd-skills</span></td>
+        <td><span class="skill-phase-tag" style="background:#37474F;">全体</span></td>
+        <td>スキル一覧と使い方を表示する。困ったときのクイックリファレンス。</td>
+        <td>一覧表示</td>
+        <td>スキル一覧・推奨アクション</td>
+      </tr>
+      <!-- 工程1 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c1l);color:var(--c1);">工程1: 原則決定（Constitution）</td></tr>
+      <tr>
+        <td><span class="skill-name">/charter-create</span></td>
+        <td><span class="skill-phase-tag p1">工程1</span></td>
+        <td>Constitution.md を対話型で一項目ずつ作成する。</td>
+        <td>✅ 完全対話型（5セクション）</td>
+        <td>.constitution/Constitution.md</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/charter-review</span></td>
+        <td><span class="skill-phase-tag p1">工程1</span></td>
+        <td>Constitution.md を5観点（完全性・明確性・一貫性・実行可能性・将来性）でレビューする。</td>
+        <td>自動レビュー + 修正支援</td>
+        <td>レビューレポート・改善提案</td>
+      </tr>
+      <!-- 工程2 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c2l);color:var(--c2);">工程2: 企画・要件定義（Specify）</td></tr>
+      <tr>
+        <td><span class="skill-name">/spec-write</span></td>
+        <td><span class="skill-phase-tag p2">工程2</span></td>
+        <td>仕様書をWhy→What→受入基準の順に対話型で作成する。コーディング前に必ず実行。</td>
+        <td>✅ 完全対話型</td>
+        <td>docs/spec/[spec-id]-[name].md</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/spec-review</span></td>
+        <td><span class="skill-phase-tag p2">工程2</span></td>
+        <td>仕様書を5軸（明確性・完全性・一貫性・実装可能性・将来性）でレビューする。</td>
+        <td>自動レビュー + 修正支援</td>
+        <td>5軸レビューレポート・改善案</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/spec-list</span></td>
+        <td><span class="skill-phase-tag p2">工程2</span></td>
+        <td>全仕様書のステータス一覧を表示する。実装可能な仕様書を探すときにも使う。</td>
+        <td>自動収集・表示</td>
+        <td>ステータス別仕様書一覧</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/spec-change</span></td>
+        <td><span class="skill-phase-tag p2">工程2</span> <span class="skill-phase-tag p5">工程5</span></td>
+        <td>実装中に仕様変更が必要になったとき。コードより先に仕様書を更新する。</td>
+        <td>✅ 対話型（変更内容・影響分析）</td>
+        <td>spec/ PR + GitHub Issue</td>
+      </tr>
+      <!-- 工程3 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c3l);color:var(--c3);">工程3: 設計計画（Plan）</td></tr>
+      <tr>
+        <td><span class="skill-name">/design-create</span></td>
+        <td><span class="skill-phase-tag p3">工程3</span></td>
+        <td>アーキテクチャ・コンポーネント設計書を仕様書から対話型で作成する。</td>
+        <td>✅ 対話型（技術選定・構成確認）</td>
+        <td>architecture.md, component-design.md</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/design-review</span></td>
+        <td><span class="skill-phase-tag p3">工程3</span></td>
+        <td>設計書が仕様書の全要件を満たしているか確認する。実装前の最終チェック。</td>
+        <td>自動照合 + 修正支援</td>
+        <td>要件カバレッジレポート</td>
+      </tr>
+      <!-- 工程4 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c4l);color:var(--c4);">工程4: タスク分割（Tasks）</td></tr>
+      <tr>
+        <td><span class="skill-name">/tasks-plan</span></td>
+        <td><span class="skill-phase-tag p4">工程4</span></td>
+        <td>承認済み仕様書から「1タスク=1PR=80分以内」の粒度でタスク分割する。</td>
+        <td>✅ 対話型（担当・SP見積もり）</td>
+        <td>tasks/task-list.md + GitHub Issues</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/task-board</span></td>
+        <td><span class="skill-phase-tag p4">工程4</span> <span class="skill-phase-tag p5">工程5</span></td>
+        <td>タスクの進捗・ブロッカー・バーンダウンを確認する。朝会・進捗確認に使う。</td>
+        <td>自動表示（ブロック時に対話）</td>
+        <td>タスクボード + バーンダウン</td>
+      </tr>
+      <!-- 工程5 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c5l);color:var(--c5);">工程5: 実装（Implement）</td></tr>
+      <tr>
+        <td><span class="skill-name">/task-start</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span></td>
+        <td>タスクを選んでブランチを作成し、仕様書・受入基準を読み込んだ状態で実装を開始する。</td>
+        <td>✅ 対話型（タスク選択）</td>
+        <td>feature/ブランチ + コンテキストサマリー</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/impl-guide</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span></td>
+        <td>現在のタスクの仕様書・設計書・コーディングルールを読み込み、実装ガイダンスを提供する。</td>
+        <td>✅ 対話型（実装支援）</td>
+        <td>実装ガイダンス + コード生成支援</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/impl-check</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span></td>
+        <td>実装が受入基準をすべて満たしているか、仕様書外の実装がないかを確認する。</td>
+        <td>自動照合 + 修正支援</td>
+        <td>受入基準 vs 実装チェック表</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/task-done</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span></td>
+        <td>タスク完了後のPR作成・受入基準確認・レビュアー設定を一括で行う。</td>
+        <td>✅ 対話型（確認 + PR作成）</td>
+        <td>GitHub PR + タスクステータス更新</td>
+      </tr>
+      <!-- テスト自動化（5→6ブリッジ） -->
+      <tr class="group-header"><td colspan="5" style="background:#E8EAF6;color:#283593;">🧪 テスト自動化（工程5 → 工程6 ブリッジ）</td></tr>
+      <tr>
+        <td><span class="skill-name">/test-write</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span> <span class="skill-phase-tag p6">工程6</span></td>
+        <td>仕様書の受入基準（GWT形式）から Playwright E2E テストコードを自動生成する。Spec-as-Test の中核。</td>
+        <td>自動生成 + TODO 注記</td>
+        <td>tests/e2e/spec-xxx.spec.ts</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/test-run</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span> <span class="skill-phase-tag p6">工程6</span></td>
+        <td>Playwright テストを実行し、失敗したテストの原因を仕様書の AC と紐付けて分析する。</td>
+        <td>✅ 対話型（失敗分析）</td>
+        <td>テスト結果 + 失敗分析レポート</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/test-report</span></td>
+        <td><span class="skill-phase-tag p5">工程5</span> <span class="skill-phase-tag p6">工程6</span></td>
+        <td>テスト結果を仕様書の受入基準に反映し、PO レビュー用の正式レポートを生成する。</td>
+        <td>自動生成（PR コメント可）</td>
+        <td>docs/guides/test-report.md + spec 更新</td>
+      </tr>
+      <!-- 工程6 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c6l);color:var(--c6);">工程6: 検証・受入（Verify）</td></tr>
+      <tr>
+        <td><span class="skill-name">/accept-run</span></td>
+        <td><span class="skill-phase-tag p6">工程6</span></td>
+        <td>仕様書の受入基準に基づいてテストを実施し、POサインオフを取得する。</td>
+        <td>✅ 完全対話型（基準ごとに確認）</td>
+        <td>acceptance-checklist.md + POサインオフ</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/spec-trace</span></td>
+        <td><span class="skill-phase-tag p6">工程6</span></td>
+        <td>仕様書の全要件がコードに実装されているか、逆方向も含めて確認する。</td>
+        <td>自動照合</td>
+        <td>トレーサビリティレポート</td>
+      </tr>
+      <!-- 工程7 -->
+      <tr class="group-header"><td colspan="5" style="background:var(--c7l);color:var(--c7);">工程7: 移行・運用（Operation）</td></tr>
+      <tr>
+        <td><span class="skill-name">/release-prep</span></td>
+        <td><span class="skill-phase-tag p7">工程7</span></td>
+        <td>リリースノートの生成・デプロイチェックリスト・Gitタグ作成を実施する。</td>
+        <td>✅ 対話型（バージョン確認 + チェック）</td>
+        <td>release-notes.md + GitHub Release</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/incident-handle</span></td>
+        <td><span class="skill-phase-tag p7">工程7</span></td>
+        <td>本番障害発生時にP1〜P4分類・初動対応・インシデントレポート作成をガイドする。</td>
+        <td>✅ 完全対話型（症状確認 → 対応）</td>
+        <td>インシデントレポート</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/retro-run</span></td>
+        <td><span class="skill-phase-tag p7">工程7</span></td>
+        <td>KPT形式のレトロスペクティブを実施し、次サイクルへのフィードバックを記録する。</td>
+        <td>✅ 完全対話型（KPT収集）</td>
+        <td>retrospective.md + アクションIssues</td>
+      </tr>
+      <!-- PM ツール -->
+      <tr class="group-header"><td colspan="5" style="background:#E0F2F1;color:#00695C;">🖥️ PM ツール（Web プロジェクト管理）</td></tr>
+      <tr>
+        <td><span class="skill-name">/pm-setup</span></td>
+        <td><span class="skill-phase-tag" style="background:#00695C;">PM</span></td>
+        <td>SDD PM ツール（tools/pm/index.html）の初期設定ウィザード。プロジェクト情報・メンバーを設定する。</td>
+        <td>✅ 対話型（設定収集）</td>
+        <td>localStorage 初期データ</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/sprint-start</span></td>
+        <td><span class="skill-phase-tag" style="background:#00695C;">PM</span></td>
+        <td>新スプリントを対話型で開始する。ゴール設定・タスク選択・SP見積もりを行う。</td>
+        <td>✅ 完全対話型</td>
+        <td>PM ツール スプリントレコード</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/sprint-end</span></td>
+        <td><span class="skill-phase-tag" style="background:#00695C;">PM</span></td>
+        <td>スプリント完了処理とふりかえりへの引継ぎを行う。velocity 記録・未完了タスク処理・/retro-run 連携。</td>
+        <td>✅ 対話型（完了確認）</td>
+        <td>PM ツール スプリント完了 + retro 連携</td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">/pm-sync</span></td>
+        <td><span class="skill-phase-tag" style="background:#00695C;">PM</span></td>
+        <td>PM ツール（ブラウザ）↔ プロジェクトファイルの双方向同期。仕様書ステータス照合・task-list.md 再生成。</td>
+        <td>✅ 対話型（差分確認）</td>
+        <td>tasks/task-list.md・tasks/pm-data.json 更新</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px;background:#fff;border-radius:10px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.07);">
+    <div style="font-weight:700;font-size:13px;color:#1A237E;margin-bottom:10px;">📁 スキルのファイル構成</div>
+    <div style="font-family:'Courier New',monospace;font-size:11px;color:#37474F;line-height:1.8;background:#F5F7FA;border-radius:6px;padding:12px 16px;">
+      .claude/skills/<br>
+      ├── sdd-start/<br>
+      │   └── SKILL.md<br>
+      ├── charter-create/<br>
+      │   └── SKILL.md<br>
+      ├── spec-write/<br>
+      │   └── SKILL.md<br>
+      ├── ... （全29スキル）<br>
+      ├── pm-setup/<br>
+      │   └── SKILL.md<br>
+      ├── sprint-start/<br>
+      │   └── SKILL.md<br>
+      └── sprint-end/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── SKILL.md
+    </div>
+    <div style="font-size:11px;color:#546E7A;margin-top:8px;">
+      テンプレートパス: <code>templates/.claude/skills/</code> — 新プロジェクトへのコピー後すぐに使えます
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer style="background:#263238;color:#90A4AE;padding:20px 48px;font-size:10px;display:flex;justify-content:space-between;align-items:center;">
+  <div>仕様駆動開発ハーネス（SDD Harness）&nbsp;—&nbsp;「仕様駆動開発 実践入門」に基づくテンプレート集</div>
+  <div>スキルパス: <code style="color:#80CBC4;">templates/.claude/skills/</code> &nbsp;|&nbsp; スキル一覧: <code style="color:#80CBC4;">/sdd-skills</code> &nbsp;|&nbsp; 導入ガイド: <code style="color:#80CBC4;">docs/guides/onboarding-roadmap.md</code></div>
+</footer>
+
+</body>
+</html>
