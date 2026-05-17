@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TeckTalentManagement.Application.Goals;
+using TeckTalentManagement.Application.SelfEvaluations;
 using TeckTalentManagement.Infrastructure.Persistence;
 using TeckTalentManagement.Infrastructure.Persistence.Repositories;
 
@@ -10,6 +11,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IGoalRepository, GoalRepository>();
 builder.Services.AddScoped<IGoalService, GoalService>();
+builder.Services.AddScoped<ISelfEvaluationRepository, SelfEvaluationRepository>();
+builder.Services.AddScoped<ISelfEvaluationService, SelfEvaluationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
