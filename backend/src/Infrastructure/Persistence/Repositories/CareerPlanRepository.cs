@@ -52,4 +52,14 @@ public class CareerPlanRepository(AppDbContext db) : ICareerPlanRepository
             .ThenBy(g => g.DisplayOrder)
             .ToListAsync(ct);
     }
+
+    public async Task<IReadOnlyList<CareerPlanComment>> GetCommentsAsync(Guid careerPlanId, CancellationToken ct) =>
+        await db.CareerPlanComments
+            .Include(c => c.Author)
+            .Where(c => c.CareerPlanId == careerPlanId)
+            .OrderBy(c => c.CreatedAt)
+            .ToListAsync(ct);
+
+    public async Task AddCommentAsync(CareerPlanComment comment, CancellationToken ct) =>
+        await db.CareerPlanComments.AddAsync(comment, ct);
 }

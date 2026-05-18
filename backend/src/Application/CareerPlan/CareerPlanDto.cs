@@ -38,3 +38,14 @@ public record IntegratedViewDto(
     IReadOnlyList<IntegratedViewSkillDto> Can,
     IReadOnlyList<IntegratedViewGoalDto> Must
 );
+
+public record CareerPlanCommentDto(
+    Guid Id,
+    Guid CareerPlanId,
+    Guid AuthorId,
+    string AuthorName,
+    string Content,
+    DateTimeOffset CreatedAt
+);
+
+public record AddCommentRequest(string Content);

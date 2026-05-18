@@ -10,6 +10,8 @@ public interface ICareerPlanService
     Task<Result<CareerPlanDto>> CreateAsync(Guid requesterId, Guid userId, SaveCareerPlanRequest req, CancellationToken ct = default);
     Task<Result<CareerPlanDto>> UpdateAsync(Guid requesterId, Guid careerPlanId, SaveCareerPlanRequest req, CancellationToken ct = default);
     Task<Result<IntegratedViewDto>> GetIntegratedViewAsync(Guid requesterId, Guid userId, CancellationToken ct = default);
+    Task<Result<IReadOnlyList<CareerPlanCommentDto>>> GetCommentsAsync(Guid requesterId, Guid careerPlanId, CancellationToken ct = default);
+    Task<Result<CareerPlanCommentDto>> AddCommentAsync(Guid requesterId, Guid careerPlanId, AddCommentRequest req, CancellationToken ct = default);
 }
 
 public interface ICareerPlanRepository
@@ -23,6 +25,8 @@ public interface ICareerPlanRepository
     Task SaveChangesAsync(CancellationToken ct);
     Task<IReadOnlyList<Domain.Entities.UserSkill>> GetApprovedSkillsAsync(Guid userId, CancellationToken ct);
     Task<IReadOnlyList<Domain.Entities.Goal>> GetCurrentYearGoalsAsync(Guid userId, CancellationToken ct);
+    Task<IReadOnlyList<Domain.Entities.CareerPlanComment>> GetCommentsAsync(Guid careerPlanId, CancellationToken ct);
+    Task AddCommentAsync(Domain.Entities.CareerPlanComment comment, CancellationToken ct);
 }
 
 public class CareerPlanService(ICareerPlanRepository repo) : ICareerPlanService
@@ -136,9 +140,55 @@ public class CareerPlanService(ICareerPlanRepository repo) : ICareerPlanService
         return true;
     }
 
+    public async Task<Result<IReadOnlyList<CareerPlanCommentDto>>> GetCommentsAsync(Guid requesterId, Guid careerPlanId, CancellationToken ct = default)
+    {
+        var plan = await repo.FindAsync(careerPlanId, ct);
+        if (plan is null)
+            return Result<IReadOnlyList<CareerPlanCommentDto>>.NotFound("キャリアプランが存在しません。");
+
+        if (!await CanReadAsync(requesterId, plan.UserId, ct))
+            return Result<IReadOnlyList<CareerPlanCommentDto>>.Forbidden("このキャリアプランを閲覧する権限がありません。");
+
+        var comments = await repo.GetCommentsAsync(careerPlanId, ct);
+        return Result<IReadOnlyList<CareerPlanCommentDto>>.Ok(comments.Select(ToCommentDto).ToList());
+    }
+
+    public async Task<Result<CareerPlanCommentDto>> AddCommentAsync(Guid requesterId, Guid careerPlanId, AddCommentRequest req, CancellationToken ct = default)
+    {
+        if (string.IsNullOrWhiteSpace(req.Content))
+            return Result<CareerPlanCommentDto>.BadRequest("コメントを入力してください。");
+
+        if (req.Content.Length > 1000)
+            return Result<CareerPlanCommentDto>.BadRequest("コメントは1,000文字以内で入力してください。");
+
+        var plan = await repo.FindAsync(careerPlanId, ct);
+        if (plan is null)
+            return Result<CareerPlanCommentDto>.NotFound("キャリアプランが存在しません。");
+
+        if (!await repo.IsManagerOfAsync(requesterId, plan.UserId, ct))
+            return Result<CareerPlanCommentDto>.Forbidden("直属上長のみコメントを投稿できます。");
+
+        var comment = Domain.Entities.CareerPlanComment.Create(careerPlanId, requesterId, req.Content);
+        await repo.AddCommentAsync(comment, ct);
+        await repo.SaveChangesAsync(ct);
+
+        var author = await repo.FindUserAsync(requesterId, ct);
+        return Result<CareerPlanCommentDto>.Ok(new CareerPlanCommentDto(
+            comment.Id, comment.CareerPlanId, comment.AuthorId,
+            author?.DisplayName ?? string.Empty,
+            comment.Content, comment.CreatedAt
+        ));
+    }
+
     private static CareerPlanDto ToDto(Domain.Entities.CareerPlan p) => new(
         p.Id, p.UserId, p.PeriodYear,
         p.LongTermGoal, p.MediumTermGoal, p.CurrentFocus,
         p.CreatedAt, p.UpdatedAt
+    );
+
+    private static CareerPlanCommentDto ToCommentDto(Domain.Entities.CareerPlanComment c) => new(
+        c.Id, c.CareerPlanId, c.AuthorId,
+        c.Author?.DisplayName ?? string.Empty,
+        c.Content, c.CreatedAt
     );
 }
