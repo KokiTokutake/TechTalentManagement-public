@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import type { CareerPlan, CareerPlanComment, IntegratedView, OrgOverviewItem, SaveCareerPlanRequest } from '~/types/careerPlan'
 
 export const useCareerPlanStore = defineStore('careerPlan', () => {
