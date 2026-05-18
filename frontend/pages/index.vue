@@ -35,6 +35,12 @@
         <span class="menu-desc">目標ごとの達成度を入力・提出する</span>
       </NuxtLink>
 
+      <NuxtLink to="/career" class="menu-card">
+        <span class="menu-icon">🗺</span>
+        <span class="menu-title">キャリアプラン</span>
+        <span class="menu-desc">Will・Can・Must を統合したキャリアプランを確認・編集する</span>
+      </NuxtLink>
+
       <NuxtLink to="/skills/my" class="menu-card">
         <span class="menu-icon">🛠</span>
         <span class="menu-title">スキル管理</span>
@@ -59,6 +65,16 @@
         <span class="menu-icon">🗺</span>
         <span class="menu-title">組織スキルマップ</span>
         <span class="menu-desc">全エンジニアのスキル分布を確認する</span>
+      </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
+        to="/career/org-overview"
+        class="menu-card"
+      >
+        <span class="menu-icon">👥</span>
+        <span class="menu-title">組織キャリア俯瞰</span>
+        <span class="menu-desc">全タレントのキャリアプランサマリーを一覧で確認する</span>
       </NuxtLink>
 
       <NuxtLink

@@ -21,6 +21,13 @@ public class CareerPlansController(ICareerPlanService service) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
     }
 
+    [HttpGet("integrated-view")]
+    public async Task<IActionResult> GetIntegratedView(Guid userId, [FromQuery] Guid requesterId, CancellationToken ct)
+    {
+        var result = await service.GetIntegratedViewAsync(requesterId, userId, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateCareerPlan(Guid userId, [FromQuery] Guid requesterId, [FromBody] SaveCareerPlanRequest req, CancellationToken ct)
     {
@@ -40,6 +47,30 @@ public class CareerPlanItemController(ICareerPlanService service) : ControllerBa
     public async Task<IActionResult> UpdateCareerPlan(Guid careerPlanId, [FromQuery] Guid requesterId, [FromBody] SaveCareerPlanRequest req, CancellationToken ct)
     {
         var result = await service.UpdateAsync(requesterId, careerPlanId, req, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
+
+    [HttpGet("{careerPlanId:guid}/comments")]
+    public async Task<IActionResult> GetComments(Guid careerPlanId, [FromQuery] Guid requesterId, CancellationToken ct)
+    {
+        var result = await service.GetCommentsAsync(requesterId, careerPlanId, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
+
+    [HttpPost("{careerPlanId:guid}/comments")]
+    public async Task<IActionResult> AddComment(Guid careerPlanId, [FromQuery] Guid requesterId, [FromBody] AddCommentRequest req, CancellationToken ct)
+    {
+        var result = await service.AddCommentAsync(requesterId, careerPlanId, req, ct);
+        if (!result.IsSuccess)
+            return StatusCode(result.StatusCode, new { error = result.Error });
+
+        return CreatedAtAction(nameof(GetComments), new { careerPlanId }, result.Value);
+    }
+
+    [HttpGet("org-overview")]
+    public async Task<IActionResult> GetOrgOverview([FromQuery] Guid requesterId, CancellationToken ct)
+    {
+        var result = await service.GetOrgOverviewAsync(requesterId, ct);
         return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
     }
 }
