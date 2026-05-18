@@ -1,6 +1,6 @@
 # タスク一覧
 
-> 最終更新: 2026-05-17 （SDD Project Manager より自動生成）
+> 最終更新: 2026-05-18 （SDD Project Manager より自動生成）
 
 ---
 
@@ -32,7 +32,7 @@
 | TASK-009 | [FE] 上長評価入力画面 UI | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-009-manager-evaluation-ui |
 | TASK-010 | [TEST] Phase 1 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-001 | — | — | feat/T-010-phase1-integration-test |
 
-## Sprint 3 🏃 アクティブ
+## Sprint 3 ✅ 完了
 
 - **ゴール**: スキル管理機能 バックエンド全実装
 - **期間**: 2026-05-31 〜 2026-06-06
@@ -45,7 +45,7 @@
 | TASK-013 | [BE] スキル承認・差し戻し API | ✅ done | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
 | TASK-014 | [BE] 組織スキルマップ API | ✅ done | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
 
-## Sprint 4 📋 計画中
+## Sprint 4 ✅ 完了
 
 - **ゴール**: スキル管理機能 フロントエンド全画面・結合テスト
 - **期間**: 2026-06-07 〜 2026-06-13
@@ -59,30 +59,30 @@
 | TASK-018 | [FE] 組織スキルマップ画面 UI | ✅ done | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
 | TASK-019 | [TEST] スキル管理 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
 
-## Sprint 5 📋 計画中
+## Sprint 5 ✅ 完了
 
 - **ゴール**: キャリアプラン管理 バックエンド全実装
 - **期間**: 2026-06-14 〜 2026-06-20
-- **進捗**: 0 / 10 SP 完了
+- **進捗**: 10 / 10 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-020 | [BE] キャリアプラン CRUD API（作成・編集・年度別履歴） | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #3 | — | — |
-| TASK-021 | [BE] Will-Can-Must 統合ビュー API（Goal・Skill 集約） | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #4 | — | — |
-| TASK-022 | [BE] 上長コメント API（追記・一覧） | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #5 | — | — |
-| TASK-023 | [BE] 組織キャリアプラン俯瞰 API | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #6 | — | — |
+| TASK-020 | [BE] キャリアプラン CRUD API（作成・編集・年度別履歴） | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #3 | #10 | feat/3-career-plan-crud-api |
+| TASK-021 | [BE] Will-Can-Must 統合ビュー API（Goal・Skill 集約） | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #4 | #11 | feat/4-will-can-must-view-api |
+| TASK-022 | [BE] 上長コメント API（追記・一覧） | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #5 | #12 | feat/5-career-plan-comment-api |
+| TASK-023 | [BE] 組織キャリアプラン俯瞰 API | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #6 | #13 | feat/6-career-plan-org-overview-api |
 
-## Sprint 6 📋 計画中
+## Sprint 6 ✅ 完了
 
 - **ゴール**: キャリアプラン管理 フロントエンド全画面・結合テスト
 - **期間**: 2026-06-21 〜 2026-06-27
-- **進捗**: 0 / 10 SP 完了
+- **進捗**: 10 / 10 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-024 | [FE] キャリアプランページ UI（統合ビュー・編集・履歴切替） | ⬜ pending | @KokiTokutake | 5 | SPEC-CAREER-001 | #7 | — | — |
-| TASK-025 | [FE] 組織キャリアプラン俯瞰ページ UI | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #8 | — | — |
-| TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | — | — |
+| TASK-024 | [FE] キャリアプランページ UI（統合ビュー・編集・履歴切替） | ✅ done | @KokiTokutake | 5 | SPEC-CAREER-001 | #7 | #14 | feat/7-career-plan-page-ui |
+| TASK-025 | [FE] 組織キャリアプラン俯瞰ページ UI | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #8 | #15 | feat/8-career-plan-org-overview-ui |
+| TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | #16 | feat/9-career-plan-integration-test |
 
 ---
 
@@ -91,7 +91,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 26 |
-| 完了 | 18 |
+| 完了 | 25 |
 | 進行中 | 0 |
-| 未着手 | 8 |
+| 未着手 | 1 |
 | レビュー中 | 0 |

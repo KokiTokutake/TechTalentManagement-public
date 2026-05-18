@@ -22,6 +22,76 @@ namespace TeckTalentManagement.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CurrentFocus")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("LongTermGoal")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("MediumTermGoal")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("PeriodYear")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "PeriodYear")
+                        .IsUnique();
+
+                    b.ToTable("CareerPlans");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlanComment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CareerPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("CareerPlanId");
+
+                    b.ToTable("CareerPlanComments");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
                 {
                     b.Property<Guid>("Id")
@@ -385,6 +455,36 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("UserSkillHistories");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlan", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlanComment", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.CareerPlan", "CareerPlan")
+                        .WithMany("Comments")
+                        .HasForeignKey("CareerPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("CareerPlan");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
@@ -510,6 +610,11 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("UserSkill");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlan", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
