@@ -45,3 +45,11 @@ export interface SaveCareerPlanRequest {
   mediumTermGoal: string
   currentFocus: string
 }
+
+export interface OrgOverviewItem {
+  userId: string
+  userName: string
+  longTermGoal: string | null
+  currentFocus: string | null
+  periodYear: number | null
+}

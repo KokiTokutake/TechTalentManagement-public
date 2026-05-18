@@ -68,6 +68,16 @@
       </NuxtLink>
 
       <NuxtLink
+        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
+        to="/career/org-overview"
+        class="menu-card"
+      >
+        <span class="menu-icon">👥</span>
+        <span class="menu-title">組織キャリア俯瞰</span>
+        <span class="menu-desc">全タレントのキャリアプランサマリーを一覧で確認する</span>
+      </NuxtLink>
+
+      <NuxtLink
         v-if="auth.currentUser?.role === 'Admin'"
         to="/admin/skill-master"
         class="menu-card"

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { CareerPlan, CareerPlanComment, IntegratedView, SaveCareerPlanRequest } from '~/types/careerPlan'
+import type { CareerPlan, CareerPlanComment, IntegratedView, OrgOverviewItem, SaveCareerPlanRequest } from '~/types/careerPlan'
 
 export const useCareerPlanStore = defineStore('careerPlan', () => {
   const config = useRuntimeConfig()
@@ -9,6 +9,7 @@ export const useCareerPlanStore = defineStore('careerPlan', () => {
   const years = ref<number[]>([])
   const selectedPlan = ref<CareerPlan | null>(null)
   const comments = ref<CareerPlanComment[]>([])
+  const orgOverview = ref<OrgOverviewItem[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
 
@@ -96,18 +97,35 @@ export const useCareerPlanStore = defineStore('careerPlan', () => {
     return data
   }
 
+  async function fetchOrgOverview(requesterId: string) {
+    loading.value = true
+    error.value = null
+    try {
+      orgOverview.value = await $fetch<OrgOverviewItem[]>(
+        `${base}/api/career-plans/org-overview?requesterId=${requesterId}`,
+      )
+    }
+    catch {
+      error.value = '組織俯瞰データの取得に失敗しました。'
+    }
+    finally {
+      loading.value = false
+    }
+  }
+
   function $reset() {
     integratedView.value = null
     years.value = []
     selectedPlan.value = null
     comments.value = []
+    orgOverview.value = []
     loading.value = false
     error.value = null
   }
 
   return {
-    integratedView, years, selectedPlan, comments, loading, error,
+    integratedView, years, selectedPlan, comments, orgOverview, loading, error,
     fetchIntegratedView, fetchYears, fetchPlanByYear,
-    createPlan, updatePlan, fetchComments, addComment, $reset,
+    createPlan, updatePlan, fetchComments, addComment, fetchOrgOverview, $reset,
   }
 })
