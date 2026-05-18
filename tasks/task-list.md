@@ -59,14 +59,39 @@
 | TASK-018 | [FE] 組織スキルマップ画面 UI | ✅ done | @KokiTokutake | 3 | SPEC-SKILL-001 | — | — | — |
 | TASK-019 | [TEST] スキル管理 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-SKILL-001 | — | — | — |
 
+## Sprint 5 📋 計画中
+
+- **ゴール**: キャリアプラン管理 バックエンド全実装
+- **期間**: 2026-06-14 〜 2026-06-20
+- **進捗**: 0 / 10 SP 完了
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-020 | [BE] キャリアプラン CRUD API（作成・編集・年度別履歴） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-CAREER-001 | #3 | — | feat/3-career-plan-crud-api |
+| TASK-021 | [BE] Will-Can-Must 統合ビュー API（Goal・Skill 集約） | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #4 | — | — |
+| TASK-022 | [BE] 上長コメント API（追記・一覧） | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #5 | — | — |
+| TASK-023 | [BE] 組織キャリアプラン俯瞰 API | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #6 | — | — |
+
+## Sprint 6 📋 計画中
+
+- **ゴール**: キャリアプラン管理 フロントエンド全画面・結合テスト
+- **期間**: 2026-06-21 〜 2026-06-27
+- **進捗**: 0 / 10 SP 完了
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-024 | [FE] キャリアプランページ UI（統合ビュー・編集・履歴切替） | ⬜ pending | @KokiTokutake | 5 | SPEC-CAREER-001 | #7 | — | — |
+| TASK-025 | [FE] 組織キャリアプラン俯瞰ページ UI | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #8 | — | — |
+| TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | — | — |
+
 ---
 
 ## サマリー
 
 | 項目 | 値 |
 |------|----|
-| 総タスク数 | 19 |
+| 総タスク数 | 26 |
 | 完了 | 18 |
 | 進行中 | 0 |
-| 未着手 | 1 |
+| 未着手 | 8 |
 | レビュー中 | 0 |
