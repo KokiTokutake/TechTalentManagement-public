@@ -82,7 +82,7 @@
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-024 | [FE] キャリアプランページ UI（統合ビュー・編集・履歴切替） | ✅ done | @KokiTokutake | 5 | SPEC-CAREER-001 | #7 | #14 | feat/7-career-plan-page-ui |
 | TASK-025 | [FE] 組織キャリアプラン俯瞰ページ UI | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #8 | #15 | feat/8-career-plan-org-overview-ui |
-| TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | — | — |
+| TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | #16 | feat/9-career-plan-integration-test |
 
 ---
 
@@ -91,7 +91,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 26 |
-| 完了 | 19 |
+| 完了 | 20 |
 | 進行中 | 0 |
-| 未着手 | 7 |
+| 未着手 | 6 |
 | レビュー中 | 0 |
