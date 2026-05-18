@@ -70,7 +70,7 @@
 | TASK-020 | [BE] キャリアプラン CRUD API（作成・編集・年度別履歴） | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #3 | #10 | feat/3-career-plan-crud-api |
 | TASK-021 | [BE] Will-Can-Must 統合ビュー API（Goal・Skill 集約） | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #4 | #11 | feat/4-will-can-must-view-api |
 | TASK-022 | [BE] 上長コメント API（追記・一覧） | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #5 | #12 | feat/5-career-plan-comment-api |
-| TASK-023 | [BE] 組織キャリアプラン俯瞰 API | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-001 | #6 | — | — |
+| TASK-023 | [BE] 組織キャリアプラン俯瞰 API | 🏃 進行中 | @KokiTokutake | 2 | SPEC-CAREER-001 | #6 | — | feat/6-career-plan-org-overview-api |
 
 ## Sprint 6 📋 計画中
 

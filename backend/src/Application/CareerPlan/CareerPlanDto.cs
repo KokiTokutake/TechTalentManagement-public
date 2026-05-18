@@ -49,3 +49,11 @@ public record CareerPlanCommentDto(
 );
 
 public record AddCommentRequest(string Content);
+
+public record OrgOverviewItemDto(
+    Guid UserId,
+    string UserName,
+    string? LongTermGoal,
+    string? CurrentFocus,
+    int? PeriodYear
+);

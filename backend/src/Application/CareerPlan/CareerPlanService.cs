@@ -12,6 +12,7 @@ public interface ICareerPlanService
     Task<Result<IntegratedViewDto>> GetIntegratedViewAsync(Guid requesterId, Guid userId, CancellationToken ct = default);
     Task<Result<IReadOnlyList<CareerPlanCommentDto>>> GetCommentsAsync(Guid requesterId, Guid careerPlanId, CancellationToken ct = default);
     Task<Result<CareerPlanCommentDto>> AddCommentAsync(Guid requesterId, Guid careerPlanId, AddCommentRequest req, CancellationToken ct = default);
+    Task<Result<IReadOnlyList<OrgOverviewItemDto>>> GetOrgOverviewAsync(Guid requesterId, CancellationToken ct = default);
 }
 
 public interface ICareerPlanRepository
@@ -27,6 +28,7 @@ public interface ICareerPlanRepository
     Task<IReadOnlyList<Domain.Entities.Goal>> GetCurrentYearGoalsAsync(Guid userId, CancellationToken ct);
     Task<IReadOnlyList<Domain.Entities.CareerPlanComment>> GetCommentsAsync(Guid careerPlanId, CancellationToken ct);
     Task AddCommentAsync(Domain.Entities.CareerPlanComment comment, CancellationToken ct);
+    Task<IReadOnlyList<(Domain.Entities.User User, Domain.Entities.CareerPlan? Plan)>> GetAllTalentsWithCurrentPlanAsync(CancellationToken ct);
 }
 
 public class CareerPlanService(ICareerPlanRepository repo) : ICareerPlanService
@@ -178,6 +180,24 @@ public class CareerPlanService(ICareerPlanRepository repo) : ICareerPlanService
             author?.DisplayName ?? string.Empty,
             comment.Content, comment.CreatedAt
         ));
+    }
+
+    public async Task<Result<IReadOnlyList<OrgOverviewItemDto>>> GetOrgOverviewAsync(Guid requesterId, CancellationToken ct = default)
+    {
+        var requester = await repo.FindUserAsync(requesterId, ct);
+        if (requester is null || !ViewerRoles.Contains(requester.Role))
+            return Result<IReadOnlyList<OrgOverviewItemDto>>.Forbidden("組織俯瞰ビューを閲覧する権限がありません。");
+
+        var talents = await repo.GetAllTalentsWithCurrentPlanAsync(ct);
+        var items = talents.Select(t => new OrgOverviewItemDto(
+            t.User.Id,
+            t.User.DisplayName,
+            t.Plan?.LongTermGoal,
+            t.Plan?.CurrentFocus,
+            t.Plan?.PeriodYear
+        )).ToList();
+
+        return Result<IReadOnlyList<OrgOverviewItemDto>>.Ok(items);
     }
 
     private static CareerPlanDto ToDto(Domain.Entities.CareerPlan p) => new(

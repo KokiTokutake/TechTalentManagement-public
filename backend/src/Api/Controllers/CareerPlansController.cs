@@ -66,4 +66,11 @@ public class CareerPlanItemController(ICareerPlanService service) : ControllerBa
 
         return CreatedAtAction(nameof(GetComments), new { careerPlanId }, result.Value);
     }
+
+    [HttpGet("org-overview")]
+    public async Task<IActionResult> GetOrgOverview([FromQuery] Guid requesterId, CancellationToken ct)
+    {
+        var result = await service.GetOrgOverviewAsync(requesterId, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
 }

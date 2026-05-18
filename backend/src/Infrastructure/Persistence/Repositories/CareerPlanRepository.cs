@@ -62,4 +62,21 @@ public class CareerPlanRepository(AppDbContext db) : ICareerPlanRepository
 
     public async Task AddCommentAsync(CareerPlanComment comment, CancellationToken ct) =>
         await db.CareerPlanComments.AddAsync(comment, ct);
+
+    public async Task<IReadOnlyList<(User User, CareerPlan? Plan)>> GetAllTalentsWithCurrentPlanAsync(CancellationToken ct)
+    {
+        var currentYear = DateTime.UtcNow.Year;
+        var talents = await db.Users
+            .Where(u => u.Role == Domain.Enums.UserRole.Talent)
+            .OrderBy(u => u.DisplayName)
+            .ToListAsync(ct);
+
+        var userIds = talents.Select(u => u.Id).ToList();
+        var plans = await db.CareerPlans
+            .Where(p => userIds.Contains(p.UserId) && p.PeriodYear == currentYear)
+            .ToListAsync(ct);
+
+        var planByUser = plans.ToDictionary(p => p.UserId);
+        return talents.Select(u => (u, planByUser.GetValueOrDefault(u.Id))).ToList();
+    }
 }
