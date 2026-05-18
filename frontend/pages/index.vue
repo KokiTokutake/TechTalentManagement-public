@@ -35,6 +35,12 @@
         <span class="menu-desc">目標ごとの達成度を入力・提出する</span>
       </NuxtLink>
 
+      <NuxtLink to="/career" class="menu-card">
+        <span class="menu-icon">🗺</span>
+        <span class="menu-title">キャリアプラン</span>
+        <span class="menu-desc">Will・Can・Must を統合したキャリアプランを確認・編集する</span>
+      </NuxtLink>
+
       <NuxtLink to="/skills/my" class="menu-card">
         <span class="menu-icon">🛠</span>
         <span class="menu-title">スキル管理</span>
