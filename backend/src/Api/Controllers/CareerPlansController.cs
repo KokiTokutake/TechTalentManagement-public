@@ -21,6 +21,13 @@ public class CareerPlansController(ICareerPlanService service) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
     }
 
+    [HttpGet("integrated-view")]
+    public async Task<IActionResult> GetIntegratedView(Guid userId, [FromQuery] Guid requesterId, CancellationToken ct)
+    {
+        var result = await service.GetIntegratedViewAsync(requesterId, userId, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateCareerPlan(Guid userId, [FromQuery] Guid requesterId, [FromBody] SaveCareerPlanRequest req, CancellationToken ct)
     {

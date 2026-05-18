@@ -32,4 +32,24 @@ public class CareerPlanRepository(AppDbContext db) : ICareerPlanRepository
 
     public Task SaveChangesAsync(CancellationToken ct) =>
         db.SaveChangesAsync(ct);
+
+    public async Task<IReadOnlyList<UserSkill>> GetApprovedSkillsAsync(Guid userId, CancellationToken ct) =>
+        await db.UserSkills
+            .Include(s => s.SkillItem)
+            .ThenInclude(i => i!.Category)
+            .Where(s => s.UserId == userId && s.Status == Domain.Enums.UserSkillStatus.Approved)
+            .OrderBy(s => s.SkillItem!.Category!.Name)
+            .ThenBy(s => s.SkillItem!.Name)
+            .ToListAsync(ct);
+
+    public async Task<IReadOnlyList<Goal>> GetCurrentYearGoalsAsync(Guid userId, CancellationToken ct)
+    {
+        var currentYear = DateTime.UtcNow.Year;
+        return await db.Goals
+            .Include(g => g.EvaluationPeriod)
+            .Where(g => g.UserId == userId && g.EvaluationPeriod!.Year == currentYear)
+            .OrderBy(g => g.Category)
+            .ThenBy(g => g.DisplayOrder)
+            .ToListAsync(ct);
+    }
 }

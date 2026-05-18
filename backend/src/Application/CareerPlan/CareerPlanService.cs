@@ -9,6 +9,7 @@ public interface ICareerPlanService
     Task<Result<IReadOnlyList<int>>> GetYearsAsync(Guid requesterId, Guid userId, CancellationToken ct = default);
     Task<Result<CareerPlanDto>> CreateAsync(Guid requesterId, Guid userId, SaveCareerPlanRequest req, CancellationToken ct = default);
     Task<Result<CareerPlanDto>> UpdateAsync(Guid requesterId, Guid careerPlanId, SaveCareerPlanRequest req, CancellationToken ct = default);
+    Task<Result<IntegratedViewDto>> GetIntegratedViewAsync(Guid requesterId, Guid userId, CancellationToken ct = default);
 }
 
 public interface ICareerPlanRepository
@@ -20,6 +21,8 @@ public interface ICareerPlanRepository
     Task<bool> IsManagerOfAsync(Guid managerId, Guid userId, CancellationToken ct);
     Task AddAsync(Domain.Entities.CareerPlan plan, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
+    Task<IReadOnlyList<Domain.Entities.UserSkill>> GetApprovedSkillsAsync(Guid userId, CancellationToken ct);
+    Task<IReadOnlyList<Domain.Entities.Goal>> GetCurrentYearGoalsAsync(Guid userId, CancellationToken ct);
 }
 
 public class CareerPlanService(ICareerPlanRepository repo) : ICareerPlanService
@@ -66,6 +69,30 @@ public class CareerPlanService(ICareerPlanRepository repo) : ICareerPlanService
         await repo.SaveChangesAsync(ct);
 
         return Result<CareerPlanDto>.Ok(ToDto(plan));
+    }
+
+    public async Task<Result<IntegratedViewDto>> GetIntegratedViewAsync(Guid requesterId, Guid userId, CancellationToken ct = default)
+    {
+        if (!await CanReadAsync(requesterId, userId, ct))
+            return Result<IntegratedViewDto>.Forbidden("このキャリアプランを閲覧する権限がありません。");
+
+        var currentYear = DateTime.UtcNow.Year;
+        var plan = await repo.FindByUserAndYearAsync(userId, currentYear, ct);
+        var skills = await repo.GetApprovedSkillsAsync(userId, ct);
+        var goals = await repo.GetCurrentYearGoalsAsync(userId, ct);
+
+        var will = plan is not null ? ToDto(plan) : null;
+        var can = skills.Select(s => new IntegratedViewSkillDto(
+            s.Id, s.SkillItemId,
+            s.SkillItem?.Name ?? string.Empty,
+            s.SkillItem?.Category?.Name ?? string.Empty,
+            s.Level
+        )).ToList();
+        var must = goals.Select(g => new IntegratedViewGoalDto(
+            g.Id, g.Category.ToString(), g.Title, g.Description, g.DisplayOrder
+        )).ToList();
+
+        return Result<IntegratedViewDto>.Ok(new IntegratedViewDto(will, can, must));
     }
 
     public async Task<Result<CareerPlanDto>> UpdateAsync(Guid requesterId, Guid careerPlanId, SaveCareerPlanRequest req, CancellationToken ct = default)
