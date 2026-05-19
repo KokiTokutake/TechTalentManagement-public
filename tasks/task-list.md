@@ -84,16 +84,16 @@
 | TASK-025 | [FE] 組織キャリアプラン俯瞰ページ UI | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #8 | #15 | feat/8-career-plan-org-overview-ui |
 | TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | #16 | feat/9-career-plan-integration-test |
 
-## Sprint 7 ⬜ 未着手
+## Sprint 7 🏃 進行中
 
 - **ゴール**: 人材開発委員会機能 バックエンド全実装
 - **期間**: 2026-05-24 〜 2026-05-30
-- **進捗**: 0 / 12 SP 完了
+- **進捗**: 3 / 12 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-027 | [BE] DBスキーマ拡張・EF Core マイグレーション（KeyPerson / DevelopmentPlan / CommitteeSession） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #17 | — | — |
-| TASK-028 | [BE] 重点管理人物 API（指定・解除・一覧・自分の状況） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #18 | — | — |
+| TASK-027 | [BE] DBスキーマ拡張・EF Core マイグレーション（KeyPerson / DevelopmentPlan / CommitteeSession） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #17 | #27 | feat/17-db-schema-mdc |
+| TASK-028 | [BE] 重点管理人物 API（指定・解除・一覧・自分の状況） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-001 | #18 | — | feat/18-key-person-api |
 | TASK-029 | [BE] 育成方針 API（新規・バージョン管理・履歴一覧） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #19 | — | — |
 | TASK-030 | [BE] 委員会セッション API（作成・一覧・詳細）＋ 委員会サマリー API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #20 | — | — |
 
@@ -119,7 +119,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 36 |
-| 完了 | 25 |
-| 進行中 | 0 |
-| 未着手 | 11 |
+| 完了 | 26 |
+| 進行中 | 1 |
+| 未着手 | 9 |
 | レビュー中 | 0 |
