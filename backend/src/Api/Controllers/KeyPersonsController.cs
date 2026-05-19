@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using TeckTalentManagement.Application.CommitteeSession;
 using TeckTalentManagement.Application.KeyPerson;
 
 namespace TeckTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/key-persons")]
-public class KeyPersonsController(IKeyPersonService service) : ControllerBase
+public class KeyPersonsController(IKeyPersonService service, ICommitteeSessionService committeeService) : ControllerBase
 {
+    [HttpGet("committee-summary")]
+    public async Task<IActionResult> GetCommitteeSummary([FromQuery] Guid requesterId, CancellationToken ct)
+    {
+        var result = await committeeService.GetCommitteeSummaryAsync(requesterId, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetList([FromQuery] Guid requesterId, CancellationToken ct)
     {
