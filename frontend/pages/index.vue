@@ -106,6 +106,16 @@
         <span class="menu-title">委員会セッション</span>
         <span class="menu-desc">人材開発委員会の開催記録を管理する</span>
       </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
+        to="/mdc/summary"
+        class="menu-card"
+      >
+        <span class="menu-icon">📊</span>
+        <span class="menu-title">委員会サマリー</span>
+        <span class="menu-desc">重点管理人物の Will・Can・Must 状況を俯瞰する</span>
+      </NuxtLink>
     </div>
 
     <p class="api-status">
