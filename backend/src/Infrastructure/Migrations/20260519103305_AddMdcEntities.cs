@@ -173,7 +173,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                 name: "IX_KeyPersons_TalentId",
                 table: "KeyPersons",
                 column: "TalentId",
-                filter: "\"IsActive\" = true");
+                filter: "[IsActive] = 1");
         }
 
         /// <inheritdoc />
