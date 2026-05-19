@@ -94,7 +94,7 @@
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-027 | [BE] DBスキーマ拡張・EF Core マイグレーション（KeyPerson / DevelopmentPlan / CommitteeSession） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #17 | #27 | feat/17-db-schema-mdc |
 | TASK-028 | [BE] 重点管理人物 API（指定・解除・一覧・自分の状況） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #18 | #28 | feat/18-key-person-api |
-| TASK-029 | [BE] 育成方針 API（新規・バージョン管理・履歴一覧） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #19 | — | — |
+| TASK-029 | [BE] 育成方針 API（新規・バージョン管理・履歴一覧） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-001 | #19 | — | feat/19-development-plan-api |
 | TASK-030 | [BE] 委員会セッション API（作成・一覧・詳細）＋ 委員会サマリー API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #20 | — | — |
 
 ## Sprint 8 ⬜ 未着手
