@@ -6,6 +6,12 @@
       <p class="subtitle">{{ auth.currentUser?.displayName }} さんのキャリアプラン</p>
     </header>
 
+    <!-- 重点管理人物バッジ -->
+    <div v-if="keyPersonStore.myStatus?.isActive" class="key-person-banner">
+      <span class="key-person-badge">⭐ 重点管理人物</span>
+      <span v-if="keyPersonStore.myStatus.reason" class="key-person-reason">{{ keyPersonStore.myStatus.reason }}</span>
+    </div>
+
     <div v-if="store.error" class="error-box" role="alert">{{ store.error }}</div>
     <div v-if="store.loading" class="loading">読み込み中...</div>
 
@@ -132,6 +138,36 @@
         <p v-else class="empty-note">今期のデータのみ表示されます</p>
       </section>
 
+      <!-- 育成方針（重点管理人物のみ） -->
+      <section class="section" v-if="keyPersonStore.myStatus?.isActive">
+        <h2>育成方針（Must）</h2>
+        <p class="section-desc">直属上長が登録した育成方針です</p>
+        <div v-if="devPlanStore.loading" class="empty-note">読み込み中...</div>
+        <template v-else-if="devPlanStore.plans.length > 0">
+          <div class="dev-plan-card">
+            <div class="dev-plan-version">
+              <span class="version-badge">最新 v{{ devPlanStore.plans[0].version }}</span>
+              <span v-if="devPlanStore.plans[0].dueDate" class="due-badge">
+                期限: {{ devPlanStore.plans[0].dueDate.slice(0, 10) }}
+              </span>
+            </div>
+            <div class="dev-plan-item">
+              <span class="dev-plan-label">課題</span>
+              <p class="dev-plan-text">{{ devPlanStore.plans[0].challenge }}</p>
+            </div>
+            <div class="dev-plan-item">
+              <span class="dev-plan-label">目標</span>
+              <p class="dev-plan-text">{{ devPlanStore.plans[0].goal }}</p>
+            </div>
+            <div class="dev-plan-item">
+              <span class="dev-plan-label">サポート施策</span>
+              <p class="dev-plan-text">{{ devPlanStore.plans[0].supportAction }}</p>
+            </div>
+          </div>
+        </template>
+        <p v-else class="empty-note">育成方針はまだ登録されていません。</p>
+      </section>
+
       <!-- 上長コメント -->
       <section class="section" v-if="currentPlan">
         <h2>上長からのコメント</h2>
@@ -150,10 +186,14 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 import { useCareerPlanStore } from '~/stores/careerPlan'
+import { useKeyPersonStore } from '~/stores/keyPerson'
+import { useDevelopmentPlanStore } from '~/stores/developmentPlan'
 import type { CareerPlan } from '~/types/careerPlan'
 
 const auth = useAuthStore()
 const store = useCareerPlanStore()
+const keyPersonStore = useKeyPersonStore()
+const devPlanStore = useDevelopmentPlanStore()
 
 const currentYear = new Date().getFullYear()
 const selectedYear = ref(currentYear)
@@ -179,10 +219,14 @@ onMounted(async () => {
   await Promise.all([
     store.fetchIntegratedView(auth.currentUser.id, auth.currentUser.id),
     store.fetchYears(auth.currentUser.id, auth.currentUser.id),
+    keyPersonStore.fetchMyStatus(auth.currentUser.id),
   ])
   if (store.integratedView?.will) {
     planSaved.value = true
     await store.fetchComments(store.integratedView.will.id, auth.currentUser.id)
+  }
+  if (keyPersonStore.myStatus?.isActive && keyPersonStore.myStatus.id) {
+    await devPlanStore.fetchList(auth.currentUser.id, keyPersonStore.myStatus.id)
   }
 })
 
@@ -243,6 +287,60 @@ function formatDate(iso: string) {
 </script>
 
 <style scoped>
+.key-person-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.key-person-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #854d0e;
+  white-space: nowrap;
+}
+.key-person-reason {
+  font-size: 0.85rem;
+  color: #92400e;
+}
+.dev-plan-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.dev-plan-version {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.version-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+}
+.due-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+}
+.dev-plan-item { }
+.dev-plan-label { font-size: 0.72rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; }
+.dev-plan-text { margin: 0.25rem 0 0; white-space: pre-wrap; font-size: 0.875rem; }
 .year-selector { display: flex; align-items: center; gap: 0.75rem; }
 .select-sm { width: auto; min-width: 120px; }
 .will-section { }
