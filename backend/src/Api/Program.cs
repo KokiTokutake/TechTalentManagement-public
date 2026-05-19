@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TeckTalentManagement.Application.CareerPlan;
+using TeckTalentManagement.Application.KeyPerson;
 using TeckTalentManagement.Application.Goals;
 using TeckTalentManagement.Application.ManagerEvaluations;
 using TeckTalentManagement.Application.SelfEvaluations;
@@ -29,6 +30,8 @@ builder.Services.AddScoped<ISkillMapRepository, SkillMapRepository>();
 builder.Services.AddScoped<ISkillMapService, SkillMapService>();
 builder.Services.AddScoped<ICareerPlanRepository, CareerPlanRepository>();
 builder.Services.AddScoped<ICareerPlanService, CareerPlanService>();
+builder.Services.AddScoped<IKeyPersonRepository, KeyPersonRepository>();
+builder.Services.AddScoped<IKeyPersonService, KeyPersonService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
