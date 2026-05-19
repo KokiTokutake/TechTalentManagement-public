@@ -101,7 +101,7 @@
 
 - **ゴール**: 人材開発委員会機能 フロントエンド全画面・結合テスト
 - **期間**: 2026-05-31 〜 2026-06-06
-- **進捗**: 11 / 16 SP 完了
+- **進捗**: 13 / 16 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -109,7 +109,7 @@
 | TASK-032 | [FE] 育成方針入力・閲覧・履歴画面 UI（Manager 入力 / Talent・Senior 閲覧） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #22 | #32 | feat/22-development-plan-ui |
 | TASK-033 | [FE] 委員会セッション管理画面 UI（作成・一覧・詳細） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #23 | #33 | feat/23-committee-session-ui |
 | TASK-034 | [FE] 委員会向けサマリービュー画面 UI | ✅ done | @KokiTokutake | 2 | SPEC-MDC-001 | #24 | #34 | feat/24-committee-summary-ui |
-| TASK-035 | [FE] タレント向けマイページ統合（重点管理バッジ・育成方針表示をキャリアプランページに追加） | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-001 | #25 | — | — |
+| TASK-035 | [FE] タレント向けマイページ統合（重点管理バッジ・育成方針表示をキャリアプランページに追加） | ✅ done | @KokiTokutake | 2 | SPEC-MDC-001 | #25 | #35 | feat/25-talent-mypage-integration |
 | TASK-036 | [TEST] 人材開発委員会機能 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #26 | — | — |
 
 ---
@@ -119,7 +119,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 36 |
-| 完了 | 34 |
+| 完了 | 35 |
 | 進行中 | 0 |
-| 未着手 | 4 |
+| 未着手 | 3 |
 | レビュー中 | 0 |
