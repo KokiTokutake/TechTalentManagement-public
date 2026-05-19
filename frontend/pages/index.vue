@@ -96,6 +96,16 @@
         <span class="menu-title">重点管理人物</span>
         <span class="menu-desc">重点管理対象のタレントを指定・解除する</span>
       </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin' || auth.currentUser?.role === 'Manager'"
+        to="/mdc/sessions"
+        class="menu-card"
+      >
+        <span class="menu-icon">📋</span>
+        <span class="menu-title">委員会セッション</span>
+        <span class="menu-desc">人材開発委員会の開催記録を管理する</span>
+      </NuxtLink>
     </div>
 
     <p class="api-status">
