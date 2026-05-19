@@ -17,6 +17,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserSkillHistory> UserSkillHistories => Set<UserSkillHistory>();
     public DbSet<CareerPlan> CareerPlans => Set<CareerPlan>();
     public DbSet<CareerPlanComment> CareerPlanComments => Set<CareerPlanComment>();
+    public DbSet<KeyPerson> KeyPersons => Set<KeyPerson>();
+    public DbSet<DevelopmentPlan> DevelopmentPlans => Set<DevelopmentPlan>();
+    public DbSet<CommitteeSession> CommitteeSessions => Set<CommitteeSession>();
+    public DbSet<CommitteeSessionParticipant> CommitteeSessionParticipants => Set<CommitteeSessionParticipant>();
+    public DbSet<CommitteeSessionKeyPerson> CommitteeSessionKeyPersons => Set<CommitteeSessionKeyPerson>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

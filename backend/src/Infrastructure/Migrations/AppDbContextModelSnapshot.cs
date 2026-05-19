@@ -92,6 +92,108 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("CareerPlanComments");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("HeldOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Minutes")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("CommitteeSessions");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionKeyPerson", b =>
+                {
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("KeyPersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SessionId", "KeyPersonId");
+
+                    b.HasIndex("KeyPersonId");
+
+                    b.ToTable("CommitteeSessionKeyPersons");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionParticipant", b =>
+                {
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SessionId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommitteeSessionParticipants");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.DevelopmentPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Challenge")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Goal")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<Guid>("KeyPersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SupportAction")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("KeyPersonId");
+
+                    b.ToTable("DevelopmentPlans");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
                 {
                     b.Property<Guid>("Id")
@@ -171,6 +273,38 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.HasIndex("UserId", "EvaluationPeriodId", "Category");
 
                     b.ToTable("Goals");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("DesignatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("DesignatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DesignatedBy");
+
+                    b.HasIndex("TalentId")
+                        .HasFilter("\"IsActive\" = true");
+
+                    b.ToTable("KeyPersons");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.ManagerEvaluation", b =>
@@ -485,6 +619,60 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("CareerPlan");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSession", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionKeyPerson", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.KeyPerson", null)
+                        .WithMany()
+                        .HasForeignKey("KeyPersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.CommitteeSession", null)
+                        .WithMany("KeyPersons")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionParticipant", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.CommitteeSession", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.DevelopmentPlan", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.KeyPerson", null)
+                        .WithMany("DevelopmentPlans")
+                        .HasForeignKey("KeyPersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
@@ -502,6 +690,21 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("EvaluationPeriod");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("DesignatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.ManagerEvaluation", b =>
@@ -617,6 +820,13 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Comments");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSession", b =>
+                {
+                    b.Navigation("KeyPersons");
+
+                    b.Navigation("Participants");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
                 {
                     b.Navigation("Goals");
@@ -627,6 +837,11 @@ namespace TeckTalentManagement.Infrastructure.Migrations
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.Navigation("SelfEvaluationItem");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
+                {
+                    b.Navigation("DevelopmentPlans");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
