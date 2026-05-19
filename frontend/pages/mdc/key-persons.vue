@@ -29,13 +29,18 @@
           </thead>
           <tbody>
             <tr v-for="kp in store.keyPersons" :key="kp.id">
-              <td class="name-cell">{{ talentName(kp.talentId) }}</td>
+              <td class="name-cell">
+                <NuxtLink :to="`/mdc/development-plans/${kp.id}`" class="talent-link">
+                  {{ talentName(kp.talentId) }}
+                </NuxtLink>
+              </td>
               <td>
                 <span v-if="kp.reason" class="reason-text">{{ kp.reason }}</span>
                 <span v-else class="cell-empty">—</span>
               </td>
               <td class="date-cell">{{ formatDate(kp.designatedAt) }}</td>
               <td class="action-cell">
+                <NuxtLink :to="`/mdc/development-plans/${kp.id}`" class="btn-plans">育成方針</NuxtLink>
                 <button
                   class="btn-revoke"
                   :disabled="revoking === kp.id"
@@ -293,7 +298,30 @@ h1 {
 
 .name-cell { font-weight: 600; white-space: nowrap; }
 .date-cell { white-space: nowrap; color: #6b7280; font-size: 0.8rem; }
-.action-cell { text-align: right; }
+.action-cell { text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; }
+
+.talent-link {
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.talent-link:hover { text-decoration: underline; }
+
+.btn-plans {
+  border: 1px solid #93c5fd;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+
+.btn-plans:hover { background: #dbeafe; }
 
 .reason-text {
   display: -webkit-box;
