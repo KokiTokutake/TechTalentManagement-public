@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TeckTalentManagement.Application.CareerPlan;
+using TeckTalentManagement.Application.CommitteeSession;
 using TeckTalentManagement.Application.DevelopmentPlan;
 using TeckTalentManagement.Application.KeyPerson;
 using TeckTalentManagement.Application.Goals;
@@ -35,6 +36,8 @@ builder.Services.AddScoped<IKeyPersonRepository, KeyPersonRepository>();
 builder.Services.AddScoped<IKeyPersonService, KeyPersonService>();
 builder.Services.AddScoped<IDevelopmentPlanRepository, DevelopmentPlanRepository>();
 builder.Services.AddScoped<IDevelopmentPlanService, DevelopmentPlanService>();
+builder.Services.AddScoped<ICommitteeSessionRepository, CommitteeSessionRepository>();
+builder.Services.AddScoped<ICommitteeSessionService, CommitteeSessionService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
