@@ -108,7 +108,7 @@
 | TASK-031 | [FE] 重点管理人物一覧・指定・解除画面 UI（Senior/Executive/Admin） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #21 | #31 | feat/21-key-person-ui |
 | TASK-032 | [FE] 育成方針入力・閲覧・履歴画面 UI（Manager 入力 / Talent・Senior 閲覧） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #22 | #32 | feat/22-development-plan-ui |
 | TASK-033 | [FE] 委員会セッション管理画面 UI（作成・一覧・詳細） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #23 | #33 | feat/23-committee-session-ui |
-| TASK-034 | [FE] 委員会向けサマリービュー画面 UI | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-001 | #24 | — | — |
+| TASK-034 | [FE] 委員会向けサマリービュー画面 UI | 🏃 進行中 | @KokiTokutake | 2 | SPEC-MDC-001 | #24 | — | feat/24-committee-summary-ui |
 | TASK-035 | [FE] タレント向けマイページ統合（重点管理バッジ・育成方針表示をキャリアプランページに追加） | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-001 | #25 | — | — |
 | TASK-036 | [TEST] 人材開発委員会機能 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #26 | — | — |
 
@@ -120,6 +120,6 @@
 |------|----|
 | 総タスク数 | 36 |
 | 完了 | 33 |
-| 進行中 | 0 |
+| 進行中 | 1 |
 | 未着手 | 4 |
 | レビュー中 | 0 |
