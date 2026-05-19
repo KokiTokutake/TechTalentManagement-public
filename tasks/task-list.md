@@ -84,11 +84,11 @@
 | TASK-025 | [FE] 組織キャリアプラン俯瞰ページ UI | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-001 | #8 | #15 | feat/8-career-plan-org-overview-ui |
 | TASK-026 | [TEST] キャリアプラン管理 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-001 | #9 | #16 | feat/9-career-plan-integration-test |
 
-## Sprint 7 🏃 進行中
+## Sprint 7 ✅ 完了
 
 - **ゴール**: 人材開発委員会機能 バックエンド全実装
 - **期間**: 2026-05-24 〜 2026-05-30
-- **進捗**: 3 / 12 SP 完了
+- **進捗**: 12 / 12 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -97,16 +97,16 @@
 | TASK-029 | [BE] 育成方針 API（新規・バージョン管理・履歴一覧） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #19 | #29 | feat/19-development-plan-api |
 | TASK-030 | [BE] 委員会セッション API（作成・一覧・詳細）＋ 委員会サマリー API | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #20 | #30 | feat/20-committee-session-api |
 
-## Sprint 8 ⬜ 未着手
+## Sprint 8 🏃 進行中
 
 - **ゴール**: 人材開発委員会機能 フロントエンド全画面・結合テスト
 - **期間**: 2026-05-31 〜 2026-06-06
-- **進捗**: 0 / 16 SP 完了
+- **進捗**: 6 / 16 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-031 | [FE] 重点管理人物一覧・指定・解除画面 UI（Senior/Executive/Admin） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #21 | — | — |
-| TASK-032 | [FE] 育成方針入力・閲覧・履歴画面 UI（Manager 入力 / Talent・Senior 閲覧） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #22 | — | — |
+| TASK-031 | [FE] 重点管理人物一覧・指定・解除画面 UI（Senior/Executive/Admin） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #21 | #31 | feat/21-key-person-ui |
+| TASK-032 | [FE] 育成方針入力・閲覧・履歴画面 UI（Manager 入力 / Talent・Senior 閲覧） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #22 | #32 | feat/22-development-plan-ui |
 | TASK-033 | [FE] 委員会セッション管理画面 UI（作成・一覧・詳細） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-001 | #23 | — | — |
 | TASK-034 | [FE] 委員会向けサマリービュー画面 UI | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-001 | #24 | — | — |
 | TASK-035 | [FE] タレント向けマイページ統合（重点管理バッジ・育成方針表示をキャリアプランページに追加） | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-001 | #25 | — | — |
@@ -119,7 +119,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 36 |
-| 完了 | 26 |
-| 進行中 | 1 |
-| 未着手 | 9 |
+| 完了 | 32 |
+| 進行中 | 0 |
+| 未着手 | 4 |
 | レビュー中 | 0 |
