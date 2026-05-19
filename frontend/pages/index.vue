@@ -86,6 +86,16 @@
         <span class="menu-title">スキルマスター管理</span>
         <span class="menu-desc">カテゴリとスキル種別を管理する</span>
       </NuxtLink>
+
+      <NuxtLink
+        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
+        to="/mdc/key-persons"
+        class="menu-card"
+      >
+        <span class="menu-icon">⭐</span>
+        <span class="menu-title">重点管理人物</span>
+        <span class="menu-desc">重点管理対象のタレントを指定・解除する</span>
+      </NuxtLink>
     </div>
 
     <p class="api-status">
