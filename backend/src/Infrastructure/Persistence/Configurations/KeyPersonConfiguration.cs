@@ -12,7 +12,7 @@ public class KeyPersonConfiguration : IEntityTypeConfiguration<KeyPerson>
         builder.Property(k => k.Reason).HasMaxLength(1000);
 
         builder.HasIndex(k => k.TalentId)
-            .HasFilter("\"IsActive\" = true");
+            .HasFilter("[IsActive] = 1");
 
         builder.HasOne<Domain.Entities.User>()
             .WithMany()

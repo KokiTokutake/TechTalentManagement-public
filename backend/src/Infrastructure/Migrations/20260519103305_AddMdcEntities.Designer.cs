@@ -305,7 +305,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.HasIndex("DesignatedBy");
 
                     b.HasIndex("TalentId")
-                        .HasFilter("\"IsActive\" = true");
+                        .HasFilter("[IsActive] = 1");
 
                     b.ToTable("KeyPersons");
                 });
