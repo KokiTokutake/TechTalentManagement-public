@@ -16,7 +16,7 @@ owner: @KokiTokutake
 | 最終更新 | 2026-05-18 |
 | オーナー | @KokiTokutake |
 | 関連 Issue | #2 |
-| 関連仕様書 | SPEC-EVAL-001（今期目標の参照）、SPEC-SKILL-001（スキルの参照） |
+| 関連仕様書 | SPEC-EVAL-001（今期目標の参照）、SPEC-SKILL-001（スキルの参照）、SPEC-CAREER-002（Will時間軸拡張・Can強み/課題分割）、SPEC-MDC-001（委員会サマリービューへのデータ提供） |
 
 ---
 
@@ -57,7 +57,7 @@ Constitution.md との対応:
 | 用語 | 定義 |
 |------|------|
 | キャリアプラン | タレントが記録する中長期の成長目標と今期の注力テーマ。Willを中心に構成される |
-| Will | なりたい姿・やりたいこと（3〜5年後の目標） |
+| Will | なりたい姿・やりたいこと（3〜5年後の目標）。SPEC-CAREER-002 にて短期（6ヶ月）・中期（1〜3年）・長期（3〜5年）の3軸に拡張される |
 | Can | 現在できること（SPEC-SKILL-001 の承認済みスキル） |
 | Must | やるべきこと（SPEC-EVAL-001 の今期評価目標） |
 | 統合ビュー | Will-Can-Mustを同一ページで確認できる画面 |
@@ -256,3 +256,5 @@ CareerPlanComment
 
 統合ビューは CareerPlan + UserSkill（Can）+ EvaluationGoal（Must）の読み取り集約で実現する。
 EvaluationGoal は SPEC-EVAL-001 で定義済みの目標エンティティを参照する。
+
+> **移行注記（SPEC-CAREER-002 拡張時）**: 本モデルの `LongTermGoal`・`MediumTermGoal`・`CurrentFocus` フィールドは SPEC-CAREER-002 の `WillCanMustEntry` エンティティに移行する（LongTermGoal → timeHorizon=LongTerm, MediumTermGoal → timeHorizon=MidTerm, CurrentFocus → timeHorizon=ShortTerm）。移行後はアーカイブとして読み取り専用で保持し、削除しない。

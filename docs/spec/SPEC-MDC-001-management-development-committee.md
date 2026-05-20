@@ -72,6 +72,8 @@ Senior / Executive / Admin が委員会セッションを作成・記録でき�
 - SPEC-CAREER-001 の統合ビューデータを流用
 - 1ページで全重点管理人物の状況を俯瞰できる
 
+> **拡張**: より詳細な委員会事前資料（スキルサマリー・面談履歴・9ボックス評価を含む）は SPEC-MDC-003 タレントプロファイルとして実現する。
+
 ### REQ-05: タレント向けマイページ表示 【Should】
 
 重点管理人物に指定されているタレントが、自分のキャリアプランページで指定状況と育成方針を確認できる。
@@ -211,7 +213,7 @@ DevelopmentPlan（育成方針）
 CommitteeSession（委員会セッション）
   Id: Guid
   HeldOn: DateOnly（開催日）
-  Minutes: string（議事録）
+  Minutes: string（議事録フリーテキスト。SPEC-MDC-004 で構造化された決定事項・アクションアイテムに拡張される）
   CreatedBy: Guid → User
   CreatedAt: DateTimeOffset
   Participants: ICollection<CommitteeSessionParticipant>
@@ -263,7 +265,12 @@ GET    /api/committee-sessions/{id}       → 詳細
 | Spec ID | 関連内容 |
 |---------|---------|
 | SPEC-CAREER-001 | 統合ビュー（Will-Can-Must）データを委員会サマリーに活用 |
+| SPEC-CAREER-002 | Will-Can-Must深化（時間軸分割・Can強み/課題）の委員会サマリーへの反映 |
 | SPEC-EVAL-001 | 評価ワークフローとの将来的な連携（v2 以降） |
+| SPEC-MDC-002 | 9ボックス評価（委員会での活用） |
+| SPEC-MDC-003 | タレントプロファイル（委員会事前資料の自動生成、REQ-04の発展形） |
+| SPEC-MDC-004 | 委員会議事録の構造化（CommitteeSession.Minutesの拡張） |
+| SPEC-MDC-005 | 後継者計画（委員会での審議） |
 
 ---
 
@@ -273,3 +280,4 @@ GET    /api/committee-sessions/{id}       → 詳細
 |-----------|------|---------|
 | v1.0.0 | 2026-05-18 | 初版作成 |
 | v1.0.1 | 2026-05-18 | /spec-review による改善（REQ-05 AC 参照追加・AC-02-06 追加・API 返却条件明記・参加者ロール制約明記） |
+| v1.0.2 | 2026-05-20 | 関連仕様書更新（SPEC-MDC-002〜005追加）・Minutes拡張注記追加・REQ-04拡張注記追加 |
