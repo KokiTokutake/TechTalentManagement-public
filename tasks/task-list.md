@@ -1,6 +1,6 @@
 # タスク一覧
 
-> 最終更新: 2026-05-19 （/tasks-plan SPEC-MDC-001 により更新）
+> 最終更新: 2026-05-20 （/tasks-plan SPEC-MDC-002 + SPEC-1ON1-001 により更新）
 
 ---
 
@@ -112,14 +112,57 @@
 | TASK-035 | [FE] タレント向けマイページ統合（重点管理バッジ・育成方針表示をキャリアプランページに追加） | ✅ done | @KokiTokutake | 2 | SPEC-MDC-001 | #25 | #35 | feat/25-talent-mypage-integration |
 | TASK-036 | [TEST] 人材開発委員会機能 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #26 | #36 | feat/26-mdc-integration-test |
 
+## Sprint 9 ⬜ 未着手
+
+- **ゴール**: 9ボックス評価・1on1面談記録 バックエンド全実装（DB含む）
+- **期間**: 未定
+- **進捗**: 0 / 16 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-037 | [DB] NineBoxAssessment・CellDefinition スキーマ＋EF Core マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-002 | #38 | — | — |
+| TASK-038 | [BE] 9ボックス評価 API（入力・更新・期間別取得） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #39 | — | — |
+| TASK-039 | [BE] 9ボックスマップ・フィルタ・検索 API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #40 | — | — |
+| TASK-040 | [BE] キャリブレーション API＋重点管理候補自動フラグ・通知 | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #41 | — | — |
+| TASK-041 | [DB] OneOnOneMeeting・MeetingActionItem スキーマ＋マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #42 | — | — |
+| TASK-042 | [BE] 1on1記録 CRUD API（作成・更新・削除・一覧・詳細） | ⬜ pending | @KokiTokutake | 3 | SPEC-1ON1-001 | #43 | — | — |
+
+## Sprint 10 ⬜ 未着手
+
+- **ゴール**: 9ボックス全画面 UI＋1on1 バックエンド残り
+- **期間**: 未定
+- **進捗**: 0 / 14 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-043 | [BE] 宿題管理 API＋前回宿題自動引き継ぎ | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #44 | — | — |
+| TASK-044 | [BE] 委員会連携 API（共有フラグ・サマリー）＋テンプレートマスタ | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #45 | — | — |
+| TASK-045 | [FE] 9ボックス評価入力フォーム UI（上長向け） | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-002 | #46 | — | — |
+| TASK-046 | [FE] 9ボックスマップ画面 UI（グリッド・ポップオーバー・期間切替・フィルタ） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-002 | #47 | — | — |
+| TASK-047 | [FE] キャリブレーション画面 UI（評価分布・統計表示） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #48 | — | — |
+
+## Sprint 11 ⬜ 未着手
+
+- **ゴール**: 1on1全画面 UI＋結合テスト → スプリントゴール達成
+- **期間**: 未定
+- **進捗**: 0 / 13 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-048 | [FE] 1on1記録作成・編集画面 UI（テンプレート選択・宿題入力） | ⬜ pending | @KokiTokutake | 3 | SPEC-1ON1-001 | #49 | — | — |
+| TASK-049 | [FE] 面談履歴一覧 UI＋前回引き継ぎサイドパネル | ⬜ pending | @KokiTokutake | 3 | SPEC-1ON1-001 | #50 | — | — |
+| TASK-050 | [FE] 委員会連携フラグ・MDCサマリー反映 UI | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #51 | — | — |
+| TASK-051 | [TEST] 9ボックス評価 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #52 | — | — |
+| TASK-052 | [TEST] 1on1面談記録 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #53 | — | — |
+
 ---
 
 ## サマリー
 
 | 項目 | 値 |
 |------|----|
-| 総タスク数 | 36 |
-| 完了 | 36 |
+| 総タスク数 | 52 |
+| 完了 | 35 |
 | 進行中 | 0 |
-| 未着手 | 2 |
+| 未着手 | 17 |
 | レビュー中 | 0 |
