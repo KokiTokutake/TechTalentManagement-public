@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <h1>上長評価</h1>
       <!-- T-002（認証）実装まで managerId / periodId / talentUserId はクエリパラメータで受け取る暫定仕様 -->
@@ -9,7 +9,7 @@
     </header>
 
     <div v-if="store.loading" class="loading">読み込み中…</div>
-    <p v-else-if="store.error" class="error" role="alert">{{ store.error }}</p>
+    <p v-else-if="store.error" class="error-box" role="alert">{{ store.error }}</p>
 
     <template v-else>
       <div v-if="store.isConfirmed" class="confirmed-banner" role="status">
@@ -102,7 +102,7 @@
         </button>
       </footer>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -149,13 +149,6 @@ async function handleConfirm() {
 </script>
 
 <style scoped>
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem 6rem;
-  font-family: sans-serif;
-}
-
 .page-header {
   margin-bottom: 2rem;
 }
@@ -164,6 +157,8 @@ async function handleConfirm() {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 0.25rem;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .warn {
@@ -176,20 +171,6 @@ async function handleConfirm() {
   margin: 0;
 }
 
-.loading {
-  color: #6b7280;
-  text-align: center;
-  padding: 3rem 0;
-}
-
-.error {
-  color: #ef4444;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-}
-
 .confirmed-banner {
   background: #f0fdf4;
   border: 1px solid #86efac;
@@ -200,17 +181,13 @@ async function handleConfirm() {
   margin-bottom: 1.5rem;
 }
 
-.section {
-  margin-bottom: 2rem;
-}
-
 .section-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--text-secondary);
   margin: 0 0 0.75rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--border);
 }
 
 .goal-eval-list {
@@ -220,8 +197,8 @@ async function handleConfirm() {
 }
 
 .goal-eval-row {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.875rem 1rem;
 }
@@ -236,7 +213,7 @@ async function handleConfirm() {
 .goal-title {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #111827;
+  color: var(--text);
 }
 
 .category-badge {
@@ -247,25 +224,25 @@ async function handleConfirm() {
   flex-shrink: 0;
 }
 
-.badge-will { background: #dbeafe; color: #1d4ed8; }
+.badge-will { background: #dbeafe; color: var(--accent); }
 .badge-can  { background: #d1fae5; color: #065f46; }
-.badge-must { background: #fee2e2; color: #991b1b; }
+.badge-must { background: #fee2e2; color: var(--danger-text); }
 
 .talent-scores {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
   font-size: 0.875rem;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
 .talent-scores.no-input {
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .score-chip {
   background: #eff6ff;
-  color: #1d4ed8;
+  color: var(--accent);
   border-radius: 999px;
   padding: 0.15rem 0.6rem;
   font-weight: 700;
@@ -279,7 +256,7 @@ async function handleConfirm() {
 }
 
 .no-comment {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-style: italic;
 }
 
@@ -293,10 +270,10 @@ async function handleConfirm() {
 .label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
-.required { color: #ef4444; }
+.required { color: var(--danger); }
 
 .score-buttons {
   display: flex;
@@ -307,12 +284,12 @@ async function handleConfirm() {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 8px;
-  border: 2px solid #e5e7eb;
-  background: #f9fafb;
+  border: 2px solid var(--border);
+  background: var(--surface-muted);
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  color: #374151;
+  color: var(--text-secondary);
   transition: all 0.12s;
 }
 
@@ -325,7 +302,7 @@ async function handleConfirm() {
 .score-btn.active {
   border-color: #7c3aed;
   background: #7c3aed;
-  color: #fff;
+  color: var(--surface);
 }
 
 .score-btn:disabled {
@@ -334,11 +311,11 @@ async function handleConfirm() {
 
 .unscored {
   font-size: 0.8rem;
-  color: #ef4444;
+  color: var(--danger);
 }
 
 textarea {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 6px;
   padding: 0.6rem 0.75rem;
   font-size: 0.95rem;
@@ -354,7 +331,7 @@ textarea:focus {
 }
 
 textarea:disabled {
-  background: #f3f4f6;
+  background: var(--surface-muted);
 }
 
 .action-footer {
@@ -362,8 +339,8 @@ textarea:disabled {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  border-top: 1px solid #e5e7eb;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -374,19 +351,19 @@ textarea:disabled {
 
 .save-status {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   flex: 1;
 }
 
 .confirm-error {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 0.85rem;
   margin: 0;
 }
 
 .btn-confirm {
   background: #7c3aed;
-  color: #fff;
+  color: var(--surface);
   border: none;
   border-radius: 8px;
   padding: 0.65rem 1.75rem;

@@ -1,11 +1,11 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <h1>自己評価</h1>
     </header>
 
     <div v-if="store.loading" class="loading">読み込み中…</div>
-    <p v-else-if="store.error" class="error" role="alert">{{ store.error }}</p>
+    <p v-else-if="store.error" class="error-box" role="alert">{{ store.error }}</p>
 
     <template v-else>
       <div v-if="store.isSubmitted" class="submitted-banner" role="status">
@@ -45,7 +45,7 @@
         </button>
       </footer>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -87,13 +87,6 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem 6rem;
-  font-family: sans-serif;
-}
-
 .page-header {
   margin-bottom: 2rem;
 }
@@ -102,6 +95,8 @@ async function handleSubmit() {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 0.25rem;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .warn {
@@ -111,20 +106,6 @@ async function handleSubmit() {
   border: 1px solid #fcd34d;
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
-}
-
-.loading {
-  color: #6b7280;
-  text-align: center;
-  padding: 3rem 0;
-}
-
-.error {
-  color: #ef4444;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
 }
 
 .submitted-banner {
@@ -138,10 +119,10 @@ async function handleSubmit() {
 }
 
 .empty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 0.875rem;
   padding: 2rem;
-  border: 1px dashed #e5e7eb;
+  border: 1px dashed var(--border);
   border-radius: 8px;
   text-align: center;
 }
@@ -157,8 +138,8 @@ async function handleSubmit() {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  border-top: 1px solid #e5e7eb;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -169,19 +150,19 @@ async function handleSubmit() {
 
 .save-status {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   flex: 1;
 }
 
 .submit-error {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 0.85rem;
   margin: 0;
 }
 
 .btn-submit {
   background: #16a34a;
-  color: #fff;
+  color: var(--surface);
   border: none;
   border-radius: 8px;
   padding: 0.65rem 1.75rem;

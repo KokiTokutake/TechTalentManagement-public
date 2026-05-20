@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/mdc/sessions" class="back-link">← 委員会セッション一覧</NuxtLink>
       <h1>委員会セッション詳細</h1>
@@ -50,7 +50,7 @@
         </section>
       </div>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -98,44 +98,14 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header { margin-bottom: 1.5rem; }
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-}
-.back-link:hover { color: #2563eb; }
 
 h1 {
   font-size: 1.5rem;
   font-weight: 800;
   margin: 0;
-  color: #111827;
-}
-
-.loading {
-  text-align: center;
-  color: #9ca3af;
-  padding: 3rem 0;
-}
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  color: #dc2626;
-  font-size: 0.875rem;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .meta-bar {
@@ -149,26 +119,18 @@ h1 {
 .session-date-large {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #1d4ed8;
+  color: var(--accent);
 }
 
 .created-at {
   font-size: 0.8rem;
-  color: #9ca3af;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  color: var(--text-muted);
 }
 
 .section-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
   margin: 0 0 1rem;
   display: flex;
   align-items: center;
@@ -178,15 +140,15 @@ h1 {
 .count-badge {
   font-size: 0.75rem;
   font-weight: 400;
-  color: #6b7280;
-  background: #f3f4f6;
+  color: var(--text-secondary);
+  background: var(--surface-muted);
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
 }
 
 .minutes-text {
   font-size: 0.9rem;
-  color: #111827;
+  color: var(--text);
   white-space: pre-wrap;
   word-break: break-word;
   line-height: 1.7;
@@ -214,14 +176,14 @@ h1 {
 
 .person-item {
   font-size: 0.875rem;
-  color: #111827;
+  color: var(--text);
   padding: 0.35rem 0;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--surface-muted);
 }
 .person-item:last-child { border-bottom: none; }
 
 .person-link {
-  color: #2563eb;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 600;
 }
@@ -229,6 +191,6 @@ h1 {
 
 .cell-empty {
   font-size: 0.875rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 </style>

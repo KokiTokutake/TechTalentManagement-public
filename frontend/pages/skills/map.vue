@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap-wide">
     <header class="page-header">
       <NuxtLink to="/" class="back-link">← ホームへ戻る</NuxtLink>
       <h1>組織スキルマップ</h1>
@@ -11,10 +11,10 @@
     <div v-if="loading" class="loading">読み込み中…</div>
 
     <template v-else-if="skillMap">
-      <div v-if="!skillMap.users.length" class="empty-state">
+      <div v-if="!skillMap.users.length" class="empty-note">
         タレントが登録されていません。
       </div>
-      <div v-else-if="!skillMap.categories.length" class="empty-state">
+      <div v-else-if="!skillMap.categories.length" class="empty-note">
         承認済みスキルがまだありません。
       </div>
 
@@ -61,7 +61,7 @@
         </div>
       </section>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -121,48 +121,20 @@ function levelTooltip(level: number | null): string {
 </script>
 
 <style scoped>
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header { margin-bottom: 2rem; }
 
-.back-link {
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-}
-.back-link:hover { color: #2563eb; }
-
-h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
-.subtitle { font-size: 0.9rem; color: #9ca3af; margin: 0; }
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
-  color: #991b1b;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-.loading, .empty-state { color: #9ca3af; font-size: 0.9rem; padding: 2rem 0; text-align: center; }
+h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text); font-family: var(--font-heading); }
+.subtitle { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
 
 .category-section { margin-bottom: 2rem; }
 
 .category-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--text-secondary);
   margin: 0 0 0.75rem;
   padding-bottom: 0.4rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--border);
 }
 
 .table-wrapper { overflow-x: auto; }
@@ -174,11 +146,11 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
 }
 
 .skill-table th {
-  background: #f9fafb;
+  background: var(--surface-muted);
   font-weight: 700;
-  color: #374151;
+  color: var(--text-secondary);
   padding: 0.5rem 0.75rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   white-space: nowrap;
 }
 
@@ -187,7 +159,7 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
 
 .skill-table td {
   padding: 0.4rem 0.5rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   text-align: center;
   font-weight: 700;
 }
@@ -195,14 +167,14 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
 .skill-col.skill-table td,
 td.skill-col {
   text-align: left;
-  color: #374151;
+  color: var(--text-secondary);
   font-weight: 400;
-  background: #fff;
+  background: var(--surface);
 }
 
 .level-cell { font-size: 0.9rem; font-weight: 700; }
 
-.empty-cell { color: #d1d5db; font-weight: 400; font-size: 0.85rem; }
+.empty-cell { color: var(--border-strong); font-weight: 400; font-size: 0.85rem; }
 
 /* レベル別カラー */
 .lv-1 { background: #f0fdf4; color: #166534; }
@@ -215,12 +187,12 @@ td.skill-col {
 .legend {
   margin-top: 2rem;
   padding: 1rem 1.25rem;
-  background: #f9fafb;
+  background: var(--surface-muted);
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
 }
 
-.legend h3 { font-size: 0.85rem; font-weight: 700; color: #374151; margin: 0 0 0.5rem; }
+.legend h3 { font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); margin: 0 0 0.5rem; }
 
 .legend-items { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 

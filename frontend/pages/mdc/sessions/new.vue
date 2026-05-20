@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/mdc/sessions" class="back-link">← 委員会セッション一覧</NuxtLink>
       <h1>委員会セッションを作成</h1>
@@ -80,7 +80,7 @@
         </button>
       </div>
     </form>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -157,46 +157,14 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header { margin-bottom: 2rem; }
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-}
-.back-link:hover { color: #2563eb; }
 
 h1 {
   font-size: 1.5rem;
   font-weight: 800;
   margin: 0;
-  color: #111827;
-}
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  color: #dc2626;
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.75rem;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .session-form {
@@ -214,25 +182,25 @@ h1 {
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
-.required { color: #dc2626; }
+.required { color: var(--danger); }
 
 .form-input,
 .form-textarea {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
   font-size: 0.875rem;
-  color: #111827;
-  background: #fff;
+  color: var(--text);
+  background: var(--surface);
   transition: border-color 0.12s;
 }
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 .form-textarea { resize: vertical; }
@@ -243,7 +211,7 @@ h1 {
   gap: 0.5rem;
   max-height: 220px;
   overflow-y: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.75rem;
 }
@@ -270,13 +238,13 @@ h1 {
 .role-manager  { background: #d1fae5; color: #065f46; }
 .role-senior   { background: #fef3c7; color: #92400e; }
 .role-executive { background: #fee2e2; color: #991b1b; }
-.role-admin    { background: #f3f4f6; color: #374151; }
+.role-admin    { background: var(--surface-muted); color: var(--text-secondary); }
 
-.checkbox-name { color: #111827; }
+.checkbox-name { color: var(--text); }
 
 .hint-text {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .form-actions {
@@ -285,34 +253,4 @@ h1 {
   gap: 0.75rem;
   padding-top: 0.5rem;
 }
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
-  border-radius: 8px;
-  padding: 0.6rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.btn-secondary:hover { background: #f9fafb; }
-
-.btn-primary {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.btn-primary:hover:not(:disabled) { background: #1d4ed8; }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 </style>

@@ -57,9 +57,9 @@ defineEmits<{
 
 <style scoped>
 .eval-item {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -67,21 +67,13 @@ defineEmits<{
 }
 
 .eval-item.submitted {
-  background: #f9fafb;
+  background: var(--surface-muted);
   opacity: 0.85;
 }
 
-.goal-header {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
+.goal-header { display: flex; align-items: center; gap: 0.6rem; }
 
-.goal-title {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #111827;
-}
+.goal-title { font-weight: 600; font-size: 0.9rem; color: var(--text); }
 
 .category-badge {
   font-size: 0.72rem;
@@ -92,83 +84,68 @@ defineEmits<{
 }
 
 .badge-will { background: #dbeafe; color: #1d4ed8; }
-.badge-can  { background: #d1fae5; color: #065f46; }
-.badge-must { background: #fee2e2; color: #991b1b; }
+.badge-can  { background: var(--success-bg); color: var(--success-text); }
+.badge-must { background: var(--danger-bg); color: var(--danger-text); }
 
-.score-row,
-.comment-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
+.score-row, .comment-row { display: flex; align-items: flex-start; gap: 1rem; }
 
 .label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--text-muted);
   width: 4rem;
   flex-shrink: 0;
   padding-top: 0.35rem;
 }
 
-.score-buttons {
-  display: flex;
-  gap: 0.4rem;
-}
+.score-buttons { display: flex; gap: 0.4rem; }
 
 .score-btn {
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 6px;
-  border: 2px solid #e5e7eb;
-  background: #f9fafb;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--surface-muted);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
   cursor: pointer;
-  color: #374151;
-  transition: all 0.12s;
+  color: var(--text-secondary);
 }
 
 .score-btn:hover:not(:disabled) {
-  border-color: #2563eb;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
 }
 
 .score-btn.active {
-  border-color: #2563eb;
-  background: #2563eb;
+  border-color: var(--accent);
+  background: var(--accent);
   color: #fff;
 }
 
-.score-btn:disabled {
-  cursor: not-allowed;
-}
+.score-btn:disabled { cursor: not-allowed; }
 
-.unscored {
-  font-size: 0.8rem;
-  color: #ef4444;
-  padding-top: 0.45rem;
-}
+.unscored { font-size: 0.8rem; color: var(--danger); padding-top: 0.45rem; }
 
 textarea {
   flex: 1;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--surface);
   resize: vertical;
   outline: none;
-  transition: border-color 0.15s;
-  font-family: inherit;
 }
 
 textarea:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.12);
 }
 
-textarea:disabled {
-  background: #f3f4f6;
-}
+textarea:disabled { background: var(--surface-muted); }
 </style>

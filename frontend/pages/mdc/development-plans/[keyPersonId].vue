@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/mdc/key-persons" class="back-link">← 重点管理人物一覧</NuxtLink>
       <h1>育成方針</h1>
@@ -74,7 +74,7 @@
           <span class="version-count">{{ store.plans.length }} 件</span>
         </h2>
 
-        <div v-if="store.plans.length === 0" class="empty-state">
+        <div v-if="store.plans.length === 0" class="empty-note">
           まだ育成方針が登録されていません。
         </div>
 
@@ -111,7 +111,7 @@
         </div>
       </section>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -182,68 +182,28 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header {
   margin-bottom: 2rem;
 }
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-}
-
-.back-link:hover { color: #2563eb; }
 
 h1 {
   font-size: 1.5rem;
   font-weight: 800;
   margin: 0 0 0.25rem;
-  color: #111827;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 0;
-}
-
-.loading {
-  text-align: center;
-  color: #9ca3af;
-  padding: 3rem 0;
-}
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  color: #dc2626;
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
 }
 
 .section-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
   margin: 0 0 1.25rem;
   display: flex;
   align-items: center;
@@ -253,7 +213,7 @@ h1 {
 .version-count {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .form-error { margin-bottom: 1rem; }
@@ -279,25 +239,25 @@ h1 {
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
 .form-textarea,
 .form-input {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
   font-size: 0.875rem;
-  color: #111827;
-  background: #fff;
+  color: var(--text);
+  background: var(--surface);
   transition: border-color 0.12s;
 }
 
 .form-textarea:focus,
 .form-input:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
@@ -305,31 +265,8 @@ h1 {
 
 .hint-text {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   margin: 0;
-}
-
-.btn-primary {
-  align-self: flex-start;
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.65rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btn-primary:hover:not(:disabled) { background: #1d4ed8; }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.empty-state {
-  color: #9ca3af;
-  font-size: 0.875rem;
-  padding: 1.5rem 0;
-  text-align: center;
 }
 
 .plan-list {
@@ -339,10 +276,10 @@ h1 {
 }
 
 .plan-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1.25rem;
-  background: #fafafa;
+  background: var(--surface-muted);
 }
 
 .plan-card--latest {
@@ -360,8 +297,8 @@ h1 {
 
 .version-badge {
   display: inline-block;
-  background: #e5e7eb;
-  color: #374151;
+  background: var(--border);
+  color: var(--text-secondary);
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.2rem 0.6rem;
@@ -369,13 +306,13 @@ h1 {
 }
 
 .version-badge--latest {
-  background: #2563eb;
-  color: #fff;
+  background: var(--accent);
+  color: var(--surface);
 }
 
 .plan-date {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .due-date-badge {
@@ -398,14 +335,14 @@ h1 {
 .plan-dt {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--text-secondary);
   white-space: nowrap;
   padding-top: 0.1rem;
 }
 
 .plan-dd {
   font-size: 0.875rem;
-  color: #111827;
+  color: var(--text);
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;

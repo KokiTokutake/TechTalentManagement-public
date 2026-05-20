@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/" class="back-link">← ホーム</NuxtLink>
       <div class="header-row">
@@ -18,7 +18,7 @@
     <div v-else-if="store.error" class="error-box">{{ store.error }}</div>
 
     <template v-else>
-      <div v-if="store.sessions.length === 0" class="empty-state">
+      <div v-if="store.sessions.length === 0" class="empty-note">
         委員会セッションはまだ登録されていません。
       </div>
 
@@ -41,7 +41,7 @@
         </NuxtLink>
       </div>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -71,23 +71,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header { margin-bottom: 2rem; }
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-}
-.back-link:hover { color: #2563eb; }
 
 .header-row {
   display: flex;
@@ -100,50 +84,14 @@ h1 {
   font-size: 1.5rem;
   font-weight: 800;
   margin: 0 0 0.25rem;
-  color: #111827;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 0;
-}
-
-.btn-primary {
-  display: inline-block;
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.15s;
-}
-.btn-primary:hover { background: #1d4ed8; }
-
-.loading {
-  text-align: center;
-  color: #9ca3af;
-  padding: 3rem 0;
-}
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  color: #dc2626;
-  font-size: 0.875rem;
-}
-
-.empty-state {
-  color: #9ca3af;
-  font-size: 0.875rem;
-  padding: 3rem 0;
-  text-align: center;
 }
 
 .session-list {
@@ -158,9 +106,9 @@ h1 {
   justify-content: space-between;
   gap: 1rem;
   padding: 1.25rem 1.5rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  background: #fff;
+  background: var(--surface);
   text-decoration: none;
   transition: all 0.12s;
 }
@@ -174,12 +122,12 @@ h1 {
 .session-date {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #1d4ed8;
+  color: var(--accent);
 }
 
 .session-minutes-preview {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 0.35rem 0 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -194,8 +142,8 @@ h1 {
 }
 
 .badge-count {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--surface-muted);
+  color: var(--text-secondary);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
@@ -205,6 +153,6 @@ h1 {
 
 .arrow {
   font-size: 1.2rem;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 </style>

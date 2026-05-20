@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap-wide">
     <header class="page-header">
       <NuxtLink to="/" class="back-link">← ホーム</NuxtLink>
       <h1>組織キャリアプラン俯瞰</h1>
@@ -48,7 +48,7 @@
         </tbody>
       </table>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -72,53 +72,22 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header {
   margin-bottom: 2rem;
 }
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-}
-
-.back-link:hover { color: #2563eb; }
 
 h1 {
   font-size: 1.5rem;
   font-weight: 800;
   margin: 0 0 0.25rem;
-  color: #111827;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 0;
-}
-
-.loading {
-  text-align: center;
-  color: #9ca3af;
-  padding: 3rem 0;
-}
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  color: #dc2626;
-  font-size: 0.875rem;
 }
 
 .summary-bar {
@@ -131,12 +100,12 @@ h1 {
 .summary-count {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
 }
 
 .summary-sub {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .overview-table {
@@ -148,27 +117,27 @@ h1 {
 .overview-table th {
   text-align: left;
   padding: 0.65rem 1rem;
-  background: #f9fafb;
-  border-bottom: 2px solid #e5e7eb;
+  background: var(--surface-muted);
+  border-bottom: 2px solid var(--border);
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
 .overview-table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--surface-muted);
   vertical-align: top;
-  color: #111827;
+  color: var(--text);
 }
 
 .overview-table tr:hover td {
-  background: #f9fafb;
+  background: var(--surface-muted);
 }
 
 .user-link {
   font-weight: 600;
-  color: #2563eb;
+  color: var(--accent);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -183,14 +152,14 @@ h1 {
 }
 
 .cell-empty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 0.8rem;
 }
 
 .year-badge {
   display: inline-block;
   background: #dbeafe;
-  color: #1d4ed8;
+  color: var(--accent);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.15rem 0.5rem;

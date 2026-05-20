@@ -1,127 +1,139 @@
 <template>
-  <main class="container">
-    <header class="page-header">
-      <div class="header-top">
-        <h1>TeckTalentManagement</h1>
-        <button class="btn-logout" @click="handleLogout">ユーザー切替</button>
+  <div class="page-wrap">
+    <!-- Welcome header -->
+    <header class="dashboard-header">
+      <div class="dashboard-greeting">
+        <h1 class="greeting-title">
+          おはようございます、<br>{{ auth.currentUser?.displayName }} さん
+        </h1>
+        <p class="greeting-sub">
+          <span class="role-badge" :class="`role-${auth.currentUser!.role.toLowerCase()}`">
+            {{ roleLabel(auth.currentUser!.role) }}
+          </span>
+          <span class="api-pill" :class="apiOk ? 'api-ok' : 'api-err'">
+            {{ apiOk ? 'API 接続中' : 'API 接続エラー' }}
+          </span>
+        </p>
       </div>
-      <div class="user-info">
-        <span class="role-badge" :class="`role-${auth.currentUser!.role.toLowerCase()}`">
-          {{ roleLabel(auth.currentUser!.role) }}
-        </span>
-        <span class="user-name">{{ auth.currentUser!.displayName }}</span>
-        <span class="period-name">{{ auth.currentPeriod?.name ?? '期間未選択' }}</span>
+      <div v-if="auth.currentPeriod" class="period-badge">
+        <span class="period-badge-label">考課期間</span>
+        <span class="period-badge-name">{{ auth.currentPeriod.name }}</span>
+        <span class="period-badge-phase">{{ phaseLabel }}</span>
       </div>
     </header>
 
-    <div class="menu-grid">
-      <NuxtLink
-        v-if="auth.currentPeriod"
-        :to="`/periods/${auth.currentPeriod.id}/goals`"
-        class="menu-card"
-      >
-        <span class="menu-icon">🎯</span>
-        <span class="menu-title">目標設定</span>
-        <span class="menu-desc">Will / Can / Must の目標を登録・管理する</span>
-      </NuxtLink>
+    <!-- Quick actions based on role -->
+    <section class="section">
+      <h2 class="section-title">クイックアクション</h2>
+      <div class="action-grid">
+        <NuxtLink
+          v-for="action in quickActions"
+          :key="action.to"
+          :to="action.to"
+          class="action-card"
+        >
+          <span class="action-number">{{ action.num }}</span>
+          <div class="action-content">
+            <span class="action-title">{{ action.title }}</span>
+            <span class="action-desc">{{ action.desc }}</span>
+          </div>
+          <span class="action-arrow">→</span>
+        </NuxtLink>
+      </div>
+    </section>
 
-      <NuxtLink
-        v-if="auth.currentPeriod"
-        :to="`/periods/${auth.currentPeriod.id}/self-evaluation`"
-        class="menu-card"
-      >
-        <span class="menu-icon">📝</span>
-        <span class="menu-title">自己評価</span>
-        <span class="menu-desc">目標ごとの達成度を入力・提出する</span>
-      </NuxtLink>
+    <!-- All features -->
+    <section class="section">
+      <h2 class="section-title">すべての機能</h2>
+      <div class="feature-groups">
+        <!-- Personal -->
+        <div class="feature-group">
+          <h3 class="feature-group-label">マイページ</h3>
+          <div class="feature-list">
+            <NuxtLink
+              v-if="auth.currentPeriod"
+              :to="`/periods/${auth.currentPeriod.id}/goals`"
+              class="feature-item"
+            >
+              <span>目標設定</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink
+              v-if="auth.currentPeriod"
+              :to="`/periods/${auth.currentPeriod.id}/self-evaluation`"
+              class="feature-item"
+            >
+              <span>自己評価</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink to="/career" class="feature-item">
+              <span>キャリアプラン</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink to="/skills/my" class="feature-item">
+              <span>スキル管理</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+          </div>
+        </div>
 
-      <NuxtLink to="/career" class="menu-card">
-        <span class="menu-icon">🗺</span>
-        <span class="menu-title">キャリアプラン</span>
-        <span class="menu-desc">Will・Can・Must を統合したキャリアプランを確認・編集する</span>
-      </NuxtLink>
+        <!-- Team management -->
+        <div
+          v-if="auth.currentUser?.role === 'Manager' || isSeniorPlus"
+          class="feature-group"
+        >
+          <h3 class="feature-group-label">チーム管理</h3>
+          <div class="feature-list">
+            <NuxtLink to="/skills/approval" class="feature-item">
+              <span>スキル承認</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink v-if="isSeniorPlus" to="/skills/map" class="feature-item">
+              <span>組織スキルマップ</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink v-if="isSeniorPlus" to="/career/org-overview" class="feature-item">
+              <span>組織キャリア俯瞰</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+          </div>
+        </div>
 
-      <NuxtLink to="/skills/my" class="menu-card">
-        <span class="menu-icon">🛠</span>
-        <span class="menu-title">スキル管理</span>
-        <span class="menu-desc">自分のスキルを登録・編集する</span>
-      </NuxtLink>
+        <!-- MDC -->
+        <div
+          v-if="auth.currentUser?.role === 'Manager' || isSeniorPlus"
+          class="feature-group"
+        >
+          <h3 class="feature-group-label">人材開発委員会</h3>
+          <div class="feature-list">
+            <NuxtLink v-if="isSeniorPlus" to="/mdc/key-persons" class="feature-item">
+              <span>重点管理人物</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink to="/mdc/sessions" class="feature-item">
+              <span>委員会セッション</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+            <NuxtLink v-if="isSeniorPlus" to="/mdc/summary" class="feature-item">
+              <span>委員会サマリー</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+          </div>
+        </div>
 
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Manager' || auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
-        to="/skills/approval"
-        class="menu-card"
-      >
-        <span class="menu-icon">✅</span>
-        <span class="menu-title">スキル承認</span>
-        <span class="menu-desc">部下のスキル申請を承認・差し戻しする</span>
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
-        to="/skills/map"
-        class="menu-card"
-      >
-        <span class="menu-icon">🗺</span>
-        <span class="menu-title">組織スキルマップ</span>
-        <span class="menu-desc">全エンジニアのスキル分布を確認する</span>
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
-        to="/career/org-overview"
-        class="menu-card"
-      >
-        <span class="menu-icon">👥</span>
-        <span class="menu-title">組織キャリア俯瞰</span>
-        <span class="menu-desc">全タレントのキャリアプランサマリーを一覧で確認する</span>
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Admin'"
-        to="/admin/skill-master"
-        class="menu-card"
-      >
-        <span class="menu-icon">⚙</span>
-        <span class="menu-title">スキルマスター管理</span>
-        <span class="menu-desc">カテゴリとスキル種別を管理する</span>
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
-        to="/mdc/key-persons"
-        class="menu-card"
-      >
-        <span class="menu-icon">⭐</span>
-        <span class="menu-title">重点管理人物</span>
-        <span class="menu-desc">重点管理対象のタレントを指定・解除する</span>
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin' || auth.currentUser?.role === 'Manager'"
-        to="/mdc/sessions"
-        class="menu-card"
-      >
-        <span class="menu-icon">📋</span>
-        <span class="menu-title">委員会セッション</span>
-        <span class="menu-desc">人材開発委員会の開催記録を管理する</span>
-      </NuxtLink>
-
-      <NuxtLink
-        v-if="auth.currentUser?.role === 'Senior' || auth.currentUser?.role === 'Executive' || auth.currentUser?.role === 'Admin'"
-        to="/mdc/summary"
-        class="menu-card"
-      >
-        <span class="menu-icon">📊</span>
-        <span class="menu-title">委員会サマリー</span>
-        <span class="menu-desc">重点管理人物の Will・Can・Must 状況を俯瞰する</span>
-      </NuxtLink>
-    </div>
-
-    <p class="api-status">
-      API: <strong>{{ apiStatus }}</strong>
-    </p>
-  </main>
+        <!-- Admin -->
+        <div v-if="auth.currentUser?.role === 'Admin'" class="feature-group">
+          <h3 class="feature-group-label">管理</h3>
+          <div class="feature-list">
+            <NuxtLink to="/admin/skill-master" class="feature-item">
+              <span>スキルマスター管理</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -130,125 +142,237 @@ const config = useRuntimeConfig()
 
 const { data, error } = await useFetch<{ status: string }>(
   `${config.public.apiBaseUrl}/health`,
-  { server: false }
+  { server: false },
 )
 
-const apiStatus = computed(() =>
-  error.value ? '接続エラー' : (data.value?.status ?? '確認中…')
-)
+const apiOk = computed(() => !error.value && !!data.value)
 
-function roleLabel(role: string) {
+const role = computed(() => auth.currentUser?.role ?? '')
+const isSeniorPlus = computed(() => ['Senior', 'Executive', 'Admin'].includes(role.value))
+
+function roleLabel(r: string) {
   const map: Record<string, string> = {
     Talent: 'タレント', Manager: '上長', Senior: '管理職', Executive: '幹部長', Admin: '管理者',
   }
-  return map[role] ?? role
+  return map[r] ?? r
 }
 
-async function handleLogout() {
-  auth.logout()
-  await navigateTo('/select-user')
-}
+const phaseLabel = computed(() => {
+  const phase = auth.currentPeriod?.currentPhase ?? ''
+  const map: Record<string, string> = {
+    GoalRegistration: '目標登録フェーズ',
+    SelfEvaluation: '自己評価フェーズ',
+    ManagerEvaluation: '上長評価フェーズ',
+    Confirmation: '確定フェーズ',
+    Closed: '完了',
+  }
+  return map[phase] ?? phase
+})
+
+const quickActions = computed(() => {
+  const actions: { num: string, to: string, title: string, desc: string }[] = []
+  const period = auth.currentPeriod
+
+  if (period) {
+    const phase = period.currentPhase
+    if (phase === 'GoalRegistration') {
+      actions.push({ num: '01', to: `/periods/${period.id}/goals`, title: '目標を設定する', desc: 'Will / Can / Must の目標を登録する' })
+    }
+    if (phase === 'SelfEvaluation') {
+      actions.push({ num: '01', to: `/periods/${period.id}/self-evaluation`, title: '自己評価を入力する', desc: '今期の達成度を入力・提出する' })
+    }
+    if (phase === 'ManagerEvaluation' && (role.value === 'Manager' || isSeniorPlus.value)) {
+      actions.push({ num: '01', to: '/skills/approval', title: '上長評価を実施する', desc: '部下の自己評価を確認し上長評価を入力する' })
+    }
+  }
+
+  actions.push({ num: actions.length === 0 ? '01' : '02', to: '/career', title: 'キャリアプランを確認する', desc: 'Will・Can・Must を統合した自分のキャリアプラン' })
+  actions.push({ num: String(actions.length).padStart(2, '0'), to: '/skills/my', title: 'スキルを管理する', desc: '自分のスキルを登録・更新する' })
+
+  if (isSeniorPlus.value) {
+    actions.push({ num: String(actions.length).padStart(2, '0'), to: '/mdc/key-persons', title: '重点管理人物を確認する', desc: '育成強化対象のタレントを管理する' })
+  }
+
+  return actions.slice(0, 3)
+})
 </script>
 
 <style scoped>
-.container {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
-.page-header {
-  margin-bottom: 2rem;
-}
-
-.header-top {
+.dashboard-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
 }
 
-h1 {
-  font-size: 1.4rem;
-  font-weight: 800;
-  margin: 0;
-  color: #111827;
+.greeting-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  line-height: 1.4;
 }
 
-.btn-logout {
-  background: none;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  color: #6b7280;
-  cursor: pointer;
-}
-
-.btn-logout:hover { background: #f3f4f6; }
-
-.user-info {
+.greeting-sub {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
-.role-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
+.api-pill {
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
 }
+.api-ok  { background: var(--success-bg); color: var(--success-text); }
+.api-err { background: var(--danger-bg); color: var(--danger-text); }
 
-.role-talent   { background: #dbeafe; color: #1d4ed8; }
-.role-manager  { background: #d1fae5; color: #065f46; }
-.role-senior   { background: #fef3c7; color: #92400e; }
-.role-executive { background: #fee2e2; color: #991b1b; }
-.role-admin    { background: #f3f4f6; color: #374151; }
-
-.user-name {
-  font-weight: 600;
-  color: #111827;
-}
-
-.period-name {
-  font-size: 0.85rem;
-  color: #9ca3af;
-}
-
-.menu-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.menu-card {
+.period-badge {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 1.5rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
+  align-items: flex-end;
+  gap: 0.15rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.period-badge-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.period-badge-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-heading);
+}
+
+.period-badge-phase {
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+/* Action cards */
+.action-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   text-decoration: none;
-  transition: all 0.12s;
+  transition: border-color 0.12s, box-shadow 0.12s;
 }
 
-.menu-card:hover {
-  border-color: #2563eb;
-  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.1);
-  transform: translateY(-1px);
+.action-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
 }
 
-.menu-icon { font-size: 1.75rem; }
-.menu-title { font-weight: 700; font-size: 1rem; color: #111827; }
-.menu-desc  { font-size: 0.8rem; color: #6b7280; }
+.action-number {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.6;
+  min-width: 2ch;
+}
 
-.api-status {
+.action-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.action-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.action-desc {
   font-size: 0.8rem;
-  color: #9ca3af;
-  text-align: center;
+  color: var(--text-muted);
+}
+
+.action-arrow {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.action-card:hover .action-arrow {
+  color: var(--accent);
+}
+
+/* Feature groups */
+.feature-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.feature-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.feature-group-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.65rem 1rem;
+  background: var(--surface-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.feature-list {
+  padding: 0.35rem 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.feature-item:hover {
+  background: var(--surface-muted);
+  color: var(--accent);
+}
+
+.feature-arrow {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 </style>

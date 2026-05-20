@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/" class="back-link">← ホームへ戻る</NuxtLink>
       <h1>スキル承認</h1>
@@ -10,7 +10,7 @@
 
     <div v-if="store.loading" class="loading">読み込み中…</div>
 
-    <div v-else-if="!store.subordinateSkills.length" class="empty-state">
+    <div v-else-if="!store.subordinateSkills.length" class="empty-note">
       <p>現在、承認待ちのスキル申請はありません。</p>
     </div>
 
@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -135,56 +135,28 @@ function extractError(e: unknown): string | null {
 </script>
 
 <style scoped>
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header { margin-bottom: 2rem; }
 
-.back-link {
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-}
-.back-link:hover { color: #2563eb; }
-
-h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
-.subtitle { font-size: 0.9rem; color: #9ca3af; margin: 0; }
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
-  color: #991b1b;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-.loading, .empty-state { color: #9ca3af; font-size: 0.9rem; padding: 2rem 0; text-align: center; }
+h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text); font-family: var(--font-heading); }
+.subtitle { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
 
 .user-group { margin-bottom: 2rem; }
 
 .user-name {
   font-size: 1rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--text-secondary);
   padding: 0.5rem 0;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--border);
   margin: 0 0 0.75rem;
 }
 
 .skill-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 0.6rem;
-  background: #fff;
+  background: var(--surface);
 }
 
 .skill-header {
@@ -205,31 +177,31 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
 
 .category-tag {
   font-size: 0.75rem;
-  background: #f3f4f6;
-  color: #6b7280;
+  background: var(--surface-muted);
+  color: var(--text-secondary);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
 }
 
-.skill-name { font-weight: 700; color: #111827; }
+.skill-name { font-weight: 700; color: var(--text); }
 
 .level-badge {
   font-size: 0.78rem;
   font-weight: 700;
   background: #dbeafe;
-  color: #1d4ed8;
+  color: var(--accent);
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
 }
 
 .skill-actions { display: flex; gap: 0.4rem; }
 
-.skill-comment { font-size: 0.85rem; color: #6b7280; margin: 0.4rem 0 0; }
-.skill-date { font-size: 0.78rem; color: #9ca3af; margin: 0.3rem 0 0; }
+.skill-comment { font-size: 0.85rem; color: var(--text-secondary); margin: 0.4rem 0 0; }
+.skill-date { font-size: 0.78rem; color: var(--text-muted); margin: 0.3rem 0 0; }
 
 .btn-approve {
   background: #059669;
-  color: #fff;
+  color: var(--surface);
   border: none;
   border-radius: 6px;
   padding: 0.35rem 0.85rem;
@@ -242,42 +214,21 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
 .btn-reject {
   background: none;
   border: 1px solid #f87171;
-  color: #ef4444;
+  color: var(--danger);
   border-radius: 6px;
   padding: 0.35rem 0.85rem;
   font-size: 0.85rem;
   cursor: pointer;
   white-space: nowrap;
 }
-.btn-reject:hover { background: #fef2f2; }
+.btn-reject:hover { background: var(--danger-bg); }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.dialog {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-}
-
-.dialog h3 { font-size: 1rem; font-weight: 700; margin: 0 0 0.4rem; color: #111827; }
-.dialog-desc { font-size: 0.9rem; color: #6b7280; margin: 0 0 1rem; }
-
-.label { font-size: 0.8rem; font-weight: 600; color: #374151; display: block; margin-bottom: 0.3rem; }
+.dialog h3 { font-size: 1rem; font-weight: 700; margin: 0 0 0.4rem; color: var(--text); }
+.dialog-desc { font-size: 0.9rem; color: var(--text-secondary); margin: 0 0 1rem; }
 
 .textarea {
   width: 100%;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
@@ -285,13 +236,13 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
   box-sizing: border-box;
   margin-bottom: 1rem;
 }
-.textarea:focus { outline: 2px solid #2563eb; }
+.textarea:focus { outline: 2px solid var(--accent); }
 
 .dialog-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
 
 .btn-reject-confirm {
-  background: #ef4444;
-  color: #fff;
+  background: var(--danger);
+  color: var(--surface);
   border: none;
   border-radius: 6px;
   padding: 0.45rem 1rem;
@@ -300,15 +251,4 @@ h1 { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; color: #111827; }
 }
 .btn-reject-confirm:hover:not(:disabled) { background: #dc2626; }
 .btn-reject-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.btn-ghost {
-  background: none;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.9rem;
-  color: #374151;
-  cursor: pointer;
-}
-.btn-ghost:hover { background: #f3f4f6; }
 </style>

@@ -28,10 +28,10 @@ function confirmDelete() {
 
 <style scoped>
 .goal-card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
 }
 
 .card-header {
@@ -42,13 +42,14 @@ function confirmDelete() {
 
 .order {
   flex-shrink: 0;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.6rem;
+  height: 1.6rem;
   border-radius: 50%;
-  background: #eff6ff;
-  color: #2563eb;
-  font-size: 0.8rem;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 0.75rem;
   font-weight: 700;
+  font-family: var(--font-mono);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,15 +58,14 @@ function confirmDelete() {
 .title {
   flex: 1;
   font-weight: 600;
-  font-size: 0.95rem;
-  color: #111827;
+  font-size: 0.9rem;
+  color: var(--text);
 }
 
 .card-actions {
   display: flex;
   gap: 0.25rem;
   opacity: 0;
-  transition: opacity 0.15s;
 }
 
 .goal-card:hover .card-actions {
@@ -77,23 +77,18 @@ function confirmDelete() {
   border: none;
   cursor: pointer;
   padding: 0.25rem;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
   line-height: 1;
 }
 
-.btn-icon:hover {
-  background: #f3f4f6;
-}
-
-.btn-danger:hover {
-  background: #fee2e2;
-}
+.btn-icon:hover { background: var(--surface-muted); }
+.btn-danger:hover { background: var(--danger-bg); }
 
 .description {
-  margin: 0.5rem 0 0 2.5rem;
-  font-size: 0.875rem;
-  color: #6b7280;
+  margin: 0.4rem 0 0 2.35rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
   white-space: pre-wrap;
 }
 </style>

@@ -113,61 +113,63 @@ async function submit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 50;
 }
 
 .modal {
-  background: #fff;
-  border-radius: 8px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
   padding: 2rem;
   width: min(480px, 90vw);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-lg);
 }
 
 .modal-title {
   margin: 0 0 1.5rem;
   font-size: 1.2rem;
   font-weight: 700;
+  font-family: var(--font-heading);
+  color: var(--text);
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 label {
-  font-size: 0.875rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
-.required {
-  color: #ef4444;
-}
+.required { color: var(--danger); }
 
 input[type='text'],
 input[type='number'],
 select,
 textarea {
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   padding: 0.5rem 0.75rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--surface);
   outline: none;
-  transition: border-color 0.15s;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(192, 86, 33, 0.12);
 }
 
 .error-msg {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 0.875rem;
   margin: 0 0 0.75rem;
 }
@@ -177,30 +179,5 @@ textarea:focus {
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1.5rem;
-}
-
-.btn-primary {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  background: #f3f4f6;
-  color: #374151;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 0.5rem 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
 }
 </style>

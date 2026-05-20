@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/" class="back-link">← ホームへ戻る</NuxtLink>
       <h1>スキルマスター管理</h1>
@@ -131,7 +131,7 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -288,46 +288,12 @@ function extractError(e: unknown): string | null {
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header {
   margin-bottom: 2rem;
 }
 
-.back-link {
-  font-size: 0.85rem;
-  color: #6b7280;
-  text-decoration: none;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-}
-.back-link:hover { color: #2563eb; }
-
-h1 { font-size: 1.4rem; font-weight: 800; margin: 0; color: #111827; }
-h2 { font-size: 1rem; font-weight: 700; color: #374151; margin: 0 0 0.75rem; }
-
-.section { margin-bottom: 2rem; }
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
-  color: #991b1b;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-.loading, .empty {
-  color: #9ca3af;
-  font-size: 0.9rem;
-  padding: 0.5rem 0;
-}
+h1 { font-size: 1.4rem; font-weight: 800; margin: 0; color: var(--text); font-family: var(--font-heading); }
+h2 { font-size: 1rem; font-weight: 700; color: var(--text-secondary); margin: 0 0 0.75rem; }
 
 .inline-form {
   display: flex;
@@ -337,7 +303,7 @@ h2 { font-size: 1rem; font-weight: 700; color: #374151; margin: 0 0 0.75rem; }
 }
 
 .input {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 6px;
   padding: 0.45rem 0.75rem;
   font-size: 0.9rem;
@@ -346,10 +312,10 @@ h2 { font-size: 1rem; font-weight: 700; color: #374151; margin: 0 0 0.75rem; }
 }
 .input-sm { flex: 0 0 80px; min-width: 80px; }
 .input-inline { flex: 1; min-width: 120px; }
-.input:focus { outline: 2px solid #2563eb; }
+.input:focus { outline: 2px solid var(--accent); }
 
 .category-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   margin-bottom: 0.75rem;
   overflow: hidden;
@@ -360,19 +326,19 @@ h2 { font-size: 1rem; font-weight: 700; color: #374151; margin: 0 0 0.75rem; }
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: #f9fafb;
+  background: var(--surface-muted);
 }
 
 .cat-order {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   width: 2rem;
   text-align: center;
 }
 
 .cat-name {
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
   flex: 1;
 }
 
@@ -380,7 +346,7 @@ h2 { font-size: 1rem; font-weight: 700; color: #374151; margin: 0 0 0.75rem; }
 
 .items-panel {
   padding: 0.75rem 1rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border);
 }
 
 .item-form { margin-bottom: 0.75rem; }
@@ -390,81 +356,30 @@ h2 { font-size: 1rem; font-weight: 700; color: #374151; margin: 0 0 0.75rem; }
   align-items: center;
   gap: 0.75rem;
   padding: 0.4rem 0;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--surface-muted);
 }
 .item-row:last-child { border-bottom: none; }
 
 .item-order {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   width: 2rem;
   text-align: center;
 }
 
-.item-name { flex: 1; font-size: 0.9rem; color: #374151; }
+.item-name { flex: 1; font-size: 0.9rem; color: var(--text-secondary); }
 .item-actions { display: flex; gap: 0.4rem; }
 
-/* ボタン */
-.btn-primary {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
+.empty {
+  color: var(--text-muted);
   font-size: 0.9rem;
-  cursor: pointer;
-  white-space: nowrap;
+  padding: 0.5rem 0;
 }
-.btn-primary:hover:not(:disabled) { background: #1d4ed8; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.btn-ghost {
-  background: none;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.9rem;
-  color: #374151;
-  cursor: pointer;
-}
-.btn-ghost:hover { background: #f3f4f6; }
-
-.btn-danger {
-  background: #ef4444;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-.btn-danger:hover { background: #dc2626; }
-
-.btn-sm { padding: 0.25rem 0.6rem; font-size: 0.8rem; }
 
 /* ダイアログ */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.dialog {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  max-width: 360px;
-  width: 100%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-}
-
 .dialog-msg {
   font-size: 0.95rem;
-  color: #111827;
+  color: var(--text);
   margin: 0 0 1.25rem;
   line-height: 1.5;
 }

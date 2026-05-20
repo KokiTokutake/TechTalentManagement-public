@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <NuxtLink to="/" class="back-link">← ホームへ戻る</NuxtLink>
       <h1>キャリアプラン</h1>
@@ -86,7 +86,7 @@
         </form>
       </section>
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -141,27 +141,26 @@ function formatDate(iso: string) {
 <style scoped>
 .plan-view { display: flex; flex-direction: column; gap: 1rem; }
 .plan-item { }
-.plan-label { font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.plan-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
 .plan-text { margin-top: 0.25rem; white-space: pre-wrap; }
-.empty-note { color: #9ca3af; font-size: 0.875rem; }
 .skill-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.skill-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; background: #f9fafb; border-radius: 0.375rem; }
-.skill-category { font-size: 0.75rem; color: #6b7280; }
+.skill-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; background: var(--surface-muted); border-radius: 0.375rem; }
+.skill-category { font-size: 0.75rem; color: var(--text-secondary); }
 .skill-name { font-weight: 500; flex: 1; }
-.skill-level { font-size: 0.75rem; color: #3b82f6; font-weight: 600; }
+.skill-level { font-size: 0.75rem; color: var(--accent); font-weight: 600; }
 .goal-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.goal-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; background: #f9fafb; border-radius: 0.375rem; }
+.goal-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; background: var(--surface-muted); border-radius: 0.375rem; }
 .badge { font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 9999px; }
-.badge.must { background: #fee2e2; color: #dc2626; }
-.badge.will { background: #dbeafe; color: #2563eb; }
+.badge.must { background: #fee2e2; color: var(--danger); }
+.badge.will { background: #dbeafe; color: var(--accent); }
 .badge.can { background: #dcfce7; color: #16a34a; }
 .goal-title { flex: 1; }
 .comment-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
-.comment-item { padding: 0.75rem; background: #f9fafb; border-radius: 0.375rem; border-left: 3px solid #d1d5db; }
-.comment-meta { font-size: 0.75rem; color: #6b7280; margin-bottom: 0.25rem; }
+.comment-item { padding: 0.75rem; background: var(--surface-muted); border-radius: 0.375rem; border-left: 3px solid var(--border-strong); }
+.comment-meta { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
 .comment-content { margin: 0; white-space: pre-wrap; }
 .comment-form { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
-.textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem; resize: vertical; }
-.error-inline { color: #dc2626; font-size: 0.875rem; }
+.textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--border-strong); border-radius: 0.375rem; font-size: 0.875rem; resize: vertical; }
+.error-inline { color: var(--danger); font-size: 0.875rem; }
 .form-footer { display: flex; justify-content: flex-end; }
 </style>

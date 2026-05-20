@@ -1,11 +1,11 @@
 <template>
-  <main class="container">
+  <div class="page-wrap">
     <header class="page-header">
       <h1>目標設定</h1>
     </header>
 
     <div v-if="store.loading" class="loading">読み込み中…</div>
-    <p v-else-if="store.error" class="error" role="alert">{{ store.error }}</p>
+    <p v-else-if="store.error" class="error-box" role="alert">{{ store.error }}</p>
 
     <template v-else>
       <section
@@ -45,7 +45,7 @@
       @saved="handleSaved"
       @cancel="showForm = false"
     />
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -107,13 +107,6 @@ async function handleDelete(goalId: string) {
 </script>
 
 <style scoped>
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: sans-serif;
-}
-
 .page-header {
   margin-bottom: 2rem;
 }
@@ -122,6 +115,8 @@ async function handleDelete(goalId: string) {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 0.25rem;
+  color: var(--text);
+  font-family: var(--font-heading);
 }
 
 .warn {
@@ -131,20 +126,6 @@ async function handleDelete(goalId: string) {
   border: 1px solid #fcd34d;
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
-}
-
-.loading {
-  color: #6b7280;
-  text-align: center;
-  padding: 3rem 0;
-}
-
-.error {
-  color: #ef4444;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
 }
 
 .category-section {
@@ -163,7 +144,7 @@ async function handleDelete(goalId: string) {
   font-size: 1rem;
   font-weight: 700;
   margin: 0;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
 .category-badge {
@@ -173,13 +154,13 @@ async function handleDelete(goalId: string) {
   border-radius: 999px;
 }
 
-.badge-will { background: #dbeafe; color: #1d4ed8; }
+.badge-will { background: #dbeafe; color: var(--accent); }
 .badge-can  { background: #d1fae5; color: #065f46; }
-.badge-must { background: #fee2e2; color: #991b1b; }
+.badge-must { background: #fee2e2; color: var(--danger-text); }
 
 .btn-add {
   background: none;
-  border: 1px dashed #9ca3af;
+  border: 1px dashed var(--text-muted);
   border-radius: 6px;
   padding: 0.3rem 0.75rem;
   font-size: 0.875rem;
@@ -188,8 +169,8 @@ async function handleDelete(goalId: string) {
 }
 
 .btn-add:hover:not(:disabled) {
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: var(--accent);
+  color: var(--accent);
   background: #eff6ff;
 }
 
@@ -199,10 +180,10 @@ async function handleDelete(goalId: string) {
 }
 
 .empty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 0.875rem;
   padding: 1rem;
-  border: 1px dashed #e5e7eb;
+  border: 1px dashed var(--border);
   border-radius: 8px;
   text-align: center;
 }
