@@ -8,6 +8,8 @@ export interface AppUser {
   managerId: string | null
 }
 
+export type EvaluationPhase = 'Upcoming' | 'GoalRegistration' | 'SelfEvaluation' | 'ManagerEvaluation' | 'Closed'
+
 export interface EvaluationPeriod {
   id: string
   year: number
@@ -18,4 +20,5 @@ export interface EvaluationPeriod {
   evaluationEndDate: string
   approvalDeadline: string
   isActive: boolean
+  currentPhase: EvaluationPhase
 }

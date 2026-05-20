@@ -348,6 +348,95 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("ManagerEvaluations");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MeetingActionItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("MeetingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MeetingId", "Status");
+
+                    b.ToTable("MeetingActionItems");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CanTopics")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateOnly>("ConductedAt")
+                        .HasColumnType("date");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CurrentSituation")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("Format")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FreeText")
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MustTopics")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("ShareWithMdc")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("WillTopics")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId", "TalentId");
+
+                    b.HasIndex("TalentId", "ConductedAt");
+
+                    b.ToTable("OneOnOneMeetings");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -726,6 +815,36 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("SelfEvaluation");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MeetingActionItem", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", "Meeting")
+                        .WithMany("ActionItems")
+                        .HasForeignKey("MeetingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Meeting");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("Talent");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
@@ -842,6 +961,11 @@ namespace TeckTalentManagement.Infrastructure.Migrations
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
                 {
                     b.Navigation("DevelopmentPlans");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+                {
+                    b.Navigation("ActionItems");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>

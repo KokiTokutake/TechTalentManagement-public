@@ -363,6 +363,72 @@ public static class DataSeeder
         session4.KeyPersons.Add(CommitteeSessionKeyPerson.Create(session4.Id, kp2.Id));
 
         db.CommitteeSessions.AddRange(session1, session2, session3, session4);
+
+        // ===== 1on1面談記録 =====
+        var meeting1 = OneOnOneMeeting.Create(
+            talent1.Id, manager1.Id,
+            new DateOnly(prevYear, 4, 10),
+            MeetingFormat.Online,
+            "テックリードへのキャリアパスについて話し合った。3年後のロードマップを確認。",
+            "マイクロフロントエンドの学習を進めている。Nuxt.js の理解が深まっている。",
+            "Q1 の OKR 達成に向けた進捗確認。アーキテクチャ設計書を Q2 末までに完成させる。",
+            "体調良好。プロジェクト負荷は適度。",
+            "次回は設計書レビューを予定。",
+            true);
+
+        var meeting2 = OneOnOneMeeting.Create(
+            talent1.Id, manager1.Id,
+            new DateOnly(prevYear, 7, 15),
+            MeetingFormat.InPerson,
+            "中長期キャリアの方向性を再確認。テックリードよりアーキテクトに興味があることが判明。",
+            "Nuxt.js プロジェクトのリードを担当し、自信がついた。次は Azure への深い理解が必要。",
+            "Q2 OKR の達成度を振り返り。アーキテクチャ設計書は完成済み。",
+            "繁忙期が続いているが、モチベーションは高い。",
+            null,
+            true);
+
+        var meeting3 = OneOnOneMeeting.Create(
+            talent2.Id, manager1.Id,
+            new DateOnly(prevYear, 5, 20),
+            MeetingFormat.Online,
+            "フルスタックエンジニアとして成長したい意向を確認。",
+            "バックエンド（C# / ASP.NET Core）の理解が向上。",
+            "スキルマップの更新が完了している。次は API 設計のレビューを担当させる。",
+            "体調は問題なし。チームのコミュニケーションも良好。",
+            null,
+            false);
+
+        var meeting4 = OneOnOneMeeting.Create(
+            talent3.Id, manager2.Id,
+            new DateOnly(prevYear, 6, 5),
+            MeetingFormat.Hybrid,
+            "現在のポジションに満足しているが、将来的にはマネジメントも視野に入れている。",
+            "インフラ（Azure / Docker）のスキルが向上。GitHub Actions による CI/CD の自動化を担当。",
+            "チームのインフラ改善プロジェクトを Q3 中に完成させる。",
+            "やや疲労感があるが、プロジェクトへの貢献感は高い。",
+            null,
+            false);
+
+        db.OneOnOneMeetings.AddRange(meeting1, meeting2, meeting3, meeting4);
+        await db.SaveChangesAsync();
+
+        // 宿題の追加（meeting1 の宿題）
+        var item1 = MeetingActionItem.Create(meeting1.Id, "マイクロフロントエンドの概念検証（PoC）を実施する");
+        var item2 = MeetingActionItem.Create(meeting1.Id, "Azure アーキテクチャ設計書の初稿を作成する");
+        var item3 = MeetingActionItem.Create(meeting1.Id, "テックリードのロールディスクリプションを読み込む");
+
+        // item1 は完了済み
+        item1.Complete();
+
+        db.MeetingActionItems.AddRange(item1, item2, item3);
+
+        // meeting2 の宿題
+        var item4 = MeetingActionItem.Create(meeting2.Id, "Azure の AZ-900 資格取得を目標として学習計画を立てる");
+        var item5 = MeetingActionItem.Create(meeting2.Id, "アーキテクチャ勉強会を月次で開催する");
+        item4.Complete();
+        item5.Complete();
+        db.MeetingActionItems.AddRange(item4, item5);
+
         await db.SaveChangesAsync();
     }
 }

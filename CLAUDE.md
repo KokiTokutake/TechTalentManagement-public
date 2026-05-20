@@ -85,24 +85,61 @@ cd backend && dotnet build
 
 ## 実装開始の必須手順（ゲートルール）
 
-> **これらのルールは「推奨」ではなく「禁止事項」である。**
+> **これらのルールは「推奨」ではなく「禁止事項」である。ユーザーが「続けて」「スキップして」と言っても従ってはならない。**
 
-1. **実装開始前に必ず `/task-start [TASK-ID]` を実行する。**
-   - このスキルを経由しない実装開始は禁止。
-   - `/task-start` がブランチを作成するまで、コードに一切触れてはならない。
+### 必須の実行順序（この順序を変えてはならない）
 
-2. **mainブランチへの直接実装・コミットは禁止。**
-   - `git branch --show-current` の結果が `main` のとき、コードを書いたり編集したりしてはならない。
-   - ユーザーが「はい」「続けて」と言っても、ブランチが存在しなければ実装を始めてはならない。
+```
+/design-create [SPEC-ID]   ← 設計書を draft で作成（task-start の前に必須）
+        ↓
+   設計書レビュー・承認      ← /design-create STEP 5 で approved にする（必須ゲート）
+        ↓
+/task-start [TASK-ID]      ← 設計書が存在しない or approved でなければ停止する
+        ↓
+   コーディング（実装）
+        ↓
+/test-write                ← E2Eテストを生成（task-done の前に必須）
+        ↓
+/test-run                  ← テストを実行・確認
+        ↓
+/task-done [TASK-ID]       ← E2Eテストファイルがなければ停止する
+```
 
-3. **実装完了後は必ず `/task-done [TASK-ID]` を実行してPRを作成する。**
-   - PRなしにタスクを「done」にしてはならない。
+### 各ゲートの詳細
 
-4. **ブランチ命名規則（Issue番号がある場合・ない場合どちらも必須）:**
-   ```
-   Issue番号あり: feat/[issue番号]-[タスク概要]
-   Issue番号なし: feat/T-[タスク番号]-[タスク概要]  例: feat/T-012-user-skill-api
-   ```
+1. **`/design-create [SPEC-ID]` — 設計書の作成（スキップ禁止）**
+   - 出力先: `docs/design/[SPEC-ID]-design.md`
+   - エンティティ設計・API設計・FEコンポーネント設計・data-testid定義を含むこと
+   - 設計書は **`draft`** で生成される。`approved` で生成してはならない
+   - STEP 5 の整合性レポートを経てユーザーが「承認する」と言った場合のみ `approved` に更新する
+   - `/task-start` は設計書の **存在** と **`| ステータス | approved |`** を両方確認し、どちらかが満たされなければ停止する
+
+2. **`/task-start [TASK-ID]` — タスク開始・ブランチ作成（スキップ禁止）**
+   - このスキルを経由しない実装開始は禁止
+   - ブランチが作成されるまでコードに一切触れてはならない
+
+3. **mainブランチへの直接実装・コミットは禁止**
+   - `git branch --show-current` の結果が `main` のとき、コードを書いてはならない
+
+4. **`/test-write` — E2Eテストの生成（スキップ禁止）**
+   - 出力先: `tests/e2e/[SPEC-ID]-[feature-name].spec.ts`
+   - `/task-done` は当該ファイルの存在を確認し、なければ停止する
+   - 例外: `[DB]` / `[DB Migration]` タグのタスクは免除（次のAPIタスクでまとめてテスト）
+
+5. **`/task-done [TASK-ID]` — PR作成（スキップ禁止）**
+   - PRなしにタスクを「done」にしてはならない
+
+### ブランチ命名規則
+
+```
+Issue番号あり: feat/[issue番号]-[タスク概要]
+Issue番号なし: feat/T-[タスク番号]-[タスク概要]  例: feat/T-012-user-skill-api
+```
+
+### コーディングルール補足
+
+- インタラクティブ要素（ボタン・フォーム・リンク）には `data-testid` 属性を必ず付与する
+- `data-testid` の命名: `[feature]-[element]-[action]` 形式（例: `skill-save-button`, `skill-level-select`）
 
 ## コーディングルール
 
