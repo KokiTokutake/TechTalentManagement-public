@@ -131,10 +131,17 @@ cd backend && dotnet build
 
 ### ブランチ命名規則
 
-```
-Issue番号あり: feat/[issue番号]-[タスク概要]
-Issue番号なし: feat/T-[タスク番号]-[タスク概要]  例: feat/T-012-user-skill-api
-```
+すべての変更はブランチを通じて行う。**main への直接コミット・プッシュは禁止**（フックで自動ブロック）。
+
+| 変更の種類 | ブランチ形式 | 例 |
+|-----------|------------|-----|
+| 実装タスク | `feat/[issue番号]-[タスク概要]` | `feat/43-1on1-crud-api` |
+| 実装タスク（Issue なし） | `feat/T-[タスク番号]-[タスク概要]` | `feat/T-012-user-skill-api` |
+| 設計書作成 | `design/[SPEC-ID]` | `design/SPEC-1ON1-001` |
+| 仕様書変更 | `spec/[issue番号]-[機能名]` | `spec/12-auth-spec-update` |
+| バグ修正 | `fix/[issue番号]-[内容]` | `fix/10-login-crash` |
+| ハーネス・ツール修正 | `chore/[概要]` | `chore/design-review-gate` |
+| ドキュメント | `docs/[内容]` | `docs/api-guide` |
 
 ### コーディングルール補足
 

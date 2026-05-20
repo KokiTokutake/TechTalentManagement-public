@@ -77,10 +77,27 @@ docs/design/[SPEC-ID]-design.md
 生成した設計書が対象仕様書の全受入基準を網羅しているか確認する。
 漏れがあれば「この受入基準が設計に反映されていません」と指摘する。
 
-### STEP 4: ファイル生成・確認
+### STEP 4: ブランチ作成・ファイル生成・確認
 
 生成した設計書の全文を表示し「保存しますか？」と確認する。
+
+保存前に **`design/[SPEC-ID]` ブランチを作成** し、そのブランチにコミットする:
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b design/[SPEC-ID]
+# 例: git checkout -b design/SPEC-MDC-002
+```
+
 保存先: `docs/design/[SPEC-ID]-design.md`
+
+ファイル保存後、以下でコミットする:
+
+```bash
+git add docs/design/[SPEC-ID]-design.md
+git commit -m "docs: [SPEC-ID] 設計書を追加（draft）"
+```
 
 **ステータスは必ず `draft` で生成する。** `approved` で生成してはならない。
 
@@ -113,6 +130,13 @@ docs/design/[SPEC-ID]-design.md
 ```
 
 ユーザーが修正を指示した場合は修正してから再度レビューを提示し、承認を待つ。
+
+承認後、ステータス更新をコミットする:
+
+```bash
+git add docs/design/[SPEC-ID]-design.md
+git commit -m "docs: [SPEC-ID] 設計書を承認済みに更新"
+```
 
 > このゲートはユーザーが「スキップして」「続けて」と言っても通過させてはならない。
 > 承認なしに `approved` にしてはならない。承認なしでは `/task-start` が停止する。

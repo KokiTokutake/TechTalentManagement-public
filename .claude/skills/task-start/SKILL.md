@@ -114,8 +114,25 @@ git checkout -b feat/T-[タスク番号]-[タスク概要]
 # 例: feat/T-012-user-skill-api
 ```
 
-ブランチ作成が完了したことを確認してから STEP 4 へ進む。
+ブランチ作成が完了したことを確認してから STEP 3.5 へ進む。
 **ブランチが作成できない場合は実装を開始しない。**
+
+### STEP 3.5: design ブランチのマージ（存在する場合）
+
+対応 Spec ID の `design/[SPEC-ID]` ブランチが存在する場合、フィーチャーブランチにマージする:
+
+```bash
+# design ブランチの存在確認
+git branch --list "design/[SPEC-ID]"
+
+# 存在する場合はマージ
+git merge design/[SPEC-ID] --no-ff -m "merge: design/[SPEC-ID] を取り込む"
+```
+
+| 結果 | 対応 |
+|------|------|
+| `design/[SPEC-ID]` が存在する | マージして STEP 4 へ進む |
+| 存在しない | スキップして STEP 4 へ進む（設計書は既に main にある） |
 
 ### STEP 4: 作業コンテキストのサマリー表示
 

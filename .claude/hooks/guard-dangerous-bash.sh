@@ -108,4 +108,46 @@ if echo "$COMMAND" | grep -qE 'NODE_ENV=production|RAILS_ENV=production|APP_ENV=
   fi
 fi
 
+# ── 8. main/master への直接コミットをブロック ────────────────────────
+if echo "$COMMAND" | grep -qE '^\s*git\s+commit'; then
+  CURRENT_BRANCH=$(git branch --show-current 2>/dev/null)
+  if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "master" ]; then
+    echo "⛔ [GUARD] main/master ブランチへの直接コミットは禁止されています。"
+    echo ""
+    echo "  現在のブランチ: $CURRENT_BRANCH"
+    echo ""
+    echo "  ブランチを作成してから作業してください:"
+    echo "    /task-start [TASK-ID]          — 実装タスク"
+    echo "    /design-create [SPEC-ID]       — 設計書作成（design/ ブランチを自動作成）"
+    echo "    git checkout -b chore/[概要]   — ハーネス・ツール修正"
+    exit 2
+  fi
+fi
+
+# ── 9. main/master への直接プッシュをブロック ────────────────────────
+if echo "$COMMAND" | grep -qE 'git\s+push' && ! echo "$COMMAND" | grep -qE '(--force|-f)\b'; then
+  # 明示的に main/master を対象にしている場合
+  if echo "$COMMAND" | grep -qE '\b(origin\s+main|origin\s+master|main\s*$|master\s*$)'; then
+    echo "⛔ [GUARD] main/master への直接プッシュは禁止されています。"
+    echo ""
+    echo "  PR を作成してレビュー・承認後にマージしてください:"
+    echo "    /task-done   — タスク完了・PR 作成"
+    echo "    gh pr create — 手動で PR を作成"
+    exit 2
+  fi
+  # 引数なしの push で現在が main の場合
+  if echo "$COMMAND" | grep -qE '^git\s+push\s*$'; then
+    CURRENT_BRANCH=$(git branch --show-current 2>/dev/null)
+    if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "master" ]; then
+      echo "⛔ [GUARD] main/master ブランチからの直接プッシュは禁止されています。"
+      echo ""
+      echo "  現在のブランチ: $CURRENT_BRANCH"
+      echo ""
+      echo "  PR を作成してレビュー・承認後にマージしてください:"
+      echo "    /task-done   — タスク完了・PR 作成"
+      exit 2
+    fi
+  fi
+fi
+
 exit 0
