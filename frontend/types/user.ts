@@ -8,7 +8,7 @@ export interface AppUser {
   managerId: string | null
 }
 
-export type EvaluationPhase = 'Upcoming' | 'GoalRegistration' | 'SelfEvaluation' | 'ManagerEvaluation' | 'Closed'
+export type EvaluationPhase = 'Upcoming' | 'GoalRegistration' | 'SelfEvaluation' | 'ManagerEvaluation' | 'Confirmation' | 'Closed'
 
 export interface EvaluationPeriod {
   id: string

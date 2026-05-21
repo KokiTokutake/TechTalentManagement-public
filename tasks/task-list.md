@@ -120,10 +120,10 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-037 | [DB] NineBoxAssessment・CellDefinition スキーマ＋EF Core マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-002 | #38 | — | — |
-| TASK-038 | [BE] 9ボックス評価 API（入力・更新・期間別取得） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #39 | — | — |
-| TASK-039 | [BE] 9ボックスマップ・フィルタ・検索 API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #40 | — | — |
-| TASK-040 | [BE] キャリブレーション API＋重点管理候補自動フラグ・通知 | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #41 | — | — |
+| TASK-037 | [DB] NineBoxAssessment・CellDefinition スキーマ＋EF Core マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-002 | #38 | — | — |
+| TASK-038 | [BE] 9ボックス評価 API（入力・更新・期間別取得） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #39 | — | — |
+| TASK-039 | [BE] 9ボックスマップ・フィルタ・検索 API | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #40 | — | — |
+| TASK-040 | [BE] キャリブレーション API＋重点管理候補自動フラグ・通知 | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #41 | — | — |
 | TASK-041 | [DB] OneOnOneMeeting・MeetingActionItem スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #42 | — | — |
 | TASK-042 | [BE] 1on1記録 CRUD API（作成・更新・削除・一覧・詳細） | ✅ done | @KokiTokutake | 3 | SPEC-1ON1-001 | #43 | — | PR#57 |
 

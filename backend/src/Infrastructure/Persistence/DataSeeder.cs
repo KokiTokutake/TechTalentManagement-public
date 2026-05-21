@@ -430,5 +430,41 @@ public static class DataSeeder
         db.MeetingActionItems.AddRange(item4, item5);
 
         await db.SaveChangesAsync();
+
+        // ===== 9ボックス セル定義マスター =====
+        var cells = new[]
+        {
+            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.High, "スター",     "業績・ポテンシャルともに最高水準。組織の中核として即戦力かつ将来リーダー候補。", "#8b5cf6"),
+            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.Mid,  "高業績者",   "現時点での業績は最高水準。成長の余地はあるが組織への貢献度が高い。",           "#6366f1"),
+            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.Low,  "専門家",     "専門領域で卓越した業績を持つが、ポテンシャルは現ポジションに特化している。",   "#3b82f6"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.High, "原石",       "高いポテンシャルを持ち、将来の活躍が期待できる。業績向上に向けた育成が重要。", "#10b981"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.Mid,  "コア人材",   "業績・ポテンシャルともに安定した中堅層。組織の安定的な基盤を担う。",             "#6b7280"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.Low,  "安定人材",   "現在のポジションで安定した業績を発揮。成長よりも定着・安定運用を優先。",         "#9ca3af"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.High, "将来有望",   "現時点では業績が低いが高いポテンシャルがあり、適切な育成で大きく成長する可能性。","#f59e0b"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.Mid,  "要育成",     "業績・ポテンシャルともに改善の余地あり。明確な育成計画と継続的サポートが必要。", "#f97316"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.Low,  "要検討",     "業績・ポテンシャルともに低い。配置転換・役割変更等を含めた抜本的な検討が必要。", "#ef4444"),
+        };
+        db.NineBoxCellDefinitions.AddRange(cells);
+        await db.SaveChangesAsync();
+
+        // ===== 前年度 9ボックス評価 =====
+        var nb1 = NineBoxAssessment.Create(talent1.Id, prevPeriod.Id, manager1.Id,
+            PerformanceLevel.High, PotentialLevel.High,
+            "全目標を高いレベルで達成。SSRアプリのパフォーマンス改善は特に顕著。",
+            "テックリード候補として申し分ない成長意欲と学習速度を持つ。");
+        var nb2 = NineBoxAssessment.Create(talent2.Id, prevPeriod.Id, manager1.Id,
+            PerformanceLevel.High, PotentialLevel.High,
+            "BEタスクを全完遂。テストカバレッジ90%以上を達成した。",
+            "分散システムへの強い関心と理解力から、将来のアーキテクト候補として最有力。");
+        var nb3 = NineBoxAssessment.Create(talent3.Id, prevPeriod.Id, manager2.Id,
+            PerformanceLevel.Mid, PotentialLevel.Mid,
+            "CI/CDパイプラインの整備など担当タスクは完遂。期待値通りの業績。",
+            "着実な成長を続けているが、自発的な領域拡張の意欲がやや少ない。");
+        var nb4 = NineBoxAssessment.Create(talent4.Id, prevPeriod.Id, manager2.Id,
+            PerformanceLevel.Low, PotentialLevel.High,
+            "入社1年目でありまだ業績は限定的だが、学習意欲と吸収速度が高い。",
+            "フロントエンド領域での急速な成長が期待できる。適切な育成で大化けする可能性がある。");
+        db.NineBoxAssessments.AddRange(nb1, nb2, nb3, nb4);
+        await db.SaveChangesAsync();
     }
 }

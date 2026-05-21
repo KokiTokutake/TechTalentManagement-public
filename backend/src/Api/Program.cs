@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TeckTalentManagement.Application.CareerPlan;
 using TeckTalentManagement.Application.CommitteeSession;
+using TeckTalentManagement.Application.NineBox;
 using TeckTalentManagement.Application.DevelopmentPlan;
 using TeckTalentManagement.Application.KeyPerson;
 using TeckTalentManagement.Application.Goals;
@@ -39,6 +40,8 @@ builder.Services.AddScoped<IDevelopmentPlanRepository, DevelopmentPlanRepository
 builder.Services.AddScoped<IDevelopmentPlanService, DevelopmentPlanService>();
 builder.Services.AddScoped<ICommitteeSessionRepository, CommitteeSessionRepository>();
 builder.Services.AddScoped<ICommitteeSessionService, CommitteeSessionService>();
+builder.Services.AddScoped<INineBoxRepository, NineBoxRepository>();
+builder.Services.AddScoped<INineBoxService, NineBoxService>();
 builder.Services.AddScoped<IOneOnOneRepository, OneOnOneRepository>();
 builder.Services.AddScoped<IOneOnOneService, OneOnOneService>();
 

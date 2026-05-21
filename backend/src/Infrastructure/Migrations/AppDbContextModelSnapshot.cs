@@ -437,6 +437,91 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("OneOnOneMeetings");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxAssessment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("AssessedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("AssessorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("EvaluationPeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PerformanceLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PerformanceRationale")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("PotentialLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PotentialRationale")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessorId");
+
+                    b.HasIndex("TalentId", "EvaluationPeriodId")
+                        .IsUnique();
+
+                    b.HasIndex("EvaluationPeriodId", "PerformanceLevel", "PotentialLevel");
+
+                    b.ToTable("NineBoxAssessments");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxCellDefinition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("PerformanceLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PotentialLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PerformanceLevel", "PotentialLevel")
+                        .IsUnique();
+
+                    b.ToTable("NineBoxCellDefinitions");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -841,6 +926,33 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Manager");
+
+                    b.Navigation("Talent");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxAssessment", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Assessor")
+                        .WithMany()
+                        .HasForeignKey("AssessorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
+                        .WithMany()
+                        .HasForeignKey("EvaluationPeriodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Assessor");
+
+                    b.Navigation("EvaluationPeriod");
 
                     b.Navigation("Talent");
                 });

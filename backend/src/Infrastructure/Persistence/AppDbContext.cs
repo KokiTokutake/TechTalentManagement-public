@@ -22,6 +22,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<CommitteeSession> CommitteeSessions => Set<CommitteeSession>();
     public DbSet<CommitteeSessionParticipant> CommitteeSessionParticipants => Set<CommitteeSessionParticipant>();
     public DbSet<CommitteeSessionKeyPerson> CommitteeSessionKeyPersons => Set<CommitteeSessionKeyPerson>();
+    public DbSet<NineBoxAssessment> NineBoxAssessments => Set<NineBoxAssessment>();
+    public DbSet<NineBoxCellDefinition> NineBoxCellDefinitions => Set<NineBoxCellDefinition>();
     public DbSet<OneOnOneMeeting> OneOnOneMeetings => Set<OneOnOneMeeting>();
     public DbSet<MeetingActionItem> MeetingActionItems => Set<MeetingActionItem>();
 
