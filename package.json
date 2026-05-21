@@ -1,0 +1,11 @@
+{
+  "name": "teck-talent-management-e2e",
+  "private": true,
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report tests/reports/html"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0"
+  }
+}

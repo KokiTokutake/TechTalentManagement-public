@@ -5,6 +5,7 @@ using TeckTalentManagement.Application.DevelopmentPlan;
 using TeckTalentManagement.Application.KeyPerson;
 using TeckTalentManagement.Application.Goals;
 using TeckTalentManagement.Application.ManagerEvaluations;
+using TeckTalentManagement.Application.OneOnOne;
 using TeckTalentManagement.Application.SelfEvaluations;
 using TeckTalentManagement.Application.SkillMaster;
 using TeckTalentManagement.Application.SkillMap;
@@ -38,6 +39,8 @@ builder.Services.AddScoped<IDevelopmentPlanRepository, DevelopmentPlanRepository
 builder.Services.AddScoped<IDevelopmentPlanService, DevelopmentPlanService>();
 builder.Services.AddScoped<ICommitteeSessionRepository, CommitteeSessionRepository>();
 builder.Services.AddScoped<ICommitteeSessionService, CommitteeSessionService>();
+builder.Services.AddScoped<IOneOnOneRepository, OneOnOneRepository>();
+builder.Services.AddScoped<IOneOnOneService, OneOnOneService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
