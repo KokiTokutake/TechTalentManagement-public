@@ -92,6 +92,17 @@ public class OneOnOnesController(IOneOnOneService service) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
     }
 
+    // GET /api/talents/{talentId}/previous-meeting
+    [HttpGet("api/talents/{talentId:guid}/previous-meeting")]
+    public async Task<IActionResult> GetPreviousMeeting(Guid talentId, CancellationToken ct = default)
+    {
+        var result = await service.GetPreviousMeetingAsync(talentId, ct);
+        if (!result.IsSuccess)
+            return StatusCode(result.StatusCode, new { error = result.Error });
+
+        return result.Value is null ? NoContent() : Ok(result.Value);
+    }
+
     // TODO: T-002 認証実装後に ClaimsPrincipal から取得する
     // 開発中は X-User-Id ヘッダーで上書き可能
     private Guid GetCurrentUserId()

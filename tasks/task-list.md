@@ -135,7 +135,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-043 | [BE] 宿題管理 API＋前回宿題自動引き継ぎ | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #44 | — | — |
+| TASK-043 | [BE] 宿題管理 API＋前回宿題自動引き継ぎ | 🏃 進行中 | @KokiTokutake | 2 | SPEC-1ON1-001 | #44 | — | feat/44-action-item-api |
 | TASK-044 | [BE] 委員会連携 API（共有フラグ・サマリー）＋テンプレートマスタ | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #45 | — | — |
 | TASK-045 | [FE] 9ボックス評価入力フォーム UI（上長向け） | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-002 | #46 | — | — |
 | TASK-046 | [FE] 9ボックスマップ画面 UI（グリッド・ポップオーバー・期間切替・フィルタ） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-002 | #47 | — | — |

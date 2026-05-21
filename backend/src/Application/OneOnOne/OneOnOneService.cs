@@ -15,6 +15,7 @@ public interface IOneOnOneService
     Task<Result<ActionItemDto>> AddActionItemAsync(Guid meetingId, Guid managerId, AddActionItemRequest req, CancellationToken ct = default);
     Task<Result<ActionItemDto>> UpdateActionItemStatusAsync(Guid itemId, Guid managerId, UpdateActionItemStatusRequest req, CancellationToken ct = default);
     Task<Result<OneOnOneSummaryDto>> GetOneOnOneSummaryAsync(Guid talentId, CancellationToken ct = default);
+    Task<Result<MeetingDetailDto?>> GetPreviousMeetingAsync(Guid talentId, CancellationToken ct = default);
 }
 
 public interface IOneOnOneRepository
@@ -29,6 +30,7 @@ public interface IOneOnOneRepository
     Task<IReadOnlyList<OneOnOneMeeting>> GetSharedMeetingsByTalentAsync(Guid talentId, CancellationToken ct);
     Task<int> CountByTalentAsync(Guid talentId, CancellationToken ct);
     Task<DateOnly?> GetLastMeetingDateAsync(Guid talentId, CancellationToken ct);
+    Task<OneOnOneMeeting?> GetLatestMeetingWithItemsAsync(Guid talentId, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
 }
 
@@ -215,6 +217,20 @@ public class OneOnOneService(IOneOnOneRepository repo) : IOneOnOneService
 
         return Result<OneOnOneSummaryDto>.Ok(new OneOnOneSummaryDto(
             talentId, talentName, lastDate, total, sharedDtos));
+    }
+
+    public async Task<Result<MeetingDetailDto?>> GetPreviousMeetingAsync(Guid talentId, CancellationToken ct = default)
+    {
+        var talent = await repo.FindUserAsync(talentId, ct);
+        if (talent is null)
+            return Result<MeetingDetailDto?>.NotFound("タレントが見つかりません。");
+
+        var meeting = await repo.GetLatestMeetingWithItemsAsync(talentId, ct);
+        if (meeting is null)
+            return Result<MeetingDetailDto?>.Ok(null);
+
+        var manager = await repo.FindUserAsync(meeting.ManagerId, ct);
+        return Result<MeetingDetailDto?>.Ok(ToDetailDto(meeting, talent, manager!));
     }
 
     private static bool TryParseFormat(string raw, out MeetingFormat format)

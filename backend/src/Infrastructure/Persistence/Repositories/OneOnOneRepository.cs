@@ -64,6 +64,13 @@ public class OneOnOneRepository(AppDbContext db) : IOneOnOneRepository
         return last;
     }
 
+    public Task<OneOnOneMeeting?> GetLatestMeetingWithItemsAsync(Guid talentId, CancellationToken ct) =>
+        db.OneOnOneMeetings
+            .Include(m => m.ActionItems)
+            .Where(m => m.TalentId == talentId)
+            .OrderByDescending(m => m.ConductedAt)
+            .FirstOrDefaultAsync(ct);
+
     public Task SaveChangesAsync(CancellationToken ct) =>
         db.SaveChangesAsync(ct);
 }
