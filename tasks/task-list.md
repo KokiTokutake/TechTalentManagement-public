@@ -137,8 +137,8 @@
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-043 | [BE] 宿題管理 API＋前回宿題自動引き継ぎ | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #44 | PR#58 | feat/44-action-item-api |
 | TASK-044 | [BE] 委員会連携 API（共有フラグ・サマリー）＋テンプレートマスタ | 🏃 進行中 | @KokiTokutake | 2 | SPEC-1ON1-001 | #45 | — | feat/45-committee-template-api |
-| TASK-045 | [FE] 9ボックス評価入力フォーム UI（上長向け） | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-002 | #46 | — | — |
-| TASK-046 | [FE] 9ボックスマップ画面 UI（グリッド・ポップオーバー・期間切替・フィルタ） | 🏃 進行中 | @KokiTokutake | 5 | SPEC-MDC-002 | #47 | — | feat/47-nine-box-map-ui |
+| TASK-045 | [FE] 9ボックス評価入力フォーム UI（上長向け） | ✅ done | @KokiTokutake | 2 | SPEC-MDC-002 | #46 | PR#62 | feat/46-nine-box-input-ui |
+| TASK-046 | [FE] 9ボックスマップ画面 UI（グリッド・ポップオーバー・期間切替・フィルタ） | ✅ done | @KokiTokutake | 5 | SPEC-MDC-002 | #47 | PR#61 | feat/47-nine-box-map-ui |
 | TASK-047 | [FE] キャリブレーション画面 UI（評価分布・統計表示） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #48 | — | — |
 
 ## Sprint 11 ⬜ 未着手

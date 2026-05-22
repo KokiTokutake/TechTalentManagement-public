@@ -129,10 +129,12 @@
 
 <script setup lang="ts">
 import type { NineBoxLevel } from '~/types/nineBox'
+import type { EvaluationPeriod } from '~/types/user'
 
 const route = useRoute()
 const auth = useAuthStore()
 const store = useNineBoxStore()
+const config = useRuntimeConfig()
 
 const talentId = computed(() => route.query.talentId as string)
 const periodId = computed(() => route.query.periodId as string)
@@ -148,12 +150,9 @@ const form = reactive({
 const isUpdate = ref(false)
 const existingAssessmentId = ref<string | null>(null)
 const saved = ref(false)
+const targetPeriodPhase = ref<string | null>(null)
 
-const isPeriodClosed = computed(() => {
-  const period = auth.currentPeriod
-  if (!period) return false
-  return period.currentPhase === 'Closed'
-})
+const isPeriodClosed = computed(() => targetPeriodPhase.value === 'Closed')
 
 const isHighPotential = computed(() => {
   if (!form.performanceLevel || !form.potentialLevel) return false
@@ -172,6 +171,10 @@ onMounted(async () => {
     await navigateTo('/')
     return
   }
+
+  const periods = await $fetch<EvaluationPeriod[]>(`${config.public.apiBaseUrl}/api/periods`)
+  const targetPeriod = periods.find(p => p.id === periodId.value)
+  targetPeriodPhase.value = targetPeriod?.currentPhase ?? null
 
   await store.loadCellDefinitions()
   await store.loadCurrentAssessment(talentId.value, periodId.value)
