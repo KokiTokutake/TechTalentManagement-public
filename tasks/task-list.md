@@ -112,34 +112,34 @@
 | TASK-035 | [FE] タレント向けマイページ統合（重点管理バッジ・育成方針表示をキャリアプランページに追加） | ✅ done | @KokiTokutake | 2 | SPEC-MDC-001 | #25 | #35 | feat/25-talent-mypage-integration |
 | TASK-036 | [TEST] 人材開発委員会機能 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-MDC-001 | #26 | #36 | feat/26-mdc-integration-test |
 
-## Sprint 9 ⬜ 未着手
+## Sprint 9 ✅ 完了
 
 - **ゴール**: 9ボックス評価・1on1面談記録 バックエンド全実装（DB含む）
 - **期間**: 未定
-- **進捗**: 0 / 16 SP
+- **進捗**: 16 / 16 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-037 | [DB] NineBoxAssessment・CellDefinition スキーマ＋EF Core マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-002 | #38 | — | — |
-| TASK-038 | [BE] 9ボックス評価 API（入力・更新・期間別取得） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #39 | — | — |
-| TASK-039 | [BE] 9ボックスマップ・フィルタ・検索 API | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #40 | — | — |
-| TASK-040 | [BE] キャリブレーション API＋重点管理候補自動フラグ・通知 | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #41 | — | — |
+| TASK-038 | [BE] 9ボックス評価 API（入力・更新・期間別取得） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #39 | PR#54 | — |
+| TASK-039 | [BE] 9ボックスマップ・フィルタ・検索 API | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #40 | PR#54 | — |
+| TASK-040 | [BE] キャリブレーション API＋重点管理候補自動フラグ・通知 | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #41 | PR#54 | — |
 | TASK-041 | [DB] OneOnOneMeeting・MeetingActionItem スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #42 | — | — |
-| TASK-042 | [BE] 1on1記録 CRUD API（作成・更新・削除・一覧・詳細） | ✅ done | @KokiTokutake | 3 | SPEC-1ON1-001 | #43 | — | PR#57 |
+| TASK-042 | [BE] 1on1記録 CRUD API（作成・更新・削除・一覧・詳細） | ✅ done | @KokiTokutake | 3 | SPEC-1ON1-001 | #43 | PR#57 | — |
 
-## Sprint 10 ⬜ 未着手
+## Sprint 10 ✅ 完了
 
 - **ゴール**: 9ボックス全画面 UI＋1on1 バックエンド残り
 - **期間**: 未定
-- **進捗**: 0 / 14 SP
+- **進捗**: 14 / 14 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-043 | [BE] 宿題管理 API＋前回宿題自動引き継ぎ | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #44 | PR#58 | feat/44-action-item-api |
-| TASK-044 | [BE] 委員会連携 API（共有フラグ・サマリー）＋テンプレートマスタ | 🏃 進行中 | @KokiTokutake | 2 | SPEC-1ON1-001 | #45 | — | feat/45-committee-template-api |
-| TASK-045 | [FE] 9ボックス評価入力フォーム UI（上長向け） | ✅ done | @KokiTokutake | 2 | SPEC-MDC-002 | #46 | PR#62 | feat/46-nine-box-input-ui |
+| TASK-044 | [BE] 委員会連携 API（共有フラグ・サマリー）＋テンプレートマスタ | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #45 | PR#59 | feat/45-committee-template-api |
+| TASK-045 | [FE] 9ボックス評価入力フォーム UI（上長向け） | ✅ done | @KokiTokutake | 2 | SPEC-MDC-002 | #46 | PR#60 | feat/46-nine-box-input-ui |
 | TASK-046 | [FE] 9ボックスマップ画面 UI（グリッド・ポップオーバー・期間切替・フィルタ） | ✅ done | @KokiTokutake | 5 | SPEC-MDC-002 | #47 | PR#61 | feat/47-nine-box-map-ui |
-| TASK-047 | [FE] キャリブレーション画面 UI（評価分布・統計表示） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-MDC-002 | #48 | — | feat/48-nine-box-calibration-ui |
+| TASK-047 | [FE] キャリブレーション画面 UI（評価分布・統計表示） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #48 | PR#62 | feat/48-nine-box-calibration-ui |
 
 ## Sprint 11 ⬜ 未着手
 
@@ -162,7 +162,7 @@
 | 項目 | 値 |
 |------|----|
 | 総タスク数 | 52 |
-| 完了 | 35 |
+| 完了 | 44 |
 | 進行中 | 0 |
-| 未着手 | 17 |
+| 未着手 | 8 |
 | レビュー中 | 0 |
