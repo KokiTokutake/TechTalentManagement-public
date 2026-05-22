@@ -1,5 +1,6 @@
 import type {
   NineBoxAssessmentDto,
+  NineBoxCalibrationResponse,
   NineBoxCellDefinition,
   NineBoxHistoryResponse,
   NineBoxMapResponse,
@@ -75,5 +76,9 @@ export function useNineBoxApi() {
     })
   }
 
-  return { fetchCellDefinitions, fetchMap, fetchHistory, fetchByTalentAndPeriod, createAssessment, updateAssessment }
+  async function fetchCalibration(periodId: string): Promise<NineBoxCalibrationResponse> {
+    return await $fetch<NineBoxCalibrationResponse>(`${base}/api/nine-box/calibration?periodId=${periodId}`)
+  }
+
+  return { fetchCellDefinitions, fetchMap, fetchHistory, fetchByTalentAndPeriod, createAssessment, updateAssessment, fetchCalibration }
 }

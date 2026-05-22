@@ -91,3 +91,37 @@ export interface NineBoxHistoryResponse {
   talentName: string
   history: NineBoxHistoryEntry[]
 }
+
+export interface NineBoxDistribution {
+  highHigh: number
+  highMid: number
+  highLow: number
+  midHigh: number
+  midMid: number
+  midLow: number
+  lowHigh: number
+  lowMid: number
+  lowLow: number
+}
+
+export interface NineBoxCalibrationTeam {
+  managerId: string
+  managerName: string
+  talentCount: number
+  assessedCount: number
+  distribution: NineBoxDistribution
+  avgPerformanceScore: number
+  avgPotentialScore: number
+}
+
+export interface NineBoxCalibrationOverall {
+  avgPerformanceScore: number
+  avgPotentialScore: number
+  distribution: NineBoxDistribution
+}
+
+export interface NineBoxCalibrationResponse {
+  periodId: string
+  teams: NineBoxCalibrationTeam[]
+  overall: NineBoxCalibrationOverall
+}

@@ -98,6 +98,14 @@
           >
             重点管理人物
           </NuxtLink>
+          <NuxtLink
+            v-if="isSeniorPlus"
+            to="/mdc/nine-box/calibration"
+            class="nav-item"
+            active-class="nav-item-active"
+          >
+            キャリブレーション
+          </NuxtLink>
           <NuxtLink to="/mdc/sessions" class="nav-item" active-class="nav-item-active">
             委員会セッション
           </NuxtLink>

@@ -110,6 +110,10 @@
               <span>重点管理人物</span>
               <span class="feature-arrow">→</span>
             </NuxtLink>
+            <NuxtLink v-if="isSeniorPlus" to="/mdc/nine-box/calibration" class="feature-item">
+              <span>キャリブレーション</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
             <NuxtLink to="/mdc/sessions" class="feature-item">
               <span>委員会セッション</span>
               <span class="feature-arrow">→</span>
