@@ -378,65 +378,6 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("MeetingActionItems");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CanTopics")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<DateOnly>("ConductedAt")
-                        .HasColumnType("date");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CurrentSituation")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<int>("Format")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FreeText")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("ManagerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("MustTopics")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<bool>("ShareWithMdc")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("TalentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("WillTopics")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ManagerId", "TalentId");
-
-                    b.HasIndex("TalentId", "ConductedAt");
-
-                    b.ToTable("OneOnOneMeetings");
-                });
-
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxAssessment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -520,6 +461,65 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("NineBoxCellDefinitions");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CanTopics")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateOnly>("ConductedAt")
+                        .HasColumnType("date");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CurrentSituation")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("Format")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FreeText")
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MustTopics")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("ShareWithMdc")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("WillTopics")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId", "TalentId");
+
+                    b.HasIndex("TalentId", "ConductedAt");
+
+                    b.ToTable("OneOnOneMeetings");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
@@ -646,6 +646,51 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("SkillItems");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.TalentManagerComment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CurrentChallenges")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DevelopmentPolicy")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("ExpectedRole")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("PeriodId");
+
+                    b.HasIndex("TalentId", "PeriodId")
+                        .IsUnique();
+
+                    b.ToTable("TalentManagerComments");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
@@ -911,25 +956,6 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Meeting");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
-                {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Talent")
-                        .WithMany()
-                        .HasForeignKey("TalentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Manager");
-
-                    b.Navigation("Talent");
-                });
-
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxAssessment", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.User", "Assessor")
@@ -953,6 +979,25 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Assessor");
 
                     b.Navigation("EvaluationPeriod");
+
+                    b.Navigation("Talent");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Manager");
 
                     b.Navigation("Talent");
                 });
@@ -1004,6 +1049,27 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.TalentManagerComment", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", null)
+                        .WithMany()
+                        .HasForeignKey("PeriodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>

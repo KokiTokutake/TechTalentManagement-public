@@ -26,6 +26,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<NineBoxCellDefinition> NineBoxCellDefinitions => Set<NineBoxCellDefinition>();
     public DbSet<OneOnOneMeeting> OneOnOneMeetings => Set<OneOnOneMeeting>();
     public DbSet<MeetingActionItem> MeetingActionItems => Set<MeetingActionItem>();
+    public DbSet<TalentManagerComment> TalentManagerComments => Set<TalentManagerComment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

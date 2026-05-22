@@ -163,7 +163,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-053 | [DB] TalentManagerComment スキーマ＋EF Core マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-003 | — | — | — |
+| TASK-053 | [DB] TalentManagerComment スキーマ＋EF Core マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-003 | — | #68 | feat/T-053-talent-manager-comment-schema |
 | TASK-054 | [BE] タレントプロファイル集約 API + 育成コメント API | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-003 | — | — | — |
 | TASK-055 | [FE] タレントプロファイル画面 UI（集約ビュー・育成コメント入力・重点管理フラグ） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-003 | — | — | — |
 | TASK-056 | [TEST] タレントプロファイル 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-003 | — | — | — |
