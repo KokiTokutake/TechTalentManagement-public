@@ -7,8 +7,8 @@
           おはようございます、<br>{{ auth.currentUser?.displayName }} さん
         </h1>
         <p class="greeting-sub">
-          <span class="role-badge" :class="`role-${auth.currentUser!.role.toLowerCase()}`">
-            {{ roleLabel(auth.currentUser!.role) }}
+          <span v-if="auth.currentUser" class="role-badge" :class="`role-${auth.currentUser.role.toLowerCase()}`">
+            {{ roleLabel(auth.currentUser.role) }}
           </span>
           <span class="api-pill" :class="apiOk ? 'api-ok' : 'api-err'">
             {{ apiOk ? 'API 接続中' : 'API 接続エラー' }}

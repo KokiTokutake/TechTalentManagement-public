@@ -87,6 +87,9 @@
         <!-- MDC (Manager+) -->
         <div v-if="isManagerPlus" class="nav-section">
           <span class="nav-section-label">人材開発委員会</span>
+          <NuxtLink to="/mdc/nine-box" class="nav-item" active-class="nav-item-active">
+            9ボックスマップ
+          </NuxtLink>
           <NuxtLink
             v-if="isSeniorPlus"
             to="/mdc/key-persons"

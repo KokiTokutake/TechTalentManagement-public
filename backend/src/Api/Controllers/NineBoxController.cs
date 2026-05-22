@@ -8,13 +8,11 @@ namespace TeckTalentManagement.Api.Controllers;
 [Route("api/nine-box")]
 public class NineBoxController(INineBoxService nineBoxService) : ControllerBase
 {
-    // 仮のアセッサーID: 認証実装（TASK-002）まで固定値を使用
-    private static readonly Guid MockAssessorId = Guid.Parse("00000000-0000-0000-0000-000000000011");
-
     [HttpPost]
     public async Task<IActionResult> CreateAssessment([FromBody] CreateNineBoxAssessmentRequest req, CancellationToken ct)
     {
-        var result = await nineBoxService.CreateAssessmentAsync(MockAssessorId, req, ct);
+        var assessorId = GetCurrentUserId();
+        var result = await nineBoxService.CreateAssessmentAsync(assessorId, req, ct);
         if (!result.IsSuccess)
             return StatusCode(result.StatusCode, new { error = result.Error });
 
@@ -24,7 +22,8 @@ public class NineBoxController(INineBoxService nineBoxService) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateAssessment(Guid id, [FromBody] UpdateNineBoxAssessmentRequest req, CancellationToken ct)
     {
-        var result = await nineBoxService.UpdateAssessmentAsync(MockAssessorId, id, req, ct);
+        var assessorId = GetCurrentUserId();
+        var result = await nineBoxService.UpdateAssessmentAsync(assessorId, id, req, ct);
         return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
     }
 
@@ -65,8 +64,19 @@ public class NineBoxController(INineBoxService nineBoxService) : ControllerBase
     [HttpPost("flag-candidates")]
     public async Task<IActionResult> FlagCandidates([FromBody] FlagCandidatesRequest req, CancellationToken ct)
     {
-        var result = await nineBoxService.FlagHighPotentialCandidatesAsync(req.PeriodId, MockAssessorId, ct);
+        var assessorId = GetCurrentUserId();
+        var result = await nineBoxService.FlagHighPotentialCandidatesAsync(req.PeriodId, assessorId, ct);
         return result.IsSuccess ? Ok(new { changedCount = result.Value }) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
+
+    // TODO: T-002 認証実装後に ClaimsPrincipal から取得する
+    private Guid GetCurrentUserId()
+    {
+        var header = HttpContext.Request.Headers["X-User-Id"].FirstOrDefault();
+        if (header is not null && Guid.TryParse(header, out var id))
+            return id;
+
+        return Guid.Parse("00000000-0000-0000-0000-000000000011");
     }
 }
 

@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiBaseUrl: '',
     public: {
-      apiBaseUrl: 'http://localhost:5000',
+      apiBaseUrl: 'http://localhost:5108',
     },
   },
   typescript: {

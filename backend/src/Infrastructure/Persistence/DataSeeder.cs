@@ -7,7 +7,14 @@ public static class DataSeeder
 {
     public static async Task SeedAsync(AppDbContext db)
     {
-        if (db.Users.Any()) return;
+        await SeedCellDefinitionsAsync(db);
+
+        if (db.Users.Any())
+        {
+            // ユーザーは既にシード済み。NineBoxアセスメントだけ補完して終了
+            await SeedNineBoxAssessmentsAsync(db);
+            return;
+        }
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         var currentYear = DateTime.UtcNow.Year;
@@ -431,23 +438,29 @@ public static class DataSeeder
 
         await db.SaveChangesAsync();
 
-        // ===== 9ボックス セル定義マスター =====
-        var cells = new[]
-        {
-            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.High, "スター",     "業績・ポテンシャルともに最高水準。組織の中核として即戦力かつ将来リーダー候補。", "#8b5cf6"),
-            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.Mid,  "高業績者",   "現時点での業績は最高水準。成長の余地はあるが組織への貢献度が高い。",           "#6366f1"),
-            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.Low,  "専門家",     "専門領域で卓越した業績を持つが、ポテンシャルは現ポジションに特化している。",   "#3b82f6"),
-            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.High, "原石",       "高いポテンシャルを持ち、将来の活躍が期待できる。業績向上に向けた育成が重要。", "#10b981"),
-            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.Mid,  "コア人材",   "業績・ポテンシャルともに安定した中堅層。組織の安定的な基盤を担う。",             "#6b7280"),
-            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.Low,  "安定人材",   "現在のポジションで安定した業績を発揮。成長よりも定着・安定運用を優先。",         "#9ca3af"),
-            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.High, "将来有望",   "現時点では業績が低いが高いポテンシャルがあり、適切な育成で大きく成長する可能性。","#f59e0b"),
-            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.Mid,  "要育成",     "業績・ポテンシャルともに改善の余地あり。明確な育成計画と継続的サポートが必要。", "#f97316"),
-            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.Low,  "要検討",     "業績・ポテンシャルともに低い。配置転換・役割変更等を含めた抜本的な検討が必要。", "#ef4444"),
-        };
-        db.NineBoxCellDefinitions.AddRange(cells);
-        await db.SaveChangesAsync();
+        // NineBoxアセスメントは全エンティティ保存後にシード（ユーザー・期間が必要）
+        await SeedNineBoxAssessmentsAsync(db);
+    }
 
-        // ===== 前年度 9ボックス評価 =====
+    private static async Task SeedNineBoxAssessmentsAsync(AppDbContext db)
+    {
+        if (db.NineBoxAssessments.Any()) return;
+
+        var manager1 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-mgr1");
+        var manager2 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-mgr2");
+        var talent1  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent1");
+        var talent2  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent2");
+        var talent3  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent3");
+        var talent4  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent4");
+
+        if (manager1 is null || manager2 is null ||
+            talent1 is null || talent2 is null || talent3 is null || talent4 is null)
+            return;
+
+        var prevYear   = DateTime.UtcNow.Year - 1;
+        var prevPeriod = db.EvaluationPeriods.FirstOrDefault(p => p.Year == prevYear);
+        if (prevPeriod is null) return;
+
         var nb1 = NineBoxAssessment.Create(talent1.Id, prevPeriod.Id, manager1.Id,
             PerformanceLevel.High, PotentialLevel.High,
             "全目標を高いレベルで達成。SSRアプリのパフォーマンス改善は特に顕著。",
@@ -465,6 +478,26 @@ public static class DataSeeder
             "入社1年目でありまだ業績は限定的だが、学習意欲と吸収速度が高い。",
             "フロントエンド領域での急速な成長が期待できる。適切な育成で大化けする可能性がある。");
         db.NineBoxAssessments.AddRange(nb1, nb2, nb3, nb4);
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedCellDefinitionsAsync(AppDbContext db)
+    {
+        if (db.NineBoxCellDefinitions.Any()) return;
+
+        var cells = new[]
+        {
+            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.High, "スター",     "業績・ポテンシャルともに最高水準。組織の中核として即戦力かつ将来リーダー候補。", "#8b5cf6"),
+            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.Mid,  "高業績者",   "現時点での業績は最高水準。成長の余地はあるが組織への貢献度が高い。",           "#6366f1"),
+            NineBoxCellDefinition.Create(PerformanceLevel.High, PotentialLevel.Low,  "専門家",     "専門領域で卓越した業績を持つが、ポテンシャルは現ポジションに特化している。",   "#3b82f6"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.High, "原石",       "高いポテンシャルを持ち、将来の活躍が期待できる。業績向上に向けた育成が重要。", "#10b981"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.Mid,  "コア人材",   "業績・ポテンシャルともに安定した中堅層。組織の安定的な基盤を担う。",             "#6b7280"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Mid,  PotentialLevel.Low,  "安定人材",   "現在のポジションで安定した業績を発揮。成長よりも定着・安定運用を優先。",         "#9ca3af"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.High, "将来有望",   "現時点では業績が低いが高いポテンシャルがあり、適切な育成で大きく成長する可能性。","#f59e0b"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.Mid,  "要育成",     "業績・ポテンシャルともに改善の余地あり。明確な育成計画と継続的サポートが必要。", "#f97316"),
+            NineBoxCellDefinition.Create(PerformanceLevel.Low,  PotentialLevel.Low,  "要検討",     "業績・ポテンシャルともに低い。配置転換・役割変更等を含めた抜本的な検討が必要。", "#ef4444"),
+        };
+        db.NineBoxCellDefinitions.AddRange(cells);
         await db.SaveChangesAsync();
     }
 }

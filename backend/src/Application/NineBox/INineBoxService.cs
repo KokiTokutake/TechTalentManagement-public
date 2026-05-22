@@ -93,10 +93,6 @@ public class NineBoxService(INineBoxRepository repo) : INineBoxService
         if (assessment.AssessorId != assessorId)
             return Result<NineBoxAssessmentResponse>.Forbidden("他のアセッサーの評価は更新できません。");
 
-        var period = await repo.FindPeriodAsync(assessment.EvaluationPeriodId, ct);
-        if (period is null || !period.IsEvaluationOpen(DateOnly.FromDateTime(DateTime.UtcNow)))
-            return Result<NineBoxAssessmentResponse>.Forbidden("評価入力可能な期間ではありません。");
-
         var talent = await repo.FindUserAsync(assessment.TalentId, ct);
 
         assessment.Update(perf, pot, req.PerformanceRationale, req.PotentialRationale);
