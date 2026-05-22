@@ -8,6 +8,9 @@
       <NuxtLink :to="backLink" class="btn btn--secondary btn--sm">← 戻る</NuxtLink>
     </header>
 
+    <div class="create-layout">
+      <div class="create-main">
+
     <!-- テンプレート選択 -->
     <div v-if="store.templates.length > 0" class="template-bar">
       <label class="template-label">テンプレートを選択:</label>
@@ -188,6 +191,16 @@
         面談記録を保存しました。
       </div>
     </form>
+
+      </div><!-- /.create-main -->
+
+      <!-- 前回記録サイドパネル -->
+      <OneOnOnePreviousMeetingPanel
+        v-if="talentId"
+        :talent-id="talentId"
+        class="create-sidebar"
+      />
+    </div><!-- /.create-layout -->
   </div>
 </template>
 
@@ -293,6 +306,33 @@ async function handleSave() {
 </script>
 
 <style scoped>
+.create-layout {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.create-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.create-sidebar {
+  width: 280px;
+  min-width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .create-layout { flex-direction: column; }
+  .create-sidebar { width: 100%; position: static; }
+}
+
 .page-header {
   display: flex;
   align-items: flex-start;
