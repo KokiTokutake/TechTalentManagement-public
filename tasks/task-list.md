@@ -151,7 +151,7 @@
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-048 | [FE] 1on1記録作成・編集画面 UI（テンプレート選択・宿題入力） | ✅ done | @KokiTokutake | 3 | SPEC-1ON1-001 | #49 | — | feat/49-one-on-one-create-edit-ui |
 | TASK-049 | [FE] 面談履歴一覧 UI＋前回引き継ぎサイドパネル | ✅ done | @KokiTokutake | 3 | SPEC-1ON1-001 | #50 | — | feat/50-one-on-one-history-ui |
-| TASK-050 | [FE] 委員会連携フラグ・MDCサマリー反映 UI | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #51 | — | — |
+| TASK-050 | [FE] 委員会連携フラグ・MDCサマリー反映 UI | 🏃 進行中 | @KokiTokutake | 2 | SPEC-1ON1-001 | #51 | — | feat/51-one-on-one-mdc-ui |
 | TASK-051 | [TEST] 9ボックス評価 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-002 | #52 | — | — |
 | TASK-052 | [TEST] 1on1面談記録 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-1ON1-001 | #53 | — | — |
 

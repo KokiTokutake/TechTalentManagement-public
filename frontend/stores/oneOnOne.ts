@@ -6,6 +6,7 @@ import type {
   UpdateMeetingRequest,
   ActionItem,
   OneOnOneTemplate,
+  OneOnOneSummary,
 } from '~/types/oneOnOne'
 
 export const useOneOnOneStore = defineStore('oneOnOne', () => {
@@ -15,6 +16,7 @@ export const useOneOnOneStore = defineStore('oneOnOne', () => {
   const meetings = ref<MeetingListItem[]>([])
   const currentMeeting = ref<MeetingDetail | null>(null)
   const previousMeeting = ref<MeetingDetail | null>(null)
+  const summary = ref<OneOnOneSummary | null>(null)
   const templates = ref<OneOnOneTemplate[]>([])
   const totalCount = ref(0)
   const loading = ref(false)
@@ -130,6 +132,16 @@ export const useOneOnOneStore = defineStore('oneOnOne', () => {
     }
   }
 
+  async function fetchSummary(talentId: string) {
+    try {
+      summary.value = await $fetch<OneOnOneSummary>(
+        `${base.value}/api/talents/${talentId}/one-on-one-summary`,
+      )
+    } catch {
+      summary.value = null
+    }
+  }
+
   async function loadTemplates() {
     if (templates.value.length > 0) return
     try {
@@ -143,6 +155,7 @@ export const useOneOnOneStore = defineStore('oneOnOne', () => {
     meetings,
     currentMeeting,
     previousMeeting,
+    summary,
     templates,
     totalCount,
     loading,
@@ -150,6 +163,7 @@ export const useOneOnOneStore = defineStore('oneOnOne', () => {
     fetchMeetings,
     fetchMeeting,
     fetchPreviousMeeting,
+    fetchSummary,
     createMeeting,
     updateMeeting,
     addActionItem,

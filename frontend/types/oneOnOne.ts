@@ -73,6 +73,20 @@ export interface UpdateMeetingRequest {
   shareWithMdc: boolean
 }
 
+export interface OneOnOneSummaryMeeting {
+  id: string
+  conductedAt: string
+  notesSummary: string
+}
+
+export interface OneOnOneSummary {
+  talentId: string
+  talentName: string
+  lastMeetingAt: string | null
+  totalMeetingCount: number
+  sharedMeetings: OneOnOneSummaryMeeting[]
+}
+
 export interface OneOnOneTemplate {
   id: string
   name: string

@@ -59,6 +59,41 @@
         </ul>
       </section>
 
+      <!-- 面談サマリー（委員会共有分） -->
+      <section class="section" data-testid="meeting-summary-section">
+        <h2>1on1 面談サマリー</h2>
+        <div v-if="oneOnOneStore.summary" class="meeting-summary">
+          <div class="summary-meta">
+            <span class="summary-stat">
+              最終面談:
+              <strong data-testid="meeting-summary-last-date">
+                {{ oneOnOneStore.summary.lastMeetingAt ? oneOnOneStore.summary.lastMeetingAt.replace(/-/g, '/') : '—' }}
+              </strong>
+            </span>
+            <span class="summary-stat">
+              合計:
+              <strong>{{ oneOnOneStore.summary.totalMeetingCount }}件</strong>
+            </span>
+          </div>
+          <div v-if="oneOnOneStore.summary.sharedMeetings.length > 0">
+            <p class="summary-label">委員会共有の面談（最大3件）</p>
+            <ul class="shared-meeting-list" data-testid="meeting-summary-shared-list">
+              <li
+                v-for="m in oneOnOneStore.summary.sharedMeetings"
+                :key="m.id"
+                class="shared-meeting-item"
+                :data-testid="`meeting-summary-item-${m.id}`"
+              >
+                <span class="shared-meeting-date">{{ m.conductedAt.replace(/-/g, '/') }}</span>
+                <span class="shared-meeting-notes">{{ m.notesSummary }}</span>
+              </li>
+            </ul>
+          </div>
+          <p v-else class="empty-note">委員会に共有された面談記録はありません。</p>
+        </div>
+        <p v-else class="empty-note">面談サマリーを読み込み中…</p>
+      </section>
+
       <!-- 上長コメント -->
       <section class="section" v-if="store.integratedView?.will">
         <h2>コメント</h2>
@@ -92,10 +127,12 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 import { useCareerPlanStore } from '~/stores/careerPlan'
+import { useOneOnOneStore } from '~/stores/oneOnOne'
 
 const route = useRoute()
 const auth = useAuthStore()
 const store = useCareerPlanStore()
+const oneOnOneStore = useOneOnOneStore()
 
 const targetUserId = route.params.userId as string
 const commentText = ref('')
@@ -110,7 +147,10 @@ const canComment = computed(() => {
 onMounted(async () => {
   if (!auth.currentUser) return
   store.$reset()
-  await store.fetchIntegratedView(targetUserId, auth.currentUser.id)
+  await Promise.all([
+    store.fetchIntegratedView(targetUserId, auth.currentUser.id),
+    oneOnOneStore.fetchSummary(targetUserId),
+  ])
   const planId = store.integratedView?.will?.id
   if (planId)
     await store.fetchComments(planId, auth.currentUser.id)
@@ -163,4 +203,13 @@ function formatDate(iso: string) {
 .textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--border-strong); border-radius: 0.375rem; font-size: 0.875rem; resize: vertical; }
 .error-inline { color: var(--danger); font-size: 0.875rem; }
 .form-footer { display: flex; justify-content: flex-end; }
+.meeting-summary { display: flex; flex-direction: column; gap: 0.75rem; }
+.summary-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.summary-stat { font-size: 0.875rem; color: var(--text-secondary); }
+.summary-stat strong { color: var(--text); }
+.summary-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.4rem; }
+.shared-meeting-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.shared-meeting-item { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.5rem 0.75rem; background: var(--surface-muted); border-radius: 6px; border-left: 3px solid var(--accent); font-size: 0.85rem; }
+.shared-meeting-date { font-family: var(--font-mono); font-weight: 600; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+.shared-meeting-notes { color: var(--text-secondary); line-height: 1.4; }
 </style>

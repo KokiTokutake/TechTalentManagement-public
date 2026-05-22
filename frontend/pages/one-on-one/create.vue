@@ -170,6 +170,22 @@
         </ul>
       </div>
 
+      <!-- 委員会共有 -->
+      <div class="form-section">
+        <h2 class="form-section-title">委員会連携</h2>
+        <label class="toggle-row" for="share-mdc-toggle">
+          <input
+            id="share-mdc-toggle"
+            v-model="form.shareWithMdc"
+            type="checkbox"
+            class="toggle-input"
+            data-testid="meeting-share-mdc-toggle"
+          />
+          <span class="toggle-label">委員会に共有する</span>
+          <span class="toggle-hint">オンにすると、タレントプロファイルの面談サマリーに表示されます</span>
+        </label>
+      </div>
+
       <!-- 保存アクション -->
       <div class="form-actions">
         <NuxtLink :to="backLink" class="btn btn--secondary">キャンセル</NuxtLink>
@@ -225,6 +241,7 @@ const form = reactive({
   mustTopics: '',
   situationNote: '',
   freeText: '',
+  shareWithMdc: false,
 })
 
 const newActionItem = ref('')
@@ -287,7 +304,7 @@ async function handleSave() {
         mustTopics: form.mustTopics || null,
         situationNote: form.situationNote || null,
         freeText: form.freeText || null,
-        shareWithMdc: false,
+        shareWithMdc: form.shareWithMdc,
       },
       auth.currentUser.id,
     )
@@ -529,6 +546,35 @@ h1 {
 }
 
 .action-item-remove:hover { color: #ef4444; }
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+.toggle-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.toggle-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  width: 100%;
+  padding-left: 1.7rem;
+}
 
 .form-actions {
   display: flex;
