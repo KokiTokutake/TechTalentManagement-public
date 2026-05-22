@@ -155,14 +155,66 @@
 | TASK-051 | [TEST] 9ボックス評価 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #52 | — | feat/52-nine-box-integration-test |
 | TASK-052 | [TEST] 1on1面談記録 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #53 | PR#67 | feat/53-one-on-one-integration-test |
 
+## Sprint 12 ⬜ 未着手
+
+- **ゴール**: タレントプロファイル（委員会事前資料）全実装
+- **期間**: 未定
+- **進捗**: 0 / 14 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-053 | [DB] TalentManagerComment スキーマ＋EF Core マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-003 | — | — | — |
+| TASK-054 | [BE] タレントプロファイル集約 API + 育成コメント API | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-003 | — | — | — |
+| TASK-055 | [FE] タレントプロファイル画面 UI（集約ビュー・育成コメント入力・重点管理フラグ） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-003 | — | — | — |
+| TASK-056 | [TEST] タレントプロファイル 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-003 | — | — | — |
+
+## Sprint 13 ⬜ 未着手
+
+- **ゴール**: 委員会議事録の構造化（決定事項・アクションアイテム管理）全実装
+- **期間**: 未定
+- **進捗**: 0 / 10 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-057 | [DB] MdcDecision・MdcDecisionTalent・MdcActionItem スキーマ＋マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-004 | — | — | — |
+| TASK-058 | [BE] 決定事項・アクションアイテム CRUD API + タレント別決定履歴 API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-004 | — | — | — |
+| TASK-059 | [FE] MDCセッション詳細 UI 拡張（決定事項・アクションアイテム・前回積み残し） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-004 | — | — | — |
+| TASK-060 | [TEST] 委員会議事録 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-004 | — | — | — |
+
+## Sprint 14 ⬜ 未着手
+
+- **ゴール**: Will-Can-Must深化（時間軸分割・Can強み/課題・やりがい）全実装
+- **期間**: 未定
+- **進捗**: 0 / 12 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-061 | [DB] WillCanMustEntry・CareerValues スキーマ＋マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-002 | — | — | — |
+| TASK-062 | [BE] WCM深化 API（時間軸別Will・強み/課題Can・価値観・やりがい） | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-002 | — | — | — |
+| TASK-063 | [FE] キャリアプランページ UI 拡張（3軸Will・強み/課題Can・価値観セクション） | ⬜ pending | @KokiTokutake | 5 | SPEC-CAREER-002 | — | — | — |
+| TASK-064 | [TEST] WCM深化 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-002 | — | — | — |
+
+## Sprint 15 ⬜ 未着手
+
+- **ゴール**: Mustの定量KPI・中間振り返り・フィードバック面談記録 全実装
+- **期間**: 未定
+- **進捗**: 0 / 15 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-065 | [DB] GoalKpi・GoalCheckin・FeedbackMeeting スキーマ＋マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-EVAL-002 | — | — | — |
+| TASK-066 | [BE] KPI設定・チェックイン・フィードバック面談 API | ⬜ pending | @KokiTokutake | 5 | SPEC-EVAL-002 | — | — | — |
+| TASK-067 | [FE] KPI入力・チェックイン・フィードバック面談 UI | ⬜ pending | @KokiTokutake | 5 | SPEC-EVAL-002 | — | — | — |
+| TASK-068 | [TEST] KPI・チェックイン・フィードバック面談 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-EVAL-002 | — | — | — |
+
 ---
 
 ## サマリー
 
 | 項目 | 値 |
 |------|----|
-| 総タスク数 | 52 |
+| 総タスク数 | 68 |
 | 完了 | 44 |
 | 進行中 | 0 |
-| 未着手 | 8 |
+| 未着手 | 24 |
 | レビュー中 | 0 |
