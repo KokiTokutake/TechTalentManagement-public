@@ -153,7 +153,7 @@
 | TASK-049 | [FE] 面談履歴一覧 UI＋前回引き継ぎサイドパネル | ✅ done | @KokiTokutake | 3 | SPEC-1ON1-001 | #50 | — | feat/50-one-on-one-history-ui |
 | TASK-050 | [FE] 委員会連携フラグ・MDCサマリー反映 UI | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #51 | — | feat/51-one-on-one-mdc-ui |
 | TASK-051 | [TEST] 9ボックス評価 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #52 | — | feat/52-nine-box-integration-test |
-| TASK-052 | [TEST] 1on1面談記録 結合テスト・受入確認 | 🏃 進行中 | @KokiTokutake | 2 | SPEC-1ON1-001 | #53 | — | feat/53-one-on-one-integration-test |
+| TASK-052 | [TEST] 1on1面談記録 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #53 | PR#67 | feat/53-one-on-one-integration-test |
 
 ---
 
