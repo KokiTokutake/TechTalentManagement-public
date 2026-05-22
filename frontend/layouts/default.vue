@@ -63,6 +63,9 @@
         <!-- Team (Manager+) -->
         <div v-if="isManagerPlus" class="nav-section">
           <span class="nav-section-label">チーム管理</span>
+          <NuxtLink to="/one-on-one" class="nav-item" active-class="nav-item-active">
+            1on1面談
+          </NuxtLink>
           <NuxtLink to="/skills/approval" class="nav-item" active-class="nav-item-active">
             スキル承認
           </NuxtLink>
