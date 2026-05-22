@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  * TASK-038: 評価入力（POST）・更新（PUT）・セル定義取得（GET /cells）
  */
 
-const BASE_URL = process.env.API_BASE_URL ?? 'http://localhost:5000';
+const BASE_URL = process.env.API_BASE_URL ?? 'http://localhost:5108';
 
 // 各テストで使うシードデータのID (DataSeeder の値)
 const PERIOD_ID_PLACEHOLDER = ''; // テスト実行前に取得
@@ -48,9 +48,10 @@ test.describe('GET /api/nine-box/cells — セル定義マスタ', () => {
 test.describe('POST /api/nine-box — 評価入力', () => {
   let periodId: string;
   let talentId: string;
+  let MANAGER_ID: string;
 
   test.beforeEach(async ({ request }) => {
-    // 評価期間とタレントIDを取得
+    // 評価期間とユーザーIDを取得
     const periodsRes = await request.get(`${BASE_URL}/api/periods`);
     if (periodsRes.ok()) {
       const periods = await periodsRes.json();
@@ -61,30 +62,31 @@ test.describe('POST /api/nine-box — 評価入力', () => {
     const usersRes = await request.get(`${BASE_URL}/api/users`);
     if (usersRes.ok()) {
       const users = await usersRes.json();
-      const talent = users.find((u: { role: string }) => u.role === 'Talent');
+      const talent = users.find((u: { role: string; managerId: string | null }) => u.role === 'Talent' && u.managerId);
       talentId = talent?.id ?? '';
+      MANAGER_ID = talent?.managerId ?? '';
     }
   });
 
   test('有効なリクエストで201と評価データが返る', async ({ request }) => {
-    if (!periodId || !talentId) {
+    if (!periodId || !talentId || !MANAGER_ID) {
       test.skip(true, 'シードデータの取得に失敗したためスキップ');
       return;
     }
 
     const res = await request.post(`${BASE_URL}/api/nine-box`, {
+      headers: { 'X-User-Id': MANAGER_ID },
       data: {
         talentId,
         periodId,
         performanceLevel: 'High',
         potentialLevel: 'High',
         performanceRationale: 'E2Eテスト用コメント',
-        potentialRationale: null,
       },
     });
 
-    // 評価期間外の場合は403が返るため、201または403を許容
-    expect([201, 403]).toContain(res.status());
+    // 評価期間外は403、既存評価あり場合は409、正常は201を許容
+    expect([201, 403, 409]).toContain(res.status());
 
     if (res.status() === 201) {
       const body = await res.json();

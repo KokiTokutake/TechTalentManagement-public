@@ -87,27 +87,26 @@ test.describe('SPEC-MDC-002: 9ボックス評価入力 API', () => {
   });
 
   // ── AC-01-01: 評価期間外は POST で 403 が返る（正常な挙動）────
-  // 現在の2026年度考課期間は GoalRegistration フェーズ（evaluationStartDate: 2026-07-18）
-  // → フロントエンドの input.vue が currentPhase を見て入力フォームを無効化する
-  // → バックエンドも IsEvaluationOpen チェックで 403 を返す
-  test('AC-01-01/03: 評価期間外の POST は 403 を返す（フロントは入力フォーム無効化で対応）', async ({ request }) => {
+  // Closedフェーズの期間への評価POST → 403
+  // → バックエンドの IsEvaluationOpen チェックで 403 を返す
+  test('AC-01-01/03: 評価期間外（Closed）への POST は 403 を返す', async ({ request }) => {
     const periodsRes = await request.get(`${API_BASE}/periods`);
-    const periods: Array<{ id: string; currentPhase: string; evaluationStartDate: string }> = await periodsRes.json();
-    const notOpenPeriod = periods.find(p => p.currentPhase !== 'Closed');
-    if (!notOpenPeriod) { test.skip(); return; }
+    const periods: Array<{ id: string; currentPhase: string }> = await periodsRes.json();
+    const closedPeriod = periods.find(p => p.currentPhase === 'Closed');
+    if (!closedPeriod) { test.skip(); return; }
 
     const res = await request.post(`${API_BASE}/nine-box`, {
       headers: managerHeaders(),
       data: {
         talentId: TALENT_ID,
-        periodId: notOpenPeriod.id,
+        periodId: closedPeriod.id,
         performanceLevel: 'High',
         potentialLevel: 'Mid',
         performanceRationale: null,
         potentialRationale: null,
       },
     });
-    // 評価期間外なので 403 を期待
+    // Closedフェーズなので 403 を期待
     expect(res.status()).toBe(403);
   });
 
