@@ -49,24 +49,56 @@
           <p v-else class="cell-empty">対象者なし</p>
         </section>
       </div>
+
+      <!-- 前回積み残し -->
+      <MdcCarryoverSection
+        v-if="decisionStore.carryoverItems.length > 0 || prevSessionId"
+        :items="decisionStore.carryoverItems"
+        :can-edit="canEdit"
+        @status-change="onCarryoverStatusChange"
+      />
+
+      <!-- 決定事項 -->
+      <MdcDecisionList
+        :decisions="decisionStore.decisions"
+        :session-id="sessionId"
+        :can-edit="canEdit"
+        :all-users="allUsers"
+        @decision-create="onDecisionCreate"
+        @decision-update="onDecisionUpdate"
+        @action-item-create="onActionItemCreate"
+        @status-change="onActionItemStatusChange"
+      />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
+import MdcDecisionList from '~/components/mdc/MdcDecisionList.vue'
+import MdcCarryoverSection from '~/components/mdc/MdcCarryoverSection.vue'
+import type { CreateDecisionRequest, CreateActionItemRequest, MdcActionItemStatus } from '~/types/mdcDecision'
+
 const route = useRoute()
 const auth = useAuthStore()
 const store = useCommitteeSessionStore()
 const keyPersonStore = useKeyPersonStore()
+const decisionStore = useMdcDecisionStore()
 
 const sessionId = route.params.sessionId as string
 
-const allowedRoles = ['Senior', 'Executive', 'Admin', 'Manager']
-if (!auth.currentUser || !allowedRoles.includes(auth.currentUser.role)) {
-  await navigateTo('/')
+if (import.meta.client) {
+  const allowedRoles = ['Senior', 'Executive', 'Admin', 'Manager']
+  if (!auth.currentUser || !allowedRoles.includes(auth.currentUser.role)) {
+    await navigateTo('/')
+  }
 }
 
+const canEdit = computed(() =>
+  ['Senior', 'Executive', 'Admin'].includes(auth.currentUser?.role ?? ''),
+)
+
 const allUsers = ref<import('~/types/user').AppUser[]>([])
+const prevSessionId = ref<string>('')
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('ja-JP', {
@@ -85,16 +117,58 @@ function keyPersonName(keyPersonId: string) {
 }
 
 onMounted(async () => {
-  if (auth.currentUser) {
-    const config = useRuntimeConfig()
-    const [users] = await Promise.all([
-      $fetch<import('~/types/user').AppUser[]>(`${config.public.apiBaseUrl}/api/users`),
-      store.fetchDetail(auth.currentUser.id, sessionId),
-      keyPersonStore.fetchList(auth.currentUser.id),
-    ])
-    allUsers.value = users
+  if (!auth.currentUser) return
+
+  const config = useRuntimeConfig()
+  const [users] = await Promise.all([
+    $fetch<import('~/types/user').AppUser[]>(`${config.public.apiBaseUrl}/api/users`),
+    store.fetchDetail(auth.currentUser.id, sessionId),
+    store.fetchList(auth.currentUser.id),
+    keyPersonStore.fetchList(auth.currentUser.id),
+    decisionStore.fetchDecisions(sessionId),
+  ])
+  allUsers.value = users
+
+  // 前回セッション（開催日が厳密に古い中で最も直近のもの）を特定して積み残しを取得
+  const sessions = store.sessions
+  const currentSession = sessions.find(s => s.id === sessionId)
+  if (currentSession) {
+    const olderSessions = sessions.filter(s => s.heldOn < currentSession.heldOn)
+    if (olderSessions.length > 0) {
+      const sorted = [...olderSessions].sort((a, b) => {
+        const byDate = b.heldOn.localeCompare(a.heldOn)
+        if (byDate !== 0) return byDate
+        return b.createdAt.localeCompare(a.createdAt)
+      })
+      prevSessionId.value = sorted[0].id
+      await decisionStore.fetchCarryoverItems(prevSessionId.value)
+    }
   }
 })
+
+onUnmounted(() => {
+  decisionStore.$reset()
+})
+
+async function onDecisionCreate(sid: string, data: CreateDecisionRequest) {
+  await decisionStore.createDecision(sid, data)
+}
+
+async function onDecisionUpdate(id: string, data: CreateDecisionRequest) {
+  await decisionStore.updateDecision(id, data)
+}
+
+async function onActionItemCreate(decisionId: string, data: CreateActionItemRequest) {
+  await decisionStore.addActionItem(decisionId, data)
+}
+
+async function onActionItemStatusChange(id: string, status: MdcActionItemStatus) {
+  await decisionStore.updateActionItemStatus(id, status)
+}
+
+async function onCarryoverStatusChange(id: string, status: MdcActionItemStatus) {
+  await decisionStore.updateActionItemStatus(id, status)
+}
 </script>
 
 <style scoped>

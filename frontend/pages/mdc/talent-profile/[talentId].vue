@@ -29,6 +29,11 @@
         @save="onSaveComment"
         @copy-prev="onCopyPrev"
       />
+
+      <TalentProfileMdcDecisions
+        :decisions="decisionStore.talentDecisions"
+        :loading="decisionStore.loading"
+      />
     </template>
 
     <div v-else-if="store.error" class="error-state" data-testid="talent-profile-error">
@@ -44,6 +49,7 @@ import TalentProfileWillCanMust from '~/components/talent-profile/TalentProfileW
 import TalentProfileSkills from '~/components/talent-profile/TalentProfileSkills.vue'
 import TalentProfileMeetings from '~/components/talent-profile/TalentProfileMeetings.vue'
 import TalentProfileManagerComment from '~/components/talent-profile/TalentProfileManagerComment.vue'
+import TalentProfileMdcDecisions from '~/components/talent-profile/TalentProfileMdcDecisions.vue'
 import type { UpsertManagerCommentRequest } from '~/types/talentProfile'
 
 const route = useRoute()
@@ -51,6 +57,7 @@ const talentId = route.params.talentId as string
 
 const store = useTalentProfileStore()
 const auth = useAuthStore()
+const decisionStore = useMdcDecisionStore()
 
 const periods = ref<{ id: string; name: string }[]>([])
 
@@ -63,7 +70,10 @@ const canEditComment = computed(() =>
 )
 
 onMounted(async () => {
-  await store.fetchProfile(talentId)
+  await Promise.all([
+    store.fetchProfile(talentId),
+    decisionStore.fetchTalentDecisions(talentId),
+  ])
   if (store.profile) {
     periods.value = [{ id: store.profile.periodId, name: store.profile.periodName }]
   }
@@ -71,6 +81,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   store.$reset()
+  decisionStore.$reset()
 })
 
 async function onPeriodChange(periodId: string) {
