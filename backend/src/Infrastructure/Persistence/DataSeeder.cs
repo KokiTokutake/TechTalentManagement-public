@@ -11,8 +11,11 @@ public static class DataSeeder
 
         if (db.Users.Any())
         {
-            // ユーザーは既にシード済み。NineBoxアセスメントだけ補完して終了
+            // ユーザーは既にシード済み。差分のみ補完して終了
             await SeedNineBoxAssessmentsAsync(db);
+            await SeedTalentManagerCommentsAsync(db);
+            await SeedWcmEntriesAsync(db);
+            await SeedCareerValuesAsync(db);
             return;
         }
 
@@ -440,6 +443,9 @@ public static class DataSeeder
 
         // NineBoxアセスメントは全エンティティ保存後にシード（ユーザー・期間が必要）
         await SeedNineBoxAssessmentsAsync(db);
+        await SeedTalentManagerCommentsAsync(db);
+        await SeedWcmEntriesAsync(db);
+        await SeedCareerValuesAsync(db);
     }
 
     private static async Task SeedNineBoxAssessmentsAsync(AppDbContext db)
@@ -478,6 +484,247 @@ public static class DataSeeder
             "入社1年目でありまだ業績は限定的だが、学習意欲と吸収速度が高い。",
             "フロントエンド領域での急速な成長が期待できる。適切な育成で大化けする可能性がある。");
         db.NineBoxAssessments.AddRange(nb1, nb2, nb3, nb4);
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedTalentManagerCommentsAsync(AppDbContext db)
+    {
+        if (db.TalentManagerComments.Any()) return;
+
+        var manager1 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-mgr1");
+        var talent1  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent1");
+        var talent2  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent2");
+        var talent3  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent3");
+        var talent4  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent4");
+        var manager2 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-mgr2");
+
+        if (manager1 is null || manager2 is null ||
+            talent1 is null || talent2 is null || talent3 is null || talent4 is null)
+            return;
+
+        var currYear   = DateTime.UtcNow.Year;
+        var currPeriod = db.EvaluationPeriods.FirstOrDefault(p => p.Year == currYear);
+        if (currPeriod is null) return;
+
+        var comments = new[]
+        {
+            TalentManagerComment.Create(
+                talent1.Id, manager1.Id, currPeriod.Id,
+                "アーキテクチャ設計の上流経験がまだ限定的。チームへの技術展開は得意だが、設計ドキュメントの精度向上が課題。",
+                "新規プロダクトのFEアーキテクチャ設計をリードさせ、部長レビューを通じて設計力を底上げする。月1回の1on1で進捗を確認する。",
+                "フロントエンドテックリード（2年以内）"),
+
+            TalentManagerComment.Create(
+                talent2.Id, manager1.Id, currPeriod.Id,
+                "分散システムの理論理解はあるが実務経験が不足している。チーム全体への技術発信力をさらに高めてほしい。",
+                "Azure Service Busを使った非同期処理基盤の実装をメインで担当させる。Q3にアーキテクチャレビューを実施し、設計力を評価する。",
+                "バックエンドアーキテクト（3年以内）→ テクニカルディレクター候補"),
+
+            TalentManagerComment.Create(
+                talent3.Id, manager2.Id, currPeriod.Id,
+                "インフラ領域は確立されているが、アプリケーション開発との連携スキルが不足している。",
+                "インフラエンジニアとしての専門性を活かしながら、アプリ開発チームとの協業機会を増やす。Azure認定資格取得を今期の重点目標とする。",
+                "クラウドインフラエンジニア（スペシャリスト）"),
+
+            TalentManagerComment.Create(
+                talent4.Id, manager2.Id, currPeriod.Id,
+                "学習意欲は高く吸収速度も速いが、まだ自走で設計・実装まで完結できる実績が少ない。",
+                "既存プロダクトのUI改善タスクをアサインし、フィードバックを重ねて実力をつけさせる。Nuxt.jsの実務経験を今年度中に積ませる。",
+                "フロントエンドエンジニア（自走レベル到達を今年度目標）"),
+        };
+
+        db.TalentManagerComments.AddRange(comments);
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedWcmEntriesAsync(AppDbContext db)
+    {
+        if (db.WillCanMustEntries.Any()) return;
+
+        var talent1 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent1");
+        var talent2 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent2");
+        var talent3 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent3");
+        var talent4 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent4");
+
+        if (talent1 is null || talent2 is null || talent3 is null || talent4 is null) return;
+
+        var currYear   = DateTime.UtcNow.Year;
+        var currPeriod = db.EvaluationPeriods.FirstOrDefault(p => p.Year == currYear);
+        if (currPeriod is null) return;
+
+        var skillTs    = db.SkillItems.FirstOrDefault(s => s.Name == "TypeScript");
+        var skillAspnet = db.SkillItems.FirstOrDefault(s => s.Name == "ASP.NET Core");
+        var skillEfcore = db.SkillItems.FirstOrDefault(s => s.Name == "Entity Framework Core");
+        var skillAzure  = db.SkillItems.FirstOrDefault(s => s.Name == "Azure");
+        var skillDocker = db.SkillItems.FirstOrDefault(s => s.Name == "Docker");
+        var skillGha    = db.SkillItems.FirstOrDefault(s => s.Name == "GitHub Actions");
+
+        var entries = new List<WillCanMustEntry>();
+
+        // ── talent1（田中 太郎）：フロントエンドスペシャリスト・テックリード候補 ──
+        // Will
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Will,
+            "直近6ヶ月でフロントエンドのアーキテクチャ設計をリードし、チームメンバーに設計ノウハウを展開したい", 1,
+            timeHorizon: WcmTimeHorizon.ShortTerm));
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Will,
+            "3年以内にテックリードとして組織の技術戦略を担い、エンジニア採用・育成にも関与したい", 1,
+            timeHorizon: WcmTimeHorizon.MidTerm));
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Will,
+            "5年後には技術とビジネスの橋渡し役として、プロダクトの事業成長に直接貢献したい", 1,
+            timeHorizon: WcmTimeHorizon.LongTerm));
+        // Can - 強み
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Can,
+            "TypeScriptの型設計・ジェネリクス活用が得意で、チームのコード品質向上をリードできる", 1,
+            canType: CanType.Strength, linkedSkillItemId: skillTs?.Id));
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Can,
+            "Vue.js / Nuxt.js を使ったSSRアプリケーションの設計・実装経験が豊富", 2,
+            canType: CanType.Strength));
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Can,
+            "社内勉強会の企画・運営が得意で、技術ナレッジのチーム展開が自然にできる", 3,
+            canType: CanType.Strength));
+        // Can - 課題
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Can,
+            "アーキテクチャ設計書の作成・ドキュメント化は経験が浅く、精度向上が必要", 1,
+            canType: CanType.Challenge));
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Can,
+            "外部カンファレンスでの登壇経験がなく、社外への情報発信力を高めたい", 2,
+            canType: CanType.Challenge));
+        // Must
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Must,
+            "新規プロダクトのFEアーキテクチャ設計書をQ2末までに完成させる", 1));
+        entries.Add(WillCanMustEntry.Create(talent1.Id, currPeriod.Id, WcmCategory.Must,
+            "月1回以上の社内技術勉強会を通年で継続し、フロントエンド技術のナレッジシェアを推進する", 2));
+
+        // ── talent2（佐藤 花子）：バックエンドアーキテクト候補 ──
+        // Will
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Will,
+            "直近6ヶ月でAzure Service Busを使った非同期処理基盤の設計・実装を本番稼働まで完遂したい", 1,
+            timeHorizon: WcmTimeHorizon.ShortTerm));
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Will,
+            "3年以内にバックエンドアーキテクトとして社内外で認知され、大規模システム設計をリードしたい", 1,
+            timeHorizon: WcmTimeHorizon.MidTerm));
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Will,
+            "5年後には技術とビジネスの橋渡し役として、CTO補佐レベルの意思決定に携わりたい", 1,
+            timeHorizon: WcmTimeHorizon.LongTerm));
+        // Can - 強み
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Can,
+            "ASP.NET CoreでのクリーンアーキテクチャAPI設計が得意。設計からテストまで一人で完結できる", 1,
+            canType: CanType.Strength, linkedSkillItemId: skillAspnet?.Id));
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Can,
+            "EF Coreのマイグレーション・クエリ最適化に精通しており、パフォーマンスチューニングができる", 2,
+            canType: CanType.Strength, linkedSkillItemId: skillEfcore?.Id));
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Can,
+            "テスト駆動開発の実践経験があり、テストカバレッジ90%以上を維持できる", 3,
+            canType: CanType.Strength));
+        // Can - 課題
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Can,
+            "分散システム・イベント駆動アーキテクチャの理論理解はあるが実務経験が少ない", 1,
+            canType: CanType.Challenge));
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Can,
+            "プロジェクト全体のコミュニケーションリードや、関係者への技術説明力を高めたい", 2,
+            canType: CanType.Challenge));
+        // Must
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Must,
+            "次期システムのBEアーキテクチャ設計書をQ3末までに完成させ、チームレビューを通過させる", 1));
+        entries.Add(WillCanMustEntry.Create(talent2.Id, currPeriod.Id, WcmCategory.Must,
+            "Azure Service Busを活用した非同期処理基盤を設計・実装し本番稼働まで担当する", 2));
+
+        // ── talent3（伊藤 健太）：インフラエンジニア ──
+        // Will
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Will,
+            "今年度中にAzure Solutions Architect Expert資格を取得したい", 1,
+            timeHorizon: WcmTimeHorizon.ShortTerm));
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Will,
+            "クラウドインフラの設計をリードするスペシャリストとして組織内で認められたい", 1,
+            timeHorizon: WcmTimeHorizon.MidTerm));
+        // Can - 強み
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Can,
+            "Azure環境の設計・構築・運用の実務経験が豊富で、コスト最適化の提案ができる", 1,
+            canType: CanType.Strength, linkedSkillItemId: skillAzure?.Id));
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Can,
+            "Dockerを使ったコンテナ化・マルチステージビルドの経験があり、本番環境での運用実績がある", 2,
+            canType: CanType.Strength, linkedSkillItemId: skillDocker?.Id));
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Can,
+            "GitHub ActionsによるCI/CDパイプライン構築の経験があり、デプロイ自動化を推進できる", 3,
+            canType: CanType.Strength, linkedSkillItemId: skillGha?.Id));
+        // Can - 課題
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Can,
+            "アプリケーション開発チームとの協業経験が少なく、開発者目線のインフラ設計が課題", 1,
+            canType: CanType.Challenge));
+        // Must
+        entries.Add(WillCanMustEntry.Create(talent3.Id, currPeriod.Id, WcmCategory.Must,
+            "CI/CDパイプラインの全面刷新を担当し、デプロイ自動化率80%以上を達成する", 1));
+
+        // ── talent4（渡辺 美咲）：フロントエンドエンジニア（成長中） ──
+        // Will
+        entries.Add(WillCanMustEntry.Create(talent4.Id, currPeriod.Id, WcmCategory.Will,
+            "半年以内にNuxt.jsを使った実務案件を自走で完結できるレベルになりたい", 1,
+            timeHorizon: WcmTimeHorizon.ShortTerm));
+        entries.Add(WillCanMustEntry.Create(talent4.Id, currPeriod.Id, WcmCategory.Will,
+            "フロントエンドエンジニアとして独力でUI設計・実装ができるレベルに成長し、チームに貢献したい", 1,
+            timeHorizon: WcmTimeHorizon.MidTerm));
+        // Can - 強み
+        entries.Add(WillCanMustEntry.Create(talent4.Id, currPeriod.Id, WcmCategory.Can,
+            "Vue.jsの基礎は習得済みで、コンポーネント設計の基本が理解できている", 1,
+            canType: CanType.Strength));
+        entries.Add(WillCanMustEntry.Create(talent4.Id, currPeriod.Id, WcmCategory.Can,
+            "学習意欲が高く、新しい技術の吸収速度が速い", 2,
+            canType: CanType.Strength));
+        // Can - 課題
+        entries.Add(WillCanMustEntry.Create(talent4.Id, currPeriod.Id, WcmCategory.Can,
+            "実務での設計から実装まで自走で完結した経験がまだ少なく、経験を積む必要がある", 1,
+            canType: CanType.Challenge));
+        // Must
+        entries.Add(WillCanMustEntry.Create(talent4.Id, currPeriod.Id, WcmCategory.Must,
+            "既存プロダクトのUI改善タスクを自走で担当し、レビューを通過させる", 1));
+
+        db.WillCanMustEntries.AddRange(entries);
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedCareerValuesAsync(AppDbContext db)
+    {
+        if (db.CareerValues.Any()) return;
+
+        var talent1 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent1");
+        var talent2 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent2");
+        var talent3 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent3");
+        var talent4 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent4");
+
+        if (talent1 is null || talent2 is null || talent3 is null || talent4 is null) return;
+
+        var currYear   = DateTime.UtcNow.Year;
+        var currPeriod = db.EvaluationPeriods.FirstOrDefault(p => p.Year == currYear);
+        if (currPeriod is null) return;
+
+        var values = new[]
+        {
+            CareerValues.Create(
+                talent1.Id, currPeriod.Id,
+                "チームの成長と技術的な誠実さを大切にする。良いコードは次の開発者へのプレゼントだと考えている。",
+                "難しい技術課題をチームで議論し、解決策を見つけてプロダクトをリリースできた瞬間。個人の成果より、チームとして動けたときに最も充実感を感じる。",
+                "技術的負債が積み上がることを分かっていながら、スピードだけを優先させられる状況。コードの品質や設計の議論が軽視される文化。"),
+
+            CareerValues.Create(
+                talent2.Id, currPeriod.Id,
+                "高品質なコードで、未来の開発者への責任を果たすこと。設計の美しさと実装の堅牢さを両立することを重視する。",
+                "自分が設計したアーキテクチャが本番環境でスケールし、ユーザーに価値を届けていると実感できるとき。複雑な問題をシンプルな構造で解決できたときの達成感。",
+                "品質よりスピードだけが評価される状況。また、技術的な意思決定に関われず、ただ言われたものを実装するだけの役割に留まること。"),
+
+            CareerValues.Create(
+                talent3.Id, currPeriod.Id,
+                "システムの安定性と信頼性を守ること。インフラが安定してこそ、開発者が安心して機能開発に集中できると考えている。",
+                "自分が構築したインフラが障害なく稼働し、チームが自信を持ってリリースできている状態を維持できているとき。",
+                "場当たり的な対応でインフラが複雑化し、技術的負債が蓄積していく状況。可用性・セキュリティよりコスト削減だけが優先される意思決定。"),
+
+            CareerValues.Create(
+                talent4.Id, currPeriod.Id,
+                "ユーザーが使いやすいUIを作ること。見た目の美しさだけでなく、直感的に操作できる体験を大切にしたい。",
+                "自分が作ったUIをユーザーが使っている場面を見るとき。先輩からのコードレビューで新しいことを学べたとき。",
+                "ユーザー体験を考慮せず、技術的な理由だけで設計が決まる状況。学習の機会が少なく、同じ作業の繰り返しで成長を感じられない環境。"),
+        };
+
+        db.CareerValues.AddRange(values);
         await db.SaveChangesAsync();
     }
 
