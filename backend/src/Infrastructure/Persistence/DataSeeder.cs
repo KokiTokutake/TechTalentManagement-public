@@ -450,8 +450,6 @@ public static class DataSeeder
 
     private static async Task SeedNineBoxAssessmentsAsync(AppDbContext db)
     {
-        if (db.NineBoxAssessments.Any()) return;
-
         var manager1 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-mgr1");
         var manager2 = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-mgr2");
         var talent1  = db.Users.FirstOrDefault(u => u.EntraObjectId == "dev-talent1");
@@ -463,28 +461,58 @@ public static class DataSeeder
             talent1 is null || talent2 is null || talent3 is null || talent4 is null)
             return;
 
-        var prevYear   = DateTime.UtcNow.Year - 1;
+        var currYear   = DateTime.UtcNow.Year;
+        var prevYear   = currYear - 1;
         var prevPeriod = db.EvaluationPeriods.FirstOrDefault(p => p.Year == prevYear);
-        if (prevPeriod is null) return;
+        var currPeriod = db.EvaluationPeriods.FirstOrDefault(p => p.Year == currYear);
 
-        var nb1 = NineBoxAssessment.Create(talent1.Id, prevPeriod.Id, manager1.Id,
-            PerformanceLevel.High, PotentialLevel.High,
-            "全目標を高いレベルで達成。SSRアプリのパフォーマンス改善は特に顕著。",
-            "テックリード候補として申し分ない成長意欲と学習速度を持つ。");
-        var nb2 = NineBoxAssessment.Create(talent2.Id, prevPeriod.Id, manager1.Id,
-            PerformanceLevel.High, PotentialLevel.High,
-            "BEタスクを全完遂。テストカバレッジ90%以上を達成した。",
-            "分散システムへの強い関心と理解力から、将来のアーキテクト候補として最有力。");
-        var nb3 = NineBoxAssessment.Create(talent3.Id, prevPeriod.Id, manager2.Id,
-            PerformanceLevel.Mid, PotentialLevel.Mid,
-            "CI/CDパイプラインの整備など担当タスクは完遂。期待値通りの業績。",
-            "着実な成長を続けているが、自発的な領域拡張の意欲がやや少ない。");
-        var nb4 = NineBoxAssessment.Create(talent4.Id, prevPeriod.Id, manager2.Id,
-            PerformanceLevel.Low, PotentialLevel.High,
-            "入社1年目でありまだ業績は限定的だが、学習意欲と吸収速度が高い。",
-            "フロントエンド領域での急速な成長が期待できる。適切な育成で大化けする可能性がある。");
-        db.NineBoxAssessments.AddRange(nb1, nb2, nb3, nb4);
-        await db.SaveChangesAsync();
+        // 前年度（2025）アセスメント
+        if (prevPeriod is not null && !db.NineBoxAssessments.Any(n => n.EvaluationPeriodId == prevPeriod.Id))
+        {
+            db.NineBoxAssessments.AddRange(
+                NineBoxAssessment.Create(talent1.Id, prevPeriod.Id, manager1.Id,
+                    PerformanceLevel.High, PotentialLevel.High,
+                    "全目標を高いレベルで達成。SSRアプリのパフォーマンス改善は特に顕著。",
+                    "テックリード候補として申し分ない成長意欲と学習速度を持つ。"),
+                NineBoxAssessment.Create(talent2.Id, prevPeriod.Id, manager1.Id,
+                    PerformanceLevel.High, PotentialLevel.High,
+                    "BEタスクを全完遂。テストカバレッジ90%以上を達成した。",
+                    "分散システムへの強い関心と理解力から、将来のアーキテクト候補として最有力。"),
+                NineBoxAssessment.Create(talent3.Id, prevPeriod.Id, manager2.Id,
+                    PerformanceLevel.Mid, PotentialLevel.Mid,
+                    "CI/CDパイプラインの整備など担当タスクは完遂。期待値通りの業績。",
+                    "着実な成長を続けているが、自発的な領域拡張の意欲がやや少ない。"),
+                NineBoxAssessment.Create(talent4.Id, prevPeriod.Id, manager2.Id,
+                    PerformanceLevel.Low, PotentialLevel.High,
+                    "入社1年目でありまだ業績は限定的だが、学習意欲と吸収速度が高い。",
+                    "フロントエンド領域での急速な成長が期待できる。適切な育成で大化けする可能性がある。")
+            );
+            await db.SaveChangesAsync();
+        }
+
+        // 今年度（2026）アセスメント — 前半期終了後の中間評価として入力済み
+        if (currPeriod is not null && !db.NineBoxAssessments.Any(n => n.EvaluationPeriodId == currPeriod.Id))
+        {
+            db.NineBoxAssessments.AddRange(
+                NineBoxAssessment.Create(talent1.Id, currPeriod.Id, manager1.Id,
+                    PerformanceLevel.High, PotentialLevel.High,
+                    "FEアーキテクチャ設計書をQ1で完成。設計品質が大幅に向上し、チームへの技術共有も継続できている。",
+                    "テックリードへの移行ペースが加速。来年度にはリード業務を正式に任せられる段階に来た。"),
+                NineBoxAssessment.Create(talent2.Id, currPeriod.Id, manager1.Id,
+                    PerformanceLevel.High, PotentialLevel.High,
+                    "Azure Service Bus導入を主導し、非同期処理基盤を本番稼働まで完遂した。設計書品質も向上。",
+                    "分散システム実装の実績ができた。アーキテクト候補としての実力が証明されつつある。"),
+                NineBoxAssessment.Create(talent3.Id, currPeriod.Id, manager2.Id,
+                    PerformanceLevel.Mid, PotentialLevel.Mid,
+                    "CI/CDパイプライン刷新が順調に進行中。Azure認定資格の学習も継続している。",
+                    "安定した実力があるが、自発的に新領域へ踏み出す動きがまだ少ない。引き続き機会を作っていく。"),
+                NineBoxAssessment.Create(talent4.Id, currPeriod.Id, manager2.Id,
+                    PerformanceLevel.Low, PotentialLevel.High,
+                    "UI改善タスクを自走で完遂。Nuxt.jsの習得速度は想定以上で、品質も許容範囲内。",
+                    "成長スピードが昨年より加速している。来年度は単独でのUI設計・実装を任せられる可能性が高い。")
+            );
+            await db.SaveChangesAsync();
+        }
     }
 
     private static async Task SeedTalentManagerCommentsAsync(AppDbContext db)
