@@ -348,6 +348,105 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("ManagerEvaluations");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcActionItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssigneeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DecisionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DecisionId");
+
+                    b.HasIndex("SessionId");
+
+                    b.HasIndex("AssigneeId", "Status");
+
+                    b.ToTable("MdcActionItems");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcDecision", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("DecidedAt")
+                        .HasColumnType("date");
+
+                    b.Property<int>("DecisionType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("MdcDecisions");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcDecisionTalent", b =>
+                {
+                    b.Property<Guid>("DecisionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DecisionId", "TalentId");
+
+                    b.HasIndex("TalentId");
+
+                    b.ToTable("MdcDecisionTalents");
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MeetingActionItem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -945,6 +1044,55 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("SelfEvaluation");
                 });
 
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcActionItem", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.MdcDecision", null)
+                        .WithMany("ActionItems")
+                        .HasForeignKey("DecisionId");
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.CommitteeSession", null)
+                        .WithMany()
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcDecision", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.CommitteeSession", null)
+                        .WithMany()
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcDecisionTalent", b =>
+                {
+                    b.HasOne("TeckTalentManagement.Domain.Entities.MdcDecision", null)
+                        .WithMany("Talents")
+                        .HasForeignKey("DecisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MeetingActionItem", b =>
                 {
                     b.HasOne("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", "Meeting")
@@ -1139,6 +1287,13 @@ namespace TeckTalentManagement.Infrastructure.Migrations
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
                 {
                     b.Navigation("DevelopmentPlans");
+                });
+
+            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MdcDecision", b =>
+                {
+                    b.Navigation("ActionItems");
+
+                    b.Navigation("Talents");
                 });
 
             modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>

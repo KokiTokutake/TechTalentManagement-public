@@ -166,7 +166,7 @@
 | TASK-053 | [DB] TalentManagerComment スキーマ＋EF Core マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-003 | — | #68 | feat/T-053-talent-manager-comment-schema |
 | TASK-054 | [BE] タレントプロファイル集約 API + 育成コメント API | ✅ done | @KokiTokutake | 5 | SPEC-MDC-003 | — | #69 | feat/T-054-talent-profile-api |
 | TASK-055 | [FE] タレントプロファイル画面 UI（集約ビュー・育成コメント入力・重点管理フラグ） | ✅ done | @KokiTokutake | 5 | SPEC-MDC-003 | — | #70 | feat/T-055-talent-profile-ui |
-| TASK-056 | [TEST] タレントプロファイル 結合テスト・受入確認 | 🏃 進行中 | @KokiTokutake | 2 | SPEC-MDC-003 | — | — | — |
+| TASK-056 | [TEST] タレントプロファイル 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-MDC-003 | — | #71 | feat/T-056-talent-profile-test |
 
 ## Sprint 13 ⬜ 未着手
 
@@ -176,7 +176,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-057 | [DB] MdcDecision・MdcDecisionTalent・MdcActionItem スキーマ＋マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-004 | — | — | — |
+| TASK-057 | [DB] MdcDecision・MdcDecisionTalent・MdcActionItem スキーマ＋マイグレーション | 🏃 進行中 | @KokiTokutake | 2 | SPEC-MDC-004 | — | — | — |
 | TASK-058 | [BE] 決定事項・アクションアイテム CRUD API + タレント別決定履歴 API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-004 | — | — | — |
 | TASK-059 | [FE] MDCセッション詳細 UI 拡張（決定事項・アクションアイテム・前回積み残し） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-004 | — | — | — |
 | TASK-060 | [TEST] 委員会議事録 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-004 | — | — | — |
