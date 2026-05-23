@@ -17,6 +17,8 @@ public class Goal
     public User? User { get; private set; }
     public EvaluationPeriod? EvaluationPeriod { get; private set; }
     public SelfEvaluationItem? SelfEvaluationItem { get; private set; }
+    public GoalKpi? GoalKpi { get; private set; }
+    public ICollection<GoalCheckin> GoalCheckins { get; private set; } = [];
 
     private Goal() { }
 

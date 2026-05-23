@@ -273,6 +273,62 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.ToTable("EvaluationPeriods");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.FeedbackMeeting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("ConductedAt")
+                        .HasColumnType("date");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DisclosedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsDisclosed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NextPeriodExpectation")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("OverallComment")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<Guid>("SelfEvaluationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TalentReactionNote")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("SelfEvaluationId")
+                        .IsUnique();
+
+                    b.HasIndex("TalentId", "IsDisclosed");
+
+                    b.ToTable("FeedbackMeetings");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.Property<Guid>("Id")
@@ -313,6 +369,91 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.HasIndex("UserId", "EvaluationPeriodId", "Category");
 
                     b.ToTable("Goals");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.GoalCheckin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CheckedInAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal?>("CurrentValue")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<Guid>("GoalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("KpiId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("ProgressPercent")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KpiId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("GoalId", "CheckedInAt");
+
+                    b.ToTable("GoalCheckins");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.GoalKpi", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("GoalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MeasurementMethod")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("MetricName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<decimal>("TargetValue")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GoalId")
+                        .IsUnique();
+
+                    b.ToTable("GoalKpis");
                 });
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.KeyPerson", b =>
@@ -1095,6 +1236,33 @@ namespace TechTalentManagement.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.FeedbackMeeting", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.SelfEvaluation", "SelfEvaluation")
+                        .WithOne("FeedbackMeeting")
+                        .HasForeignKey("TechTalentManagement.Domain.Entities.FeedbackMeeting", "SelfEvaluationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("SelfEvaluation");
+
+                    b.Navigation("Talent");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
@@ -1112,6 +1280,43 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.Navigation("EvaluationPeriod");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.GoalCheckin", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.Goal", "Goal")
+                        .WithMany("GoalCheckins")
+                        .HasForeignKey("GoalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.GoalKpi", "Kpi")
+                        .WithMany()
+                        .HasForeignKey("KpiId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Goal");
+
+                    b.Navigation("Kpi");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.GoalKpi", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.Goal", "Goal")
+                        .WithOne("GoalKpi")
+                        .HasForeignKey("TechTalentManagement.Domain.Entities.GoalKpi", "GoalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Goal");
                 });
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.KeyPerson", b =>
@@ -1405,6 +1610,10 @@ namespace TechTalentManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.Goal", b =>
                 {
+                    b.Navigation("GoalCheckins");
+
+                    b.Navigation("GoalKpi");
+
                     b.Navigation("SelfEvaluationItem");
                 });
 
@@ -1427,6 +1636,8 @@ namespace TechTalentManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
+                    b.Navigation("FeedbackMeeting");
+
                     b.Navigation("Items");
 
                     b.Navigation("ManagerEvaluation");

@@ -32,6 +32,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<MdcActionItem> MdcActionItems => Set<MdcActionItem>();
     public DbSet<WillCanMustEntry> WillCanMustEntries => Set<WillCanMustEntry>();
     public DbSet<CareerValues> CareerValues => Set<CareerValues>();
+    public DbSet<GoalKpi> GoalKpis => Set<GoalKpi>();
+    public DbSet<GoalCheckin> GoalCheckins => Set<GoalCheckin>();
+    public DbSet<FeedbackMeeting> FeedbackMeetings => Set<FeedbackMeeting>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

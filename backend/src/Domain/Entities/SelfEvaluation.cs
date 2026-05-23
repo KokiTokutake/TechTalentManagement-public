@@ -14,6 +14,7 @@ public class SelfEvaluation
     public EvaluationPeriod? EvaluationPeriod { get; private set; }
     public ICollection<SelfEvaluationItem> Items { get; private set; } = [];
     public ManagerEvaluation? ManagerEvaluation { get; private set; }
+    public FeedbackMeeting? FeedbackMeeting { get; private set; }
 
     private SelfEvaluation() { }
 
