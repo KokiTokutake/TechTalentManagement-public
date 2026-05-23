@@ -165,7 +165,7 @@
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-053 | [DB] TalentManagerComment スキーマ＋EF Core マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-003 | — | #68 | feat/T-053-talent-manager-comment-schema |
 | TASK-054 | [BE] タレントプロファイル集約 API + 育成コメント API | ✅ done | @KokiTokutake | 5 | SPEC-MDC-003 | — | #69 | feat/T-054-talent-profile-api |
-| TASK-055 | [FE] タレントプロファイル画面 UI（集約ビュー・育成コメント入力・重点管理フラグ） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-003 | — | — | — |
+| TASK-055 | [FE] タレントプロファイル画面 UI（集約ビュー・育成コメント入力・重点管理フラグ） | 🏃 進行中 | @KokiTokutake | 5 | SPEC-MDC-003 | — | — | — |
 | TASK-056 | [TEST] タレントプロファイル 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-003 | — | — | — |
 
 ## Sprint 13 ⬜ 未着手
