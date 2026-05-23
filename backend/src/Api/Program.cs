@@ -10,6 +10,8 @@ using TechTalentManagement.Application.OneOnOne;
 using TechTalentManagement.Application.SelfEvaluations;
 using TechTalentManagement.Application.TalentProfile;
 using TechTalentManagement.Application.MdcDecision;
+using TechTalentManagement.Application.Wcm;
+using TechTalentManagement.Application.CareerValues;
 using TechTalentManagement.Application.SkillMaster;
 using TechTalentManagement.Application.SkillMap;
 using TechTalentManagement.Application.UserSkills;
@@ -50,6 +52,10 @@ builder.Services.AddScoped<ITalentProfileRepository, TalentProfileRepository>();
 builder.Services.AddScoped<ITalentProfileService, TalentProfileService>();
 builder.Services.AddScoped<IMdcDecisionRepository, MdcDecisionRepository>();
 builder.Services.AddScoped<IMdcDecisionService, MdcDecisionService>();
+builder.Services.AddScoped<IWcmRepository, WcmRepository>();
+builder.Services.AddScoped<IWcmService, WcmService>();
+builder.Services.AddScoped<ICareerValuesRepository, CareerValuesRepository>();
+builder.Services.AddScoped<ICareerValuesService, CareerValuesService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()

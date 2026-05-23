@@ -190,7 +190,7 @@
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-061 | [DB] WillCanMustEntry・CareerValues スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-002 | — | #76 | feat/T-061-wcm-schema |
-| TASK-062 | [BE] WCM深化 API（時間軸別Will・強み/課題Can・価値観・やりがい） | ⬜ pending | @KokiTokutake | 3 | SPEC-CAREER-002 | — | — | — |
+| TASK-062 | [BE] WCM深化 API（時間軸別Will・強み/課題Can・価値観・やりがい） | ✅ done | @KokiTokutake | 3 | SPEC-CAREER-002 | — | #77 | feat/T-062-wcm-api |
 | TASK-063 | [FE] キャリアプランページ UI 拡張（3軸Will・強み/課題Can・価値観セクション） | ⬜ pending | @KokiTokutake | 5 | SPEC-CAREER-002 | — | — | — |
 | TASK-064 | [TEST] WCM深化 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-CAREER-002 | — | — | — |
 
