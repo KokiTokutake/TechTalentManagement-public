@@ -8,6 +8,7 @@ using TeckTalentManagement.Application.Goals;
 using TeckTalentManagement.Application.ManagerEvaluations;
 using TeckTalentManagement.Application.OneOnOne;
 using TeckTalentManagement.Application.SelfEvaluations;
+using TeckTalentManagement.Application.TalentProfile;
 using TeckTalentManagement.Application.SkillMaster;
 using TeckTalentManagement.Application.SkillMap;
 using TeckTalentManagement.Application.UserSkills;
@@ -44,6 +45,8 @@ builder.Services.AddScoped<INineBoxRepository, NineBoxRepository>();
 builder.Services.AddScoped<INineBoxService, NineBoxService>();
 builder.Services.AddScoped<IOneOnOneRepository, OneOnOneRepository>();
 builder.Services.AddScoped<IOneOnOneService, OneOnOneService>();
+builder.Services.AddScoped<ITalentProfileRepository, TalentProfileRepository>();
+builder.Services.AddScoped<ITalentProfileService, TalentProfileService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
