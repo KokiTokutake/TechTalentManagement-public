@@ -179,7 +179,7 @@
 | TASK-057 | [DB] MdcDecision・MdcDecisionTalent・MdcActionItem スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-004 | — | #72 | feat/T-057-mdc-decision-schema |
 | TASK-058 | [BE] 決定事項・アクションアイテム CRUD API + タレント別決定履歴 API | ✅ done | @KokiTokutake | 3 | SPEC-MDC-004 | — | #73 | feat/T-058-mdc-decision-api |
 | TASK-059 | [FE] MDCセッション詳細 UI 拡張（決定事項・アクションアイテム・前回積み残し） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-004 | — | [#74](https://github.com/KokiTokutake/TeckTalentManagement/pull/74) | feat/T-059-mdc-session-detail-ui |
-| TASK-060 | [TEST] 委員会議事録 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 2 | SPEC-MDC-004 | — | — | — |
+| TASK-060 | [TEST] 委員会議事録 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-MDC-004 | — | [#75](https://github.com/KokiTokutake/TeckTalentManagement/pull/75) | feat/T-060-mdc-integration-test |
 
 ## Sprint 14 ⬜ 未着手
 
