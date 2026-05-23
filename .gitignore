@@ -24,6 +24,9 @@ tests/reports/
 # PM ツール（ローカルデータ）
 tasks/pm-data.json
 
+# Claude Code（ローカル設定）
+.claude/settings.local.json
+
 # OS
 .DS_Store
 Thumbs.db
