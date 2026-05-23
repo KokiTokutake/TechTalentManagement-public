@@ -1,8 +1,8 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Application.Goals;
+namespace TechTalentManagement.Application.Goals;
 
 public interface IGoalService
 {

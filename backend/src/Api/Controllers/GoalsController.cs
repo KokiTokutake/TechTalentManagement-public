@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.Goals;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.Goals;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/periods/{periodId:guid}/users/{userId:guid}/goals")]

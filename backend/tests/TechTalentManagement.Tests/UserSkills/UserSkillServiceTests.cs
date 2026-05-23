@@ -1,9 +1,9 @@
-using NSubstitute;
-using TeckTalentManagement.Application.UserSkills;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using NSubstitute;
+using TechTalentManagement.Application.UserSkills;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Tests.UserSkills;
+namespace TechTalentManagement.Tests.UserSkills;
 
 public class UserSkillServiceTests
 {

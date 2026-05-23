@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TeckTalentManagement.Infrastructure.Migrations
+namespace TechTalentManagement.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class AddSkillMaster : Migration

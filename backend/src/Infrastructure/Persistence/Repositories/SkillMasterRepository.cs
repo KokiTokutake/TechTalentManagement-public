@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.SkillMaster;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.SkillMaster;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class SkillMasterRepository(AppDbContext db) : ISkillMasterRepository
 {

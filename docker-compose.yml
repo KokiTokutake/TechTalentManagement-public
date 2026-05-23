@@ -1,4 +1,4 @@
-services:
+﻿services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -35,7 +35,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: >-
-        Server=db;Database=TeckTalentManagement;
+        Server=db;Database=TechTalentManagement;
         User Id=sa;Password=${DB_SA_PASSWORD};TrustServerCertificate=True
       AllowedOrigins: "http://localhost:3000"
     depends_on:

@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TeckTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Configurations;
+namespace TechTalentManagement.Infrastructure.Persistence.Configurations;
 
 public class UserSkillHistoryConfiguration : IEntityTypeConfiguration<UserSkillHistory>
 {

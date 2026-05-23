@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Domain.Enums;
+﻿namespace TechTalentManagement.Domain.Enums;
 
 public enum DecisionType
 {

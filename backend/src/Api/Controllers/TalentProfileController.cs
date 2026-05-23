@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.TalentProfile;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.TalentProfile;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/talents/{talentId:guid}")]

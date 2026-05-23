@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\TeckTalentManagement.Application.csproj" />
-    <ProjectReference Include="..\Domain\TeckTalentManagement.Domain.csproj" />
+    <ProjectReference Include="..\Application\TechTalentManagement.Application.csproj" />
+    <ProjectReference Include="..\Domain\TechTalentManagement.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

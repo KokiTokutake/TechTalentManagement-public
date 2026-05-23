@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

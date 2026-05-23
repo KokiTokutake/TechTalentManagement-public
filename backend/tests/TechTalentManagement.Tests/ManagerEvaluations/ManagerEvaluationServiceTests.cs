@@ -1,9 +1,9 @@
-using NSubstitute;
-using TeckTalentManagement.Application.ManagerEvaluations;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using NSubstitute;
+using TechTalentManagement.Application.ManagerEvaluations;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Tests.ManagerEvaluations;
+namespace TechTalentManagement.Tests.ManagerEvaluations;
 
 public class ManagerEvaluationServiceTests
 {

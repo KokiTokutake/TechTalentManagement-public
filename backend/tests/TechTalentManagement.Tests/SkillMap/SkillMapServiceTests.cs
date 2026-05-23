@@ -1,9 +1,9 @@
-using NSubstitute;
-using TeckTalentManagement.Application.SkillMap;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using NSubstitute;
+using TechTalentManagement.Application.SkillMap;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Tests.SkillMap;
+namespace TechTalentManagement.Tests.SkillMap;
 
 public class SkillMapServiceTests
 {

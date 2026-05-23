@@ -1,9 +1,9 @@
-using NSubstitute;
-using TeckTalentManagement.Application.Goals;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using NSubstitute;
+using TechTalentManagement.Application.Goals;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Tests.Goals;
+namespace TechTalentManagement.Tests.Goals;
 
 public class GoalServiceTests
 {

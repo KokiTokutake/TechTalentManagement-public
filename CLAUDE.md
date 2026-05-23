@@ -1,10 +1,10 @@
-# CLAUDE.md
+﻿# CLAUDE.md
 
 This file provides guidance to Claude Code when working with code in this repository.
 
 ## プロジェクト概要
 
-**ITエンジニア向けタレントマネジメントシステム（TeckTalentManagement）**
+**ITエンジニア向けタレントマネジメントシステム（TechTalentManagement）**
 金融系グループ会社の社内ITエンジニアを対象に、Will-Can-Mustフレームワークと人材開発委員会運営をベースとした考課・タレントマネジメントを実現するWebシステム。
 
 ## 仕様書・ドキュメントの場所
@@ -165,7 +165,7 @@ cd backend && dotnet build
 ## ディレクトリ構造
 
 ```
-TeckTalentManagement/
+TechTalentManagement/
 ├── .constitution/          # プロジェクト憲章（変更禁止）
 ├── .github/                # GitHub 設定・テンプレート
 ├── .claude/                # Claude Code 設定・hooks

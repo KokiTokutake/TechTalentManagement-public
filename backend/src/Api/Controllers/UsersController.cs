@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/users")]

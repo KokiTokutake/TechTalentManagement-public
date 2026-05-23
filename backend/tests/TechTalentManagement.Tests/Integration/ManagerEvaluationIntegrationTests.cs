@@ -1,10 +1,10 @@
-using TeckTalentManagement.Application.Goals;
-using TeckTalentManagement.Application.ManagerEvaluations;
-using TeckTalentManagement.Application.SelfEvaluations;
-using TeckTalentManagement.Domain.Enums;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using TechTalentManagement.Application.Goals;
+using TechTalentManagement.Application.ManagerEvaluations;
+using TechTalentManagement.Application.SelfEvaluations;
+using TechTalentManagement.Domain.Enums;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Tests.Integration;
+namespace TechTalentManagement.Tests.Integration;
 
 // 受入基準: REQ-03 上長がタレントの自己評価を確認し、上長評価を入力・確定できる
 public class ManagerEvaluationIntegrationTests : IntegrationTestBase
@@ -25,7 +25,7 @@ public class ManagerEvaluationIntegrationTests : IntegrationTestBase
         var userId = Guid.NewGuid();
 
         // 目標登録期間は終了しているため DB に直接シード
-        var goal = TeckTalentManagement.Domain.Entities.Goal.Create(
+        var goal = TechTalentManagement.Domain.Entities.Goal.Create(
             userId, periodId, WillCanMust.Must, "目標", null, 1);
         await Db.Goals.AddAsync(goal);
         await Db.SaveChangesAsync();
@@ -64,7 +64,7 @@ public class ManagerEvaluationIntegrationTests : IntegrationTestBase
         var userId = Guid.NewGuid();
 
         // 自己評価を作成するが提出しない（目標はDBに直接シード）
-        var goal = TeckTalentManagement.Domain.Entities.Goal.Create(
+        var goal = TechTalentManagement.Domain.Entities.Goal.Create(
             userId, period.Id, WillCanMust.Will, "目標", null, 1);
         await Db.Goals.AddAsync(goal);
         await Db.SaveChangesAsync();

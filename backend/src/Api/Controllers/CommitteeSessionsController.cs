@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.CommitteeSession;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.CommitteeSession;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/committee-sessions")]

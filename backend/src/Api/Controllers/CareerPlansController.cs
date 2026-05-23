@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.CareerPlan;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.CareerPlan;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/users/{userId:guid}/career-plans")]

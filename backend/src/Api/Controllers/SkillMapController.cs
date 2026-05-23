@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.SkillMap;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.SkillMap;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/skill-map")]

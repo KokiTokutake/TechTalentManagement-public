@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\TeckTalentManagement.Application.csproj" />
-    <ProjectReference Include="..\Infrastructure\TeckTalentManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\Application\TechTalentManagement.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\TechTalentManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.CommitteeSession;
-using TeckTalentManagement.Application.KeyPerson;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.CommitteeSession;
+using TechTalentManagement.Application.KeyPerson;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/key-persons")]

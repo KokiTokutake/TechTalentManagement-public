@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.NineBox;
-using TeckTalentManagement.Application.NineBox.Requests;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.NineBox;
+using TechTalentManagement.Application.NineBox.Requests;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/nine-box")]

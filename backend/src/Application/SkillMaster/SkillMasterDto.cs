@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.SkillMaster;
+﻿namespace TechTalentManagement.Application.SkillMaster;
 
 public record SkillCategoryDto(
     Guid Id,

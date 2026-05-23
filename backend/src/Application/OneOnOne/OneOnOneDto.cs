@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.OneOnOne;
+﻿namespace TechTalentManagement.Application.OneOnOne;
 
 public record MeetingListItemDto(
     Guid Id,

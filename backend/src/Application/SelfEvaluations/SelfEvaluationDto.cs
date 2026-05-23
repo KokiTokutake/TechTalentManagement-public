@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.SelfEvaluations;
+﻿namespace TechTalentManagement.Application.SelfEvaluations;
 
 public record SelfEvaluationDto(
     Guid Id,

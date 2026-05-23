@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.UserSkills;
+﻿namespace TechTalentManagement.Application.UserSkills;
 
 public record UserSkillDto(
     Guid Id,

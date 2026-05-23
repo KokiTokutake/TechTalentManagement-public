@@ -1,11 +1,11 @@
-using TeckTalentManagement.Application.CommitteeSession;
-using TeckTalentManagement.Application.DevelopmentPlan;
-using TeckTalentManagement.Application.KeyPerson;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using TechTalentManagement.Application.CommitteeSession;
+using TechTalentManagement.Application.DevelopmentPlan;
+using TechTalentManagement.Application.KeyPerson;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Tests.Integration;
+namespace TechTalentManagement.Tests.Integration;
 
 // 受入基準: SPEC-MDC-001 人材開発委員会機能 結合テスト
 public class MdcIntegrationTests : IntegrationTestBase

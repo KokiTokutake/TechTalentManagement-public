@@ -1,8 +1,8 @@
-using NSubstitute;
-using TeckTalentManagement.Application.SkillMaster;
-using TeckTalentManagement.Domain.Entities;
+﻿using NSubstitute;
+using TechTalentManagement.Application.SkillMaster;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Tests.SkillMaster;
+namespace TechTalentManagement.Tests.SkillMaster;
 
 public class SkillMasterServiceTests
 {

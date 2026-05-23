@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.CareerPlan;
+﻿namespace TechTalentManagement.Application.CareerPlan;
 
 public record CareerPlanDto(
     Guid Id,

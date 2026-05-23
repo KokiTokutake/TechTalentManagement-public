@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.KeyPerson;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.KeyPerson;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class KeyPersonRepository(AppDbContext db) : IKeyPersonRepository
 {

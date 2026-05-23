@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.Goals;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.Goals;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class GoalRepository(AppDbContext db) : IGoalRepository
 {

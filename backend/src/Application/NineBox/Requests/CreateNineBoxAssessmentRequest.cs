@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.NineBox.Requests;
+﻿namespace TechTalentManagement.Application.NineBox.Requests;
 
 public record CreateNineBoxAssessmentRequest(
     Guid TalentId,

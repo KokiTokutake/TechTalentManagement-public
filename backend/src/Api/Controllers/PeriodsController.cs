@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Infrastructure.Persistence;
+using TechTalentManagement.Infrastructure.Persistence;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/periods")]

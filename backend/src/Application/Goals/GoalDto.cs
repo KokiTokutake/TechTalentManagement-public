@@ -1,6 +1,6 @@
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Application.Goals;
+namespace TechTalentManagement.Application.Goals;
 
 public record GoalDto(
     Guid Id,

@@ -1,7 +1,7 @@
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Infrastructure.Persistence;
+namespace TechTalentManagement.Infrastructure.Persistence;
 
 public static class DataSeeder
 {

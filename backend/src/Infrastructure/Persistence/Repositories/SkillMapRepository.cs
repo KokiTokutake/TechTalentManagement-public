@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.SkillMap;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.SkillMap;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class SkillMapRepository(AppDbContext db) : ISkillMapRepository
 {

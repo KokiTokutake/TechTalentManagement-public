@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.ManagerEvaluations;
+﻿namespace TechTalentManagement.Application.ManagerEvaluations;
 
 public record ManagerEvaluationDto(
     Guid Id,

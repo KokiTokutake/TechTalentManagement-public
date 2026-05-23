@@ -1,6 +1,6 @@
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Domain.Entities;
+namespace TechTalentManagement.Domain.Entities;
 
 public class MdcActionItem
 {

@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.SelfEvaluations;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.SelfEvaluations;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class SelfEvaluationRepository(AppDbContext db) : ISelfEvaluationRepository
 {

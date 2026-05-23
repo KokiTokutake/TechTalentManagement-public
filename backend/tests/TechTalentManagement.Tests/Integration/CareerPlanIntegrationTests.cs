@@ -1,9 +1,9 @@
-using TeckTalentManagement.Application.CareerPlan;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using TechTalentManagement.Application.CareerPlan;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Tests.Integration;
+namespace TechTalentManagement.Tests.Integration;
 
 // 受入基準: SPEC-CAREER-001 キャリアプラン管理 結合テスト
 public class CareerPlanIntegrationTests : IntegrationTestBase

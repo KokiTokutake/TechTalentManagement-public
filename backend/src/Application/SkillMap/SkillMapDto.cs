@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.SkillMap;
+﻿namespace TechTalentManagement.Application.SkillMap;
 
 public record SkillMapUserDto(Guid Id, string DisplayName, string Email);
 

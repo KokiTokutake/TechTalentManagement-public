@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Application\TeckTalentManagement.Application.csproj" />
-    <ProjectReference Include="..\..\src\Domain\TeckTalentManagement.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Infrastructure\TeckTalentManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Application\TechTalentManagement.Application.csproj" />
+    <ProjectReference Include="..\..\src\Domain\TechTalentManagement.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\TechTalentManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

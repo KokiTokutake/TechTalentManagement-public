@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.UserSkills;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.UserSkills;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/users/{userId:guid}/skills")]

@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.UserSkills;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.UserSkills;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class UserSkillRepository(AppDbContext db) : IUserSkillRepository
 {

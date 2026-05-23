@@ -1,20 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.CareerPlan;
-using TeckTalentManagement.Application.CommitteeSession;
-using TeckTalentManagement.Application.NineBox;
-using TeckTalentManagement.Application.DevelopmentPlan;
-using TeckTalentManagement.Application.KeyPerson;
-using TeckTalentManagement.Application.Goals;
-using TeckTalentManagement.Application.ManagerEvaluations;
-using TeckTalentManagement.Application.OneOnOne;
-using TeckTalentManagement.Application.SelfEvaluations;
-using TeckTalentManagement.Application.TalentProfile;
-using TeckTalentManagement.Application.MdcDecision;
-using TeckTalentManagement.Application.SkillMaster;
-using TeckTalentManagement.Application.SkillMap;
-using TeckTalentManagement.Application.UserSkills;
-using TeckTalentManagement.Infrastructure.Persistence;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.CareerPlan;
+using TechTalentManagement.Application.CommitteeSession;
+using TechTalentManagement.Application.NineBox;
+using TechTalentManagement.Application.DevelopmentPlan;
+using TechTalentManagement.Application.KeyPerson;
+using TechTalentManagement.Application.Goals;
+using TechTalentManagement.Application.ManagerEvaluations;
+using TechTalentManagement.Application.OneOnOne;
+using TechTalentManagement.Application.SelfEvaluations;
+using TechTalentManagement.Application.TalentProfile;
+using TechTalentManagement.Application.MdcDecision;
+using TechTalentManagement.Application.SkillMaster;
+using TechTalentManagement.Application.SkillMap;
+using TechTalentManagement.Application.UserSkills;
+using TechTalentManagement.Infrastructure.Persistence;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

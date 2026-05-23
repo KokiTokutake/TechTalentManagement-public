@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.ManagerEvaluations;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.ManagerEvaluations;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/self-evaluations/{selfEvaluationId:guid}/manager-evaluation")]

@@ -1,8 +1,8 @@
-using TeckTalentManagement.Application.SelfEvaluations;
-using TeckTalentManagement.Domain.Enums;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using TechTalentManagement.Application.SelfEvaluations;
+using TechTalentManagement.Domain.Enums;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Tests.Integration;
+namespace TechTalentManagement.Tests.Integration;
 
 // 受入基準: REQ-02 タレントが自己評価を入力・提出できる
 public class SelfEvaluationIntegrationTests : IntegrationTestBase
@@ -15,9 +15,9 @@ public class SelfEvaluationIntegrationTests : IntegrationTestBase
     }
 
     // 評価期間中は目標登録期間が終了しているため、DBに直接シードするヘルパー
-    private async Task<TeckTalentManagement.Domain.Entities.Goal> SeedGoal(Guid userId, Guid periodId)
+    private async Task<TechTalentManagement.Domain.Entities.Goal> SeedGoal(Guid userId, Guid periodId)
     {
-        var goal = TeckTalentManagement.Domain.Entities.Goal.Create(
+        var goal = TechTalentManagement.Domain.Entities.Goal.Create(
             userId, periodId, WillCanMust.Must, "テスト目標", null, 1);
         await Db.Goals.AddAsync(goal);
         await Db.SaveChangesAsync();

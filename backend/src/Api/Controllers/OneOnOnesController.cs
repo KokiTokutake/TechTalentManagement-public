@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.OneOnOne;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.OneOnOne;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 public class OneOnOnesController(IOneOnOneService service) : ControllerBase

@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.NineBox.Responses;
+﻿namespace TechTalentManagement.Application.NineBox.Responses;
 
 public record NineBoxCellResponse(
     string PerformanceLevel,

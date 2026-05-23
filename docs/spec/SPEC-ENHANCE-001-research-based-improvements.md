@@ -1,4 +1,4 @@
-# SPEC-ENHANCE-001: リサーチに基づく機能改善仕様
+﻿# SPEC-ENHANCE-001: リサーチに基づく機能改善仕様
 
 **Spec ID**: SPEC-ENHANCE-001  
 **Status**: reference（調査まとめ資料。各機能は SPEC-CAREER-002, SPEC-EVAL-002, SPEC-MDC-002〜005, SPEC-SKILL-002 として個別仕様書化済み）  
@@ -10,7 +10,7 @@
 
 ## 背景・調査方針
 
-本仕様は以下を参考に、TeckTalentManagementシステムの実務適合性を高めるための改善要件をまとめたものである：
+本仕様は以下を参考に、TechTalentManagementシステムの実務適合性を高めるための改善要件をまとめたものである：
 
 - **リクルート社のWill-Can-Must運用実例**（半期更新、1on1連携、Can強み/課題の両面記述）
 - **人材開発委員会（MDC）の階層別運営実務**（部レベル・経営レベルの区分、9ボックス、タレントプロファイル）

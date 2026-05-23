@@ -1,8 +1,8 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Domain.Enums;
-using DomainEntities = TeckTalentManagement.Domain.Entities;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Domain.Enums;
+using DomainEntities = TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Application.TalentProfile;
+namespace TechTalentManagement.Application.TalentProfile;
 
 public interface ITalentProfileService
 {

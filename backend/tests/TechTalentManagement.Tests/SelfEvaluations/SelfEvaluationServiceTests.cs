@@ -1,8 +1,8 @@
-using NSubstitute;
-using TeckTalentManagement.Application.SelfEvaluations;
-using TeckTalentManagement.Domain.Entities;
+﻿using NSubstitute;
+using TechTalentManagement.Application.SelfEvaluations;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Tests.SelfEvaluations;
+namespace TechTalentManagement.Tests.SelfEvaluations;
 
 public class SelfEvaluationServiceTests
 {

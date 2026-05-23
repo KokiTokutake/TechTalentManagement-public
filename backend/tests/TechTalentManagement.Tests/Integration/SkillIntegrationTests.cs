@@ -1,11 +1,11 @@
-using TeckTalentManagement.Application.SkillMap;
-using TeckTalentManagement.Application.SkillMaster;
-using TeckTalentManagement.Application.UserSkills;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using TechTalentManagement.Application.SkillMap;
+using TechTalentManagement.Application.SkillMaster;
+using TechTalentManagement.Application.UserSkills;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Tests.Integration;
+namespace TechTalentManagement.Tests.Integration;
 
 // 受入基準: SPEC-SKILL-001 スキル管理 結合テスト
 public class SkillIntegrationTests : IntegrationTestBase

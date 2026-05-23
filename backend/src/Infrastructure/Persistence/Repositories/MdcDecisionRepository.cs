@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.MdcDecision;
-using TeckTalentManagement.Domain.Enums;
-using DomainEntities = TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.MdcDecision;
+using TechTalentManagement.Domain.Enums;
+using DomainEntities = TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class MdcDecisionRepository(AppDbContext db) : IMdcDecisionRepository
 {

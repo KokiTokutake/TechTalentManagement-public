@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Domain.Entities;
+﻿namespace TechTalentManagement.Domain.Entities;
 
 public class CareerPlan
 {

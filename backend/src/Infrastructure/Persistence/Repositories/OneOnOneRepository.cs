@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.OneOnOne;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.OneOnOne;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class OneOnOneRepository(AppDbContext db) : IOneOnOneRepository
 {

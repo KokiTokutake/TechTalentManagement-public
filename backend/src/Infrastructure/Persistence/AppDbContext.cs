@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence;
+namespace TechTalentManagement.Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
@@ -30,6 +30,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<MdcDecision> MdcDecisions => Set<MdcDecision>();
     public DbSet<MdcDecisionTalent> MdcDecisionTalents => Set<MdcDecisionTalent>();
     public DbSet<MdcActionItem> MdcActionItems => Set<MdcActionItem>();
+    public DbSet<WillCanMustEntry> WillCanMustEntries => Set<WillCanMustEntry>();
+    public DbSet<CareerValues> CareerValues => Set<CareerValues>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

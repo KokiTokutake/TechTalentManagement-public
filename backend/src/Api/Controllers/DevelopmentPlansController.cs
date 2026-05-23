@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.DevelopmentPlan;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.DevelopmentPlan;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/key-persons/{keyPersonId:guid}/development-plans")]

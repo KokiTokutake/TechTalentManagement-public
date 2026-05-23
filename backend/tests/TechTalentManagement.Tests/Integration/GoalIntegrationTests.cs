@@ -1,8 +1,8 @@
-using TeckTalentManagement.Application.Goals;
-using TeckTalentManagement.Domain.Enums;
-using TeckTalentManagement.Infrastructure.Persistence.Repositories;
+﻿using TechTalentManagement.Application.Goals;
+using TechTalentManagement.Domain.Enums;
+using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
-namespace TeckTalentManagement.Tests.Integration;
+namespace TechTalentManagement.Tests.Integration;
 
 // 受入基準: REQ-01 タレントが目標を登録・編集・削除できる
 public class GoalIntegrationTests : IntegrationTestBase

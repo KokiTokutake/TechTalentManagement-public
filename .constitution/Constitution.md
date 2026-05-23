@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 IMPORTANT: This is a project constitution.
 DO NOT modify this file unless you are explicitly instructed to do so
 through the 原則決定工程 (Constitution process).
@@ -17,7 +17,7 @@ All changes must be reviewed and approved by all stakeholders.
 
 ### 1.1 プロジェクト名
 
-**ITエンジニア向けタレントマネジメントシステム（TeckTalentManagement）**
+**ITエンジニア向けタレントマネジメントシステム（TechTalentManagement）**
 
 ### 1.2 目的（Why）
 

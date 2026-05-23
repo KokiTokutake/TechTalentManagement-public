@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.SkillMaster;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.SkillMaster;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/skill-categories")]

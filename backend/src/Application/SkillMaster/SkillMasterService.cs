@@ -1,7 +1,7 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Domain.Entities;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Application.SkillMaster;
+namespace TechTalentManagement.Application.SkillMaster;
 
 public interface ISkillMasterService
 {

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TeckTalentManagement.Infrastructure.Persistence;
+using TechTalentManagement.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace TeckTalentManagement.Infrastructure.Migrations
+namespace TechTalentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260522235051_AddTalentManagerComment")]
@@ -25,7 +25,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlan", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CareerPlan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("CareerPlans");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlanComment", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CareerPlanComment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("CareerPlanComments");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSession", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSession", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +122,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("CommitteeSessions");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionKeyPerson", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSessionKeyPerson", b =>
                 {
                     b.Property<Guid>("SessionId")
                         .HasColumnType("uniqueidentifier");
@@ -137,7 +137,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("CommitteeSessionKeyPersons");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionParticipant", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSessionParticipant", b =>
                 {
                     b.Property<Guid>("SessionId")
                         .HasColumnType("uniqueidentifier");
@@ -152,7 +152,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("CommitteeSessionParticipants");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.DevelopmentPlan", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.DevelopmentPlan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,7 +197,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("DevelopmentPlans");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.EvaluationPeriod", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -236,7 +236,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("EvaluationPeriods");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -278,7 +278,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("Goals");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.KeyPerson", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -310,7 +310,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("KeyPersons");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.ManagerEvaluation", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ManagerEvaluation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -351,7 +351,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("ManagerEvaluations");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MeetingActionItem", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.MeetingActionItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -381,7 +381,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("MeetingActionItems");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxAssessment", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.NineBoxAssessment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -431,7 +431,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("NineBoxAssessments");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxCellDefinition", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.NineBoxCellDefinition", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -466,7 +466,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("NineBoxCellDefinitions");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -525,7 +525,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("OneOnOneMeetings");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -559,7 +559,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("SelfEvaluations");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluationItem", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluationItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -592,7 +592,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("SelfEvaluationItems");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillCategory", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -620,7 +620,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("SkillCategories");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillItem", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -651,7 +651,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("SkillItems");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.TalentManagerComment", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.TalentManagerComment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -696,7 +696,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("TalentManagerComments");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -733,7 +733,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkill", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.UserSkill", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -782,7 +782,7 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("UserSkills");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkillHistory", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.UserSkillHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -811,9 +811,9 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.ToTable("UserSkillHistories");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlan", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CareerPlan", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "User")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -822,15 +822,15 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlanComment", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CareerPlanComment", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Author")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.CareerPlan", "CareerPlan")
+                    b.HasOne("TechTalentManagement.Domain.Entities.CareerPlan", "CareerPlan")
                         .WithMany("Comments")
                         .HasForeignKey("CareerPlanId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -841,69 +841,69 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("CareerPlan");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSession", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSession", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionKeyPerson", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSessionKeyPerson", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.KeyPerson", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.KeyPerson", null)
                         .WithMany()
                         .HasForeignKey("KeyPersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.CommitteeSession", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.CommitteeSession", null)
                         .WithMany("KeyPersons")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSessionParticipant", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSessionParticipant", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.CommitteeSession", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.CommitteeSession", null)
                         .WithMany("Participants")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.DevelopmentPlan", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.DevelopmentPlan", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.KeyPerson", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.KeyPerson", null)
                         .WithMany("DevelopmentPlans")
                         .HasForeignKey("KeyPersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.Goal", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
+                    b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
                         .WithMany("Goals")
                         .HasForeignKey("EvaluationPeriodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "User")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "User")
                         .WithMany("Goals")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -914,32 +914,32 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.KeyPerson", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("DesignatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("TalentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.ManagerEvaluation", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ManagerEvaluation", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Manager")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Manager")
                         .WithMany("ManagerEvaluations")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.SelfEvaluation", "SelfEvaluation")
+                    b.HasOne("TechTalentManagement.Domain.Entities.SelfEvaluation", "SelfEvaluation")
                         .WithOne("ManagerEvaluation")
-                        .HasForeignKey("TeckTalentManagement.Domain.Entities.ManagerEvaluation", "SelfEvaluationId")
+                        .HasForeignKey("TechTalentManagement.Domain.Entities.ManagerEvaluation", "SelfEvaluationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -948,9 +948,9 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("SelfEvaluation");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.MeetingActionItem", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.MeetingActionItem", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", "Meeting")
+                    b.HasOne("TechTalentManagement.Domain.Entities.OneOnOneMeeting", "Meeting")
                         .WithMany("ActionItems")
                         .HasForeignKey("MeetingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -959,21 +959,21 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Meeting");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.NineBoxAssessment", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.NineBoxAssessment", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Assessor")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Assessor")
                         .WithMany()
                         .HasForeignKey("AssessorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
+                    b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
                         .WithMany()
                         .HasForeignKey("EvaluationPeriodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Talent")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Talent")
                         .WithMany()
                         .HasForeignKey("TalentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -986,15 +986,15 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Talent");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Manager")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "Talent")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Talent")
                         .WithMany()
                         .HasForeignKey("TalentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1005,15 +1005,15 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Talent");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
+                    b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
                         .WithMany("SelfEvaluations")
                         .HasForeignKey("EvaluationPeriodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "User")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "User")
                         .WithMany("SelfEvaluations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1024,15 +1024,15 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluationItem", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluationItem", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.Goal", "Goal")
+                    b.HasOne("TechTalentManagement.Domain.Entities.Goal", "Goal")
                         .WithOne("SelfEvaluationItem")
-                        .HasForeignKey("TeckTalentManagement.Domain.Entities.SelfEvaluationItem", "GoalId")
+                        .HasForeignKey("TechTalentManagement.Domain.Entities.SelfEvaluationItem", "GoalId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.SelfEvaluation", "SelfEvaluation")
+                    b.HasOne("TechTalentManagement.Domain.Entities.SelfEvaluation", "SelfEvaluation")
                         .WithMany("Items")
                         .HasForeignKey("SelfEvaluationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1043,9 +1043,9 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("SelfEvaluation");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillItem", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillItem", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.SkillCategory", "Category")
+                    b.HasOne("TechTalentManagement.Domain.Entities.SkillCategory", "Category")
                         .WithMany("Items")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1054,30 +1054,30 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.TalentManagerComment", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.TalentManagerComment", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.EvaluationPeriod", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", null)
                         .WithMany()
                         .HasForeignKey("PeriodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", null)
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("TalentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.User", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "DirectManager")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "DirectManager")
                         .WithMany()
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1085,15 +1085,15 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("DirectManager");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkill", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.UserSkill", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.SkillItem", "SkillItem")
+                    b.HasOne("TechTalentManagement.Domain.Entities.SkillItem", "SkillItem")
                         .WithMany()
                         .HasForeignKey("SkillItemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TeckTalentManagement.Domain.Entities.User", "User")
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1104,9 +1104,9 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.UserSkillHistory", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.UserSkillHistory", b =>
                 {
-                    b.HasOne("TeckTalentManagement.Domain.Entities.UserSkill", "UserSkill")
+                    b.HasOne("TechTalentManagement.Domain.Entities.UserSkill", "UserSkill")
                         .WithMany()
                         .HasForeignKey("UserSkillId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1115,53 +1115,53 @@ namespace TeckTalentManagement.Infrastructure.Migrations
                     b.Navigation("UserSkill");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CareerPlan", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CareerPlan", b =>
                 {
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.CommitteeSession", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CommitteeSession", b =>
                 {
                     b.Navigation("KeyPersons");
 
                     b.Navigation("Participants");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.EvaluationPeriod", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.EvaluationPeriod", b =>
                 {
                     b.Navigation("Goals");
 
                     b.Navigation("SelfEvaluations");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.Goal", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.Goal", b =>
                 {
                     b.Navigation("SelfEvaluationItem");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.KeyPerson", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.KeyPerson", b =>
                 {
                     b.Navigation("DevelopmentPlans");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
                 {
                     b.Navigation("ActionItems");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SelfEvaluation", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.Navigation("Items");
 
                     b.Navigation("ManagerEvaluation");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.SkillCategory", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillCategory", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("TeckTalentManagement.Domain.Entities.User", b =>
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.User", b =>
                 {
                     b.Navigation("Goals");
 

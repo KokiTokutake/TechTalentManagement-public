@@ -1,4 +1,4 @@
-namespace TeckTalentManagement.Application.Common;
+﻿namespace TechTalentManagement.Application.Common;
 
 public class Result<T>
 {

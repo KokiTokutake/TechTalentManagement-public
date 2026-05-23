@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\TeckTalentManagement.Domain.csproj" />
+    <ProjectReference Include="..\Domain\TechTalentManagement.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

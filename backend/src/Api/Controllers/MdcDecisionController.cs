@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.MdcDecision;
-using TeckTalentManagement.Domain.Enums;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.MdcDecision;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 public class MdcDecisionController(IMdcDecisionService service) : ControllerBase

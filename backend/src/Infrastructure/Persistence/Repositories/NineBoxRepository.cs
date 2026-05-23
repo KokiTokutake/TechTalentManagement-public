@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using TeckTalentManagement.Application.NineBox;
-using TeckTalentManagement.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTalentManagement.Application.NineBox;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Infrastructure.Persistence.Repositories;
+namespace TechTalentManagement.Infrastructure.Persistence.Repositories;
 
 public class NineBoxRepository(AppDbContext db) : INineBoxRepository
 {
@@ -44,11 +44,11 @@ public class NineBoxRepository(AppDbContext db) : INineBoxRepository
             .ToListAsync(ct);
 
     public Task<int> GetTalentCountAsync(CancellationToken ct) =>
-        db.Users.CountAsync(u => u.Role == TeckTalentManagement.Domain.Enums.UserRole.Talent, ct);
+        db.Users.CountAsync(u => u.Role == TechTalentManagement.Domain.Enums.UserRole.Talent, ct);
 
     public async Task<IReadOnlyList<User>> GetManagersWithTalentsAsync(CancellationToken ct) =>
         await db.Users
-            .Where(u => u.Role == TeckTalentManagement.Domain.Enums.UserRole.Manager)
+            .Where(u => u.Role == TechTalentManagement.Domain.Enums.UserRole.Manager)
             .ToListAsync(ct);
 
     public async Task<IReadOnlyList<KeyPerson>> GetActiveKeyPersonsAsync(CancellationToken ct) =>

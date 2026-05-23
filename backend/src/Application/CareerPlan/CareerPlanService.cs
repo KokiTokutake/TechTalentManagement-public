@@ -1,7 +1,7 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Application.CareerPlan;
+namespace TechTalentManagement.Application.CareerPlan;
 
 public interface ICareerPlanService
 {

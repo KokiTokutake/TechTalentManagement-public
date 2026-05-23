@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using TeckTalentManagement.Application.SelfEvaluations;
+﻿using Microsoft.AspNetCore.Mvc;
+using TechTalentManagement.Application.SelfEvaluations;
 
-namespace TeckTalentManagement.Api.Controllers;
+namespace TechTalentManagement.Api.Controllers;
 
 [ApiController]
 [Route("api/periods/{periodId:guid}/users/{userId:guid}/self-evaluation")]

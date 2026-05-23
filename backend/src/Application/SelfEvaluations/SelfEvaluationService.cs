@@ -1,7 +1,7 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Domain.Entities;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Domain.Entities;
 
-namespace TeckTalentManagement.Application.SelfEvaluations;
+namespace TechTalentManagement.Application.SelfEvaluations;
 
 public interface ISelfEvaluationService
 {

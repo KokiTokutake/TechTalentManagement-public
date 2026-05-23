@@ -1,10 +1,10 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Application.NineBox.Requests;
-using TeckTalentManagement.Application.NineBox.Responses;
-using TeckTalentManagement.Domain.Entities;
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Application.NineBox.Requests;
+using TechTalentManagement.Application.NineBox.Responses;
+using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Application.NineBox;
+namespace TechTalentManagement.Application.NineBox;
 
 public interface INineBoxService
 {

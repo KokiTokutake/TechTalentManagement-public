@@ -1,7 +1,7 @@
-using TeckTalentManagement.Application.Common;
-using TeckTalentManagement.Domain.Enums;
+﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Domain.Enums;
 
-namespace TeckTalentManagement.Application.CommitteeSession;
+namespace TechTalentManagement.Application.CommitteeSession;
 
 public interface ICommitteeSessionService
 {
