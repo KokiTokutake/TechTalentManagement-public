@@ -30,6 +30,7 @@ export interface SaveWcmEntryRequest {
   id: string | null
   content: string
   linkedSkillItemId?: string | null
+  linkedSkillName?: string | null
 }
 
 export interface SaveWcmRequest {

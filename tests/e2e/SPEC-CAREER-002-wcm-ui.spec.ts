@@ -185,3 +185,33 @@ test.describe('AC-05-FE: Manager閲覧モード', () => {
     expect(contextCount).toBeGreaterThanOrEqual(0);
   });
 });
+
+// ── AC-03-01: タレントプロフィールページに価値観表示（MDC閲覧） ─────────────────
+
+const MDC_BASE = 'http://localhost:3000';
+
+test.describe('AC-03-01: MDCタレントプロフィールページ 価値観表示', () => {
+  test('AC-03-01-01: タレントが価値観を保存後、MDCプロフィールページに価値観セクションが表示される', async ({ page }) => {
+    // Step 1: タレントとして価値観を保存する
+    await loginAsTalent(page);
+    await page.goto(talentPageUrl);
+    await expect(page.locator('[data-testid="career-values-section"]')).toBeVisible({ timeout: 10000 });
+
+    await page.locator('[data-testid="values-important-things"]').fill('チームの信頼（結合テスト）');
+    await page.locator('[data-testid="values-motivation-situations"]').fill('難しい課題を解決したとき');
+    await page.locator('[data-testid="values-avoid-situations"]').fill('成長機会のない環境');
+    await page.locator('[data-testid="values-save-button"]').click();
+    await expect(page.locator('[data-testid="wcm-save-success"]')).toBeVisible({ timeout: 10000 });
+
+    // Step 2: マネージャーとしてMDCタレントプロフィールページを開く
+    await loginAsManager(page);
+    const profileUrl = `${MDC_BASE}/mdc/talent-profile/${talentId}`;
+    await page.goto(profileUrl);
+
+    // ページロード完了を待機
+    await page.waitForLoadState('networkidle');
+
+    // Step 3: 価値観セクションが表示されることを確認
+    await expect(page.locator('[data-testid="talent-profile-values-section"]')).toBeVisible({ timeout: 15000 });
+  });
+});
