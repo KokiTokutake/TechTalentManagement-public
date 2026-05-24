@@ -84,6 +84,7 @@ export interface CompetencyMaster {
   name: string
   description: string | null
   displayOrder: number
+  isActive: boolean
 }
 
 export interface EvaluationDetail {
@@ -105,4 +106,76 @@ export interface CompetencyEvaluationsResponse {
   talentId: string
   periodId: string
   evaluations: CompetencyEvaluationResult[]
+}
+
+// SkillGap types
+export interface SkillGapSkillItem {
+  skillItemId: string
+  skillItemName: string
+  selfLevel: number | null
+  managerLevel: number | null
+  gap: number | null
+  requiresAttention: boolean
+}
+
+export interface SkillGapCompetencyItem {
+  competencyId: string
+  competencyName: string
+  category: CompetencyCategory
+  selfLevel: number | null
+  managerLevel: number | null
+  gap: number | null
+  requiresAttention: boolean
+}
+
+export interface SkillGapResult {
+  talentId: string
+  periodId: string
+  gapThreshold: number
+  skills: SkillGapSkillItem[]
+  competencies: SkillGapCompetencyItem[]
+}
+
+// CompetencyHeatmap types
+export interface CompetencyHeatmapAverage {
+  label: string
+  avgLevel: number
+  count: number
+}
+
+export interface CompetencyHeatmapItem {
+  competencyId: string
+  competencyName: string
+  averages: CompetencyHeatmapAverage[]
+}
+
+export interface CompetencyHeatmapCategory {
+  category: CompetencyCategory
+  competencies: CompetencyHeatmapItem[]
+}
+
+export interface CompetencyHeatmapResponse {
+  periodId: string
+  categories: CompetencyHeatmapCategory[]
+}
+
+// SkillMigration types
+export interface MigrationPreviewItem {
+  talentName: string
+  skillName: string
+  currentLevel: number
+  newLevel: number
+}
+
+export interface MigrationPreviewResponse {
+  conversionRule: Record<string, number>
+  affectedCount: number
+  preview: MigrationPreviewItem[]
+}
+
+export interface MigrationExecuteResponse {
+  success: boolean
+  affectedCount: number
+  migrationLogId: string
+  executedAt: string
 }

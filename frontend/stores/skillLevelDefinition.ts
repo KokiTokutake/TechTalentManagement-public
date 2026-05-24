@@ -7,15 +7,20 @@ export const useSkillLevelDefinitionStore = defineStore('skillLevelDefinition', 
 
   const definitionsMap = ref<Map<string, SkillLevelDefinitions>>(new Map())
   const loading = ref(false)
+  const error = ref<string | null>(null)
 
-  async function fetchDefinitions(skillItemId: string) {
-    if (definitionsMap.value.has(skillItemId)) return
+  async function fetchDefinitions(skillItemId: string, force = false) {
+    if (!force && definitionsMap.value.has(skillItemId)) return
     loading.value = true
+    error.value = null
     try {
       const data = await $fetch<SkillLevelDefinitions>(
         `${base}/api/skill-masters/${skillItemId}/level-definitions`,
       )
       definitionsMap.value.set(skillItemId, data)
+    }
+    catch {
+      error.value = 'レベル定義の取得に失敗しました。'
     }
     finally {
       loading.value = false
@@ -26,5 +31,5 @@ export const useSkillLevelDefinitionStore = defineStore('skillLevelDefinition', 
     return definitionsMap.value.get(skillItemId) ?? null
   }
 
-  return { loading, fetchDefinitions, getDefinitions }
+  return { definitionsMap, loading, error, fetchDefinitions, getDefinitions }
 })

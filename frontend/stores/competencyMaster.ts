@@ -9,11 +9,14 @@ export const useCompetencyMasterStore = defineStore('competencyMaster', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  async function fetchCompetencies() {
+  async function fetchCompetencies(includeInactive = false) {
     loading.value = true
     error.value = null
     try {
-      const data = await $fetch<{ competencies: CompetencyMaster[] }>(`${base}/api/competency-masters`)
+      const url = includeInactive
+        ? `${base}/api/competency-masters?includeInactive=true`
+        : `${base}/api/competency-masters`
+      const data = await $fetch<{ competencies: CompetencyMaster[] }>(url)
       competencies.value = data.competencies
     }
     catch {
