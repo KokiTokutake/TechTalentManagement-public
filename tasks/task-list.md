@@ -215,7 +215,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-069 | [DB] SkillLevelDefinition・CompetencyMaster・CompetencyEvaluation・SkillLevelMigrationLog スキーマ＋UserSkill.Level 制約拡張マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-SKILL-002 | #86 | — | — |
+| TASK-069 | [DB] SkillLevelDefinition・CompetencyMaster・CompetencyEvaluation・SkillLevelMigrationLog スキーマ＋UserSkill.Level 制約拡張マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-SKILL-002 | #86 | #92 | feat/86-skill-level-definition-schema |
 | TASK-070 | [BE] スキルレベル定義 API（GET/PUT）＋ コンピテンシーマスタ API（GET/POST/PUT） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-002 | #87 | — | — |
 | TASK-071 | [BE] コンピテンシー評価 API（Upsert/GET）＋ スキルギャップ API ＋ スキルマップ コンピテンシー API ＋ 移行ツール API（preview/execute） | ⬜ pending | @KokiTokutake | 5 | SPEC-SKILL-002 | #88 | — | — |
 | TASK-072 | [FE] スキルレベル参照 UI 拡張（my.vue: 1-7スケール・ツールチップ）＋ コンピテンシー評価ページ（competency.vue） | ⬜ pending | @KokiTokutake | 5 | SPEC-SKILL-002 | #89 | — | — |

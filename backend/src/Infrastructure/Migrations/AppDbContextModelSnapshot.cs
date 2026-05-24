@@ -189,6 +189,92 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.ToTable("CommitteeSessionParticipants");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CompetencyEvaluation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("CompetencyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("EvaluatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("EvaluatorType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PeriodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompetencyId");
+
+                    b.HasIndex("EvaluatorId");
+
+                    b.HasIndex("PeriodId");
+
+                    b.HasIndex("TalentId", "EvaluatorId", "CompetencyId", "PeriodId", "EvaluatorType")
+                        .IsUnique();
+
+                    b.ToTable("CompetencyEvaluations");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CompetencyMaster", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category", "Name")
+                        .IsUnique();
+
+                    b.ToTable("CompetencyMasters");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.DevelopmentPlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -928,6 +1014,61 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.ToTable("SkillItems");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillLevelDefinition", b =>
+                {
+                    b.Property<Guid>("SkillItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Examples")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("SkillItemId", "Level");
+
+                    b.ToTable("SkillLevelDefinitions");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillLevelMigrationLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AffectedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConversionRuleJson")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset>("ExecutedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("ExecutedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExecutedBy");
+
+                    b.ToTable("SkillLevelMigrationLogs");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.TalentManagerComment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1030,7 +1171,8 @@ namespace TechTalentManagement.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("CheckConstraint:CK_UserSkill_Level", "Level >= 1 AND Level <= 7");
 
                     b.Property<string>("RejectedReason")
                         .HasMaxLength(1000)
@@ -1219,6 +1361,41 @@ namespace TechTalentManagement.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CompetencyEvaluation", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.CompetencyMaster", "Competency")
+                        .WithMany()
+                        .HasForeignKey("CompetencyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Evaluator")
+                        .WithMany()
+                        .HasForeignKey("EvaluatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", "Period")
+                        .WithMany()
+                        .HasForeignKey("PeriodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Competency");
+
+                    b.Navigation("Evaluator");
+
+                    b.Navigation("Period");
+
+                    b.Navigation("Talent");
                 });
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.DevelopmentPlan", b =>
@@ -1506,6 +1683,28 @@ namespace TechTalentManagement.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillLevelDefinition", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.SkillItem", "SkillItem")
+                        .WithMany()
+                        .HasForeignKey("SkillItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SkillItem");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillLevelMigrationLog", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Executor")
+                        .WithMany()
+                        .HasForeignKey("ExecutedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Executor");
                 });
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.TalentManagerComment", b =>

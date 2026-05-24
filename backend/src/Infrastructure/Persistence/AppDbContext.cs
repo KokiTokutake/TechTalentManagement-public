@@ -35,6 +35,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<GoalKpi> GoalKpis => Set<GoalKpi>();
     public DbSet<GoalCheckin> GoalCheckins => Set<GoalCheckin>();
     public DbSet<FeedbackMeeting> FeedbackMeetings => Set<FeedbackMeeting>();
+    public DbSet<SkillLevelDefinition> SkillLevelDefinitions => Set<SkillLevelDefinition>();
+    public DbSet<CompetencyMaster> CompetencyMasters => Set<CompetencyMaster>();
+    public DbSet<CompetencyEvaluation> CompetencyEvaluations => Set<CompetencyEvaluation>();
+    public DbSet<SkillLevelMigrationLog> SkillLevelMigrationLogs => Set<SkillLevelMigrationLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
