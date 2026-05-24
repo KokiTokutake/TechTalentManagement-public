@@ -27,6 +27,12 @@
         />
       </div>
 
+      <!-- フィードバック面談閲覧（タレント向け） -->
+      <section v-if="store.isSubmitted" class="section">
+        <h2 class="section-title">フィードバック面談</h2>
+        <FeedbackMeetingView :meeting="feedbackMeetingStore.getMeeting(userId, periodId)" />
+      </section>
+
       <footer v-if="!store.isSubmitted && store.formItems.length > 0" class="action-footer">
         <span class="save-status">
           <template v-if="store.saveStatus === 'saving'">保存中…</template>
@@ -49,18 +55,24 @@
 </template>
 
 <script setup lang="ts">
+import FeedbackMeetingView from '~/components/evaluation/FeedbackMeetingView.vue'
+
 const route = useRoute()
 const periodId = route.params.periodId as string
 const auth = useAuthStore()
 const userId = computed(() => auth.currentUser!.id)
 
 const store = useSelfEvaluationStore()
+const feedbackMeetingStore = useFeedbackMeetingStore()
 const goalsApi = useGoalsApi()
 const submitting = ref(false)
 
 onMounted(async () => {
   const goals = await goalsApi.fetchGoals(periodId, userId.value)
   await store.load(periodId, userId.value, goals)
+  if (store.isSubmitted) {
+    await feedbackMeetingStore.fetchMeeting(userId.value, periodId)
+  }
 })
 
 function onScoreChange(goalId: string, score: number) {
@@ -97,6 +109,14 @@ async function handleSubmit() {
   margin: 0 0 0.25rem;
   color: var(--text);
   font-family: var(--font-heading);
+}
+
+.section { margin-bottom: 2rem; }
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--text-secondary);
 }
 
 .warn {

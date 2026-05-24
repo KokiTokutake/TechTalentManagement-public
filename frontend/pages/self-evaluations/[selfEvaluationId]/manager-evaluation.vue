@@ -84,6 +84,19 @@
         </div>
       </section>
 
+      <!-- フィードバック面談記録 -->
+      <section v-if="store.isConfirmed && !missingParams" class="section">
+        <h2 class="section-title">フィードバック面談記録</h2>
+        <FeedbackMeetingForm
+          :self-evaluation-id="selfEvaluationId"
+          :talent-id="talentUserId!"
+          :period-id="periodId!"
+          :existing="feedbackMeetingStore.getMeeting(talentUserId!, periodId!)"
+          @saved="onFeedbackSaved"
+          @disclosed="onFeedbackDisclosed"
+        />
+      </section>
+
       <footer v-if="!store.isConfirmed && !missingParams" class="action-footer">
         <span class="save-status">
           <template v-if="store.saveStatus === 'saving'">保存中…</template>
@@ -107,6 +120,7 @@
 
 <script setup lang="ts">
 import type { SelfEvaluationItem } from '~/types/selfEvaluation'
+import FeedbackMeetingForm from '~/components/evaluation/FeedbackMeetingForm.vue'
 
 const route = useRoute()
 const selfEvaluationId = route.params.selfEvaluationId as string
@@ -117,6 +131,7 @@ const talentUserId = route.query.talentUserId as string | undefined
 const missingParams = computed(() => !managerId || !periodId || !talentUserId)
 
 const store = useManagerEvaluationStore()
+const feedbackMeetingStore = useFeedbackMeetingStore()
 const confirming = ref(false)
 const feedbackBuffer = ref('')
 
@@ -124,7 +139,18 @@ onMounted(async () => {
   if (missingParams.value) return
   await store.load(selfEvaluationId, managerId!, periodId!, talentUserId!)
   feedbackBuffer.value = store.feedbackComment
+  if (store.isConfirmed) {
+    await feedbackMeetingStore.fetchMeeting(talentUserId!, periodId!)
+  }
 })
+
+async function onFeedbackSaved() {
+  await feedbackMeetingStore.fetchMeeting(talentUserId!, periodId!)
+}
+
+async function onFeedbackDisclosed() {
+  await feedbackMeetingStore.fetchMeeting(talentUserId!, periodId!)
+}
 
 function selfItemFor(goalId: string): SelfEvaluationItem | undefined {
   return store.selfEvaluation?.items.find(i => i.goalId === goalId)

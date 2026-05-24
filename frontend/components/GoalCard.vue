@@ -2,7 +2,8 @@
   <div class="goal-card">
     <div class="card-header">
       <span class="order">{{ goal.displayOrder }}</span>
-      <span class="title">{{ goal.title }}</span>
+      <NuxtLink :to="`/goals/${goal.id}`" class="title">{{ goal.title }}</NuxtLink>
+      <GoalProgressBadge v-if="latestProgress != null" :progress-percent="latestProgress" />
       <div class="card-actions">
         <button class="btn-icon" title="編集" @click="$emit('edit', goal)">✏️</button>
         <button class="btn-icon btn-danger" title="削除" @click="confirmDelete">🗑</button>
@@ -14,8 +15,9 @@
 
 <script setup lang="ts">
 import type { Goal } from '~/types/goal'
+import GoalProgressBadge from '~/components/goals/GoalProgressBadge.vue'
 
-const props = defineProps<{ goal: Goal }>()
+const props = defineProps<{ goal: Goal; latestProgress?: number | null }>()
 const emit = defineEmits<{ edit: [Goal]; delete: [string] }>()
 
 function confirmDelete() {
@@ -59,8 +61,10 @@ function confirmDelete() {
   flex: 1;
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--text);
+  color: var(--accent);
+  text-decoration: none;
 }
+.title:hover { text-decoration: underline; }
 
 .card-actions {
   display: flex;

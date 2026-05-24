@@ -31,6 +31,7 @@
             v-for="goal in store.byCategory(cat.value).value"
             :key="goal.id"
             :goal="goal"
+            :latest-progress="cat.value === 'Must' ? latestProgress(goal.id) : null"
             @edit="openEdit"
             @delete="handleDelete"
           />
@@ -63,10 +64,20 @@ const CATEGORIES: { value: WillCanMust; label: string }[] = [
 ]
 
 const store = useGoalsStore()
+const kpiStore = useGoalKpiStore()
 
 onMounted(async () => {
   await store.load(periodId, userId.value)
+  const mustGoals = store.byCategory('Must').value
+  for (const goal of mustGoals) {
+    kpiStore.fetchCheckins(goal.id).catch(() => {})
+  }
 })
+
+function latestProgress(goalId: string): number | null {
+  const checkins = kpiStore.checkinsByGoalId[goalId]?.checkins ?? []
+  return checkins[0]?.progressPercent ?? null
+}
 
 const showForm = ref(false)
 const editTarget = ref<Goal | null>(null)
