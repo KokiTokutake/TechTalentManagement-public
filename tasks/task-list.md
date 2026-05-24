@@ -203,7 +203,7 @@
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-065 | [DB] GoalKpi・GoalCheckin・FeedbackMeeting スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-EVAL-002 | — | #81 | feat/T-065-kpi-checkin-feedback-schema |
-| TASK-066 | [BE] KPI設定・チェックイン・フィードバック面談 API | ⬜ pending | @KokiTokutake | 5 | SPEC-EVAL-002 | — | — | — |
+| TASK-066 | [BE] KPI設定・チェックイン・フィードバック面談 API | ✅ done | @KokiTokutake | 5 | SPEC-EVAL-002 | — | #82 | feat/T-066-kpi-checkin-feedback-api |
 | TASK-067 | [FE] KPI入力・チェックイン・フィードバック面談 UI | ⬜ pending | @KokiTokutake | 5 | SPEC-EVAL-002 | — | — | — |
 | TASK-068 | [TEST] KPI・チェックイン・フィードバック面談 結合テスト・受入確認 | ⬜ pending | @KokiTokutake | 3 | SPEC-EVAL-002 | — | — | — |
 

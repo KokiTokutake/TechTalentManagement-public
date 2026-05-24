@@ -12,6 +12,8 @@ using TechTalentManagement.Application.TalentProfile;
 using TechTalentManagement.Application.MdcDecision;
 using TechTalentManagement.Application.Wcm;
 using TechTalentManagement.Application.CareerValues;
+using TechTalentManagement.Application.GoalKpi;
+using TechTalentManagement.Application.FeedbackMeeting;
 using TechTalentManagement.Application.SkillMaster;
 using TechTalentManagement.Application.SkillMap;
 using TechTalentManagement.Application.UserSkills;
@@ -56,6 +58,10 @@ builder.Services.AddScoped<IWcmRepository, WcmRepository>();
 builder.Services.AddScoped<IWcmService, WcmService>();
 builder.Services.AddScoped<ICareerValuesRepository, CareerValuesRepository>();
 builder.Services.AddScoped<ICareerValuesService, CareerValuesService>();
+builder.Services.AddScoped<IGoalKpiRepository, GoalKpiRepository>();
+builder.Services.AddScoped<IGoalKpiService, GoalKpiService>();
+builder.Services.AddScoped<IFeedbackMeetingRepository, FeedbackMeetingRepository>();
+builder.Services.AddScoped<IFeedbackMeetingService, FeedbackMeetingService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
