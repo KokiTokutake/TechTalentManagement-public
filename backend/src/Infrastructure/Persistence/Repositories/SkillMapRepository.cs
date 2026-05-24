@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TechTalentManagement.Application.SkillMap;
 using TechTalentManagement.Domain.Entities;
 using TechTalentManagement.Domain.Enums;
@@ -26,4 +26,23 @@ public class SkillMapRepository(AppDbContext db) : ISkillMapRepository
             .Where(s => s.Status == UserSkillStatus.Approved &&
                         db.Users.Any(u => u.Id == s.UserId && u.Role == UserRole.Talent))
             .ToListAsync(ct);
+
+    public async Task<IReadOnlyList<CompetencyHeatmapRawDto>> GetCompetencyHeatmapDataAsync(
+        Guid periodId, Guid? departmentId, CancellationToken ct)
+    {
+        // User エンティティには Department フィールドがないため、Role を集計ラベルとして使用
+        var query = db.CompetencyEvaluations
+            .Include(e => e.Competency)
+            .Include(e => e.Talent)
+            .Where(e => e.PeriodId == periodId && e.EvaluatorType == CompetencyEvaluatorType.Self);
+
+        return await query
+            .Select(e => new CompetencyHeatmapRawDto(
+                e.CompetencyId,
+                e.Competency!.Name,
+                e.Competency.Category.ToString(),
+                e.Talent!.Role.ToString(),
+                e.Level))
+            .ToListAsync(ct);
+    }
 }

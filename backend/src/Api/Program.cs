@@ -15,9 +15,12 @@ using TechTalentManagement.Application.CareerValues;
 using TechTalentManagement.Application.GoalKpi;
 using TechTalentManagement.Application.FeedbackMeeting;
 using TechTalentManagement.Application.CompetencyMaster;
+using TechTalentManagement.Application.CompetencyEvaluation;
+using TechTalentManagement.Application.SkillGap;
 using TechTalentManagement.Application.SkillLevelDefinition;
 using TechTalentManagement.Application.SkillMaster;
 using TechTalentManagement.Application.SkillMap;
+using TechTalentManagement.Application.SkillMigration;
 using TechTalentManagement.Application.UserSkills;
 using TechTalentManagement.Infrastructure.Persistence;
 using TechTalentManagement.Infrastructure.Persistence.Repositories;
@@ -68,6 +71,12 @@ builder.Services.AddScoped<ISkillLevelDefinitionRepository, SkillLevelDefinition
 builder.Services.AddScoped<ISkillLevelDefinitionService, SkillLevelDefinitionService>();
 builder.Services.AddScoped<ICompetencyMasterRepository, CompetencyMasterRepository>();
 builder.Services.AddScoped<ICompetencyMasterService, CompetencyMasterService>();
+builder.Services.AddScoped<ICompetencyEvaluationRepository, CompetencyEvaluationRepository>();
+builder.Services.AddScoped<ICompetencyEvaluationService, CompetencyEvaluationService>();
+builder.Services.AddScoped<ISkillGapRepository, SkillGapRepository>();
+builder.Services.AddScoped<ISkillGapService, SkillGapService>();
+builder.Services.AddScoped<ISkillMigrationRepository, SkillMigrationRepository>();
+builder.Services.AddScoped<ISkillMigrationService, SkillMigrationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()

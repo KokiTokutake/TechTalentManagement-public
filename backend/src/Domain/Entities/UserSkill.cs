@@ -65,4 +65,11 @@ public class UserSkill
         ApprovedAt = null;
         UpdatedAt = DateTimeOffset.UtcNow;
     }
+
+    // 管理者によるスケール移行ツール専用メソッド（通常の編集フローは Update() を使用すること）
+    public void SetLevelForMigration(int newLevel)
+    {
+        Level = newLevel;
+        UpdatedAt = DateTimeOffset.UtcNow;
+    }
 }

@@ -13,4 +13,15 @@ public class SkillMapController(ISkillMapService service) : ControllerBase
         var result = await service.GetSkillMapAsync(requesterId, ct);
         return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
     }
+
+    [HttpGet("competency")]
+    public async Task<IActionResult> GetCompetencyHeatmap(
+        [FromQuery] Guid requesterId,
+        [FromQuery] Guid periodId,
+        [FromQuery] Guid? departmentId,
+        CancellationToken ct)
+    {
+        var result = await service.GetCompetencyHeatmapAsync(requesterId, periodId, departmentId, ct);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(result.StatusCode, new { error = result.Error });
+    }
 }
