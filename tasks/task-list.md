@@ -220,7 +220,7 @@
 | TASK-071 | [BE] コンピテンシー評価 API（Upsert/GET）＋ スキルギャップ API ＋ スキルマップ コンピテンシー API ＋ 移行ツール API（preview/execute） | ✅ done | @KokiTokutake | 5 | SPEC-SKILL-002 | #88 | #94 | feat/88-competency-evaluation-skill-gap-api |
 | TASK-072 | [FE] スキルレベル参照 UI 拡張（my.vue: 1-7スケール・ツールチップ）＋ コンピテンシー評価ページ（competency.vue） | ✅ done | @KokiTokutake | 5 | SPEC-SKILL-002 | #89 | #95 | feat/89-skill-level-ui-competency-page |
 | TASK-073 | [FE] スキルギャップ比較ページ（gap.vue）＋ スキルマップ コンピテンシータブ（map.vue 拡張）＋ 管理者ツール 3ページ（レベル定義・コンピテンシーマスタ・移行ツール） | ✅ done | @KokiTokutake | 5 | SPEC-SKILL-002 | #90 | #96 | feat/90-skill-gap-map-admin-ui |
-| TASK-074 | [TEST] SPEC-SKILL-002 結合テスト・受入確認（AC-01-01〜AC-05-01 全9件） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-002 | #91 | — | — |
+| TASK-074 | [TEST] SPEC-SKILL-002 結合テスト・受入確認（AC-01-01〜AC-05-01 全9件） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-SKILL-002 | #91 | — | feat/91-spec-skill-002-integration-test |
 
 ---
 
