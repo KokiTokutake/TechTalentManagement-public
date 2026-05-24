@@ -207,14 +207,29 @@
 | TASK-067 | [FE] KPI入力・チェックイン・フィードバック面談 UI | ✅ done | @KokiTokutake | 5 | SPEC-EVAL-002 | — | #83 | feat/T-067-kpi-checkin-feedback-ui |
 | TASK-068 | [TEST] KPI・チェックイン・フィードバック面談 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-002 | — | — | feat/T-068-kpi-checkin-integration-test |
 
+## Sprint 16 ⬜ 未着手
+
+- **ゴール**: スキルレベル定義拡充（ITSS準拠）・コンピテンシー評価 全実装
+- **期間**: 未定
+- **進捗**: 0 / 23 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-069 | [DB] SkillLevelDefinition・CompetencyMaster・CompetencyEvaluation・SkillLevelMigrationLog スキーマ＋UserSkill.Level 制約拡張マイグレーション | ⬜ pending | @KokiTokutake | 2 | SPEC-SKILL-002 | #86 | — | — |
+| TASK-070 | [BE] スキルレベル定義 API（GET/PUT）＋ コンピテンシーマスタ API（GET/POST/PUT） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-002 | #87 | — | — |
+| TASK-071 | [BE] コンピテンシー評価 API（Upsert/GET）＋ スキルギャップ API ＋ スキルマップ コンピテンシー API ＋ 移行ツール API（preview/execute） | ⬜ pending | @KokiTokutake | 5 | SPEC-SKILL-002 | #88 | — | — |
+| TASK-072 | [FE] スキルレベル参照 UI 拡張（my.vue: 1-7スケール・ツールチップ）＋ コンピテンシー評価ページ（competency.vue） | ⬜ pending | @KokiTokutake | 5 | SPEC-SKILL-002 | #89 | — | — |
+| TASK-073 | [FE] スキルギャップ比較ページ（gap.vue）＋ スキルマップ コンピテンシータブ（map.vue 拡張）＋ 管理者ツール 3ページ（レベル定義・コンピテンシーマスタ・移行ツール） | ⬜ pending | @KokiTokutake | 5 | SPEC-SKILL-002 | #90 | — | — |
+| TASK-074 | [TEST] SPEC-SKILL-002 結合テスト・受入確認（AC-01-01〜AC-05-01 全9件） | ⬜ pending | @KokiTokutake | 3 | SPEC-SKILL-002 | #91 | — | — |
+
 ---
 
 ## サマリー
 
 | 項目 | 値 |
 |------|----|
-| 総タスク数 | 68 |
-| 完了 | 44 |
+| 総タスク数 | 74 |
+| 完了 | 67 |
 | 進行中 | 0 |
-| 未着手 | 24 |
+| 未着手 | 7 |
 | レビュー中 | 0 |
