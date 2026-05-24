@@ -26,8 +26,8 @@ docs/design/[SPEC-ID]-design.md
 ```
 
 **例:**
-- `docs/design/SPEC-MDC-002-design.md`（9ボックス評価の設計書）
-- `docs/design/SPEC-SKILL-001-design.md`（スキル管理の設計書）
+- `docs/design/SPEC-AUTH-001-design.md`（ログイン機能の設計書）
+- `docs/design/SPEC-USER-002-design.md`（ユーザー管理の設計書）
 
 > 複数仕様書にまたがる場合: 主となる Spec ID のファイル名を使い、関連 Spec ID を冒頭に記載する。
 
@@ -37,12 +37,30 @@ docs/design/[SPEC-ID]-design.md
 
 ### STEP 0: レビューパターンの事前チェック（自動）
 
-`docs/guides/review-patterns.md` が存在する場合、アーキテクチャ・セキュリティ・データモデル・API設計カテゴリのパターンを抽出して表示する。
+`docs/guides/review-patterns.md` が存在する場合、アーキテクチャ・セキュリティ・データモデル・API設計カテゴリのパターンを抽出して表示する:
+
+```
+📚 過去のレビュー指摘パターン（設計前確認）
+
+設計作業に関連するパターンが N件 あります:
+
+⚠️ [ARCH-001] レイヤー間の直接依存（頻度: 5回）
+   → レイヤー依存関係図を設計書に必ず含めてください
+
+⚠️ [SEC-001] ログへの機密情報出力（頻度: 3回）
+   → セキュリティ設計でログ禁止フィールドの方針を定義してください
+
+⚠️ [DATA-001] 外部キー制約の欠落（頻度: 2回）
+   → ERD にすべての制約を明記してください
+
+[Enter] で続行:
+```
+
 パターンDBが存在しない場合はこのSTEPをスキップする。
 
 ### STEP 1: 対象仕様書の確認
 
-引数として Spec ID を受け取る。`/design-create SPEC-MDC-002` のように呼び出す。
+引数として Spec ID を受け取る。`/design-create SPEC-AUTH-001` のように呼び出す。
 指定がない場合は approved ステータスの仕様書一覧を表示し、どれを対象とするか確認する。
 
 対象仕様書と Constitution.md を読み込み、技術的制約・要件を把握する。
@@ -65,8 +83,8 @@ docs/design/[SPEC-ID]-design.md
 
 **③ フロントエンドコンポーネント設計**（UIを含む仕様書の場合）
 - ページ・コンポーネント構成
-- Pinia ストアの設計（state / getters / actions）
-- data-testid の定義（E2Eテストで使用するセレクター）
+- 状態管理ストアの設計（state / getters / actions）
+- `data-testid` の定義（E2Eテストで使用するセレクター）
 
 **④ 技術的判断の記録**
 - 採用した設計パターンとその理由
@@ -87,7 +105,6 @@ docs/design/[SPEC-ID]-design.md
 git checkout main
 git pull origin main
 git checkout -b design/[SPEC-ID]
-# 例: git checkout -b design/SPEC-MDC-002
 ```
 
 保存先: `docs/design/[SPEC-ID]-design.md`
@@ -164,14 +181,14 @@ git commit -m "docs: [SPEC-ID] 設計書を承認済みに更新"
 
 | プロパティ | 型 | 制約 | 説明 |
 |-----------|-----|------|------|
-| Id | Guid | PK | |
+| id | string (ULID) | PK | |
 | ... | | | |
 
 **インデックス:**
-- `(TalentId, EvaluationPeriodId)` — UNIQUE
+- `(userId, periodId)` — UNIQUE
 
 **リレーション:**
-- `TalentId` → `User.Id` (OnDelete: Restrict)
+- `userId` → `User.id` (OnDelete: Restrict)
 
 ---
 
@@ -203,8 +220,7 @@ git commit -m "docs: [SPEC-ID] 設計書を承認済みに更新"
 **認可ルール:**
 | ロール | 操作 |
 |--------|------|
-| Talent | 自分のデータのみ取得・更新 |
-| Manager | 配下タレントのデータ閲覧・承認 |
+| [ロール名] | [許可する操作] |
 
 ---
 
@@ -215,13 +231,13 @@ git commit -m "docs: [SPEC-ID] 設計書を承認済みに更新"
 ```
 pages/
   [feature]/
-    index.vue      # 一覧ページ
-    [id].vue       # 詳細ページ
+    index.[ext]    # 一覧ページ
+    [id].[ext]     # 詳細ページ
 
 components/
   [feature]/
-    [Feature]List.vue
-    [Feature]Form.vue
+    [Feature]List.[ext]
+    [Feature]Form.[ext]
 ```
 
 ### data-testid 定義
@@ -229,11 +245,12 @@ components/
 | 要素 | data-testid | 用途 |
 |------|-------------|------|
 | 保存ボタン | `[feature]-save-button` | E2Eテストのセレクター |
+| [要素名] | `[feature]-[element]-[action]` | E2Eテストのセレクター |
 
-### Pinia ストア設計
+### 状態管理ストア設計
 
 ```typescript
-// stores/[feature].ts
+// stores/[feature].ts（例: Pinia）
 interface [Feature]State {
   items: [Type][];
   loading: boolean;
