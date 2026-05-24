@@ -14,9 +14,24 @@ This file provides guidance to Claude Code when working with code in this reposi
 | プロジェクト憲章 | `.constitution/Constitution.md` | 原則・制約・用語集（変更禁止） |
 | 仕様書 | `docs/spec/` | 機能仕様・API仕様・UI仕様 |
 | 設計書 | `docs/design/` | アーキテクチャ・コンポーネント設計 |
-| タスク一覧 | `tasks/` | 実装タスクと進捗 |
+| タスク一覧 | `tasks/task-list.md` | 実装タスクと進捗（GitHub Issues とリンク） |
+| GitHub Project 設定 | `.github/project-config.json` | GitHub Project のフィールド ID 等の設定 |
 
 > **実装前に必ず仕様書（status: approved）を確認すること。**
+
+## GitHub Project 管理
+
+タスク・スプリントは GitHub Projects V2 で管理する。
+
+| 管理項目 | GitHub での管理方法 |
+|---------|------------------|
+| タスク | GitHub Issues（ラベル: `task`） |
+| スプリント | GitHub Project Iterations（Sprint フィールド） |
+| 進捗 | GitHub Project Status フィールド（Todo / In Progress / In Review / Done） |
+| バグ | GitHub Issues（ラベル: `bug`） |
+
+Project ボード: `.github/project-config.json` の `project_number` を参照。
+**未設定の場合は `/github-project-init` を実行してセットアップすること。**
 
 ## 技術スタック
 
