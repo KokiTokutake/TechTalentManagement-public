@@ -14,6 +14,8 @@ using TechTalentManagement.Application.Wcm;
 using TechTalentManagement.Application.CareerValues;
 using TechTalentManagement.Application.GoalKpi;
 using TechTalentManagement.Application.FeedbackMeeting;
+using TechTalentManagement.Application.CompetencyMaster;
+using TechTalentManagement.Application.SkillLevelDefinition;
 using TechTalentManagement.Application.SkillMaster;
 using TechTalentManagement.Application.SkillMap;
 using TechTalentManagement.Application.UserSkills;
@@ -62,6 +64,10 @@ builder.Services.AddScoped<IGoalKpiRepository, GoalKpiRepository>();
 builder.Services.AddScoped<IGoalKpiService, GoalKpiService>();
 builder.Services.AddScoped<IFeedbackMeetingRepository, FeedbackMeetingRepository>();
 builder.Services.AddScoped<IFeedbackMeetingService, FeedbackMeetingService>();
+builder.Services.AddScoped<ISkillLevelDefinitionRepository, SkillLevelDefinitionRepository>();
+builder.Services.AddScoped<ISkillLevelDefinitionService, SkillLevelDefinitionService>();
+builder.Services.AddScoped<ICompetencyMasterRepository, CompetencyMasterRepository>();
+builder.Services.AddScoped<ICompetencyMasterService, CompetencyMasterService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
