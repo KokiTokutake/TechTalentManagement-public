@@ -4,7 +4,7 @@
 |------|------|
 | Doc ID | DESIGN-SPEC-SKILL-002 |
 | 対応仕様書 | SPEC-SKILL-002 |
-| ステータス | draft |
+| ステータス | approved |
 | 作成日 | 2026-05-24 |
 | 作成者 | @KokiTokutake |
 
