@@ -108,17 +108,6 @@ Then:  注文確認画面が表示され、注文番号が発行される
 生成した仕様書の全文を表示し「保存しますか？」と確認する。
 保存先: `docs/spec/[カテゴリ名]/[spec-id]-[feature-name].md` または `docs/spec/[spec-id]-[feature-name].md`
 
-### STEP 8: GitHub Issue の作成提案
-
-```
-GitHub Issue を作成しますか？（gh CLI が使える場合）
-
-gh issue create \
-  --title "[SPEC-XXX] [機能名]" \
-  --label "spec-change" \
-  --body "spec: docs/spec/xxx.md"
-```
-
 ---
 
 ## 出力ファイル

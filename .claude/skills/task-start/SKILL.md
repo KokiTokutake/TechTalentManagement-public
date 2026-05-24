@@ -16,7 +16,32 @@
 
 ## 実行手順
 
-### STEP 0: 現在のgit状態チェック（必須ゲート）
+### STEP 1: GitHub Project 設定の確認
+
+`.github/project-config.json` が存在し、`project_number` が設定されているか確認する:
+
+```bash
+test -f .github/project-config.json && \
+  jq -e '.project_number != 0 and .project_number != null' .github/project-config.json
+```
+
+**存在しない・または `project_number` が 0 の場合、以下を表示して停止する:**
+
+```
+⛔ GitHub Project が設定されていません。
+
+  .github/project-config.json が見つからないか、project_number が未設定です。
+
+セットアップを先に実行してください:
+
+  /github-project-init  → 既存プロジェクトに GitHub Project を後付けセットアップ
+  /sdd-start            → 新規プロジェクトの初回セットアップ（リポジトリ作成から行う場合）
+```
+
+> `project-config.json` がなくても **ブランチ作成・仕様書読み込みだけ** 行う場合は続行できる。
+> ただし STEP 10（GitHub Project ステータス更新）はスキップし、「`/github-project-init` でセットアップ後に手動でステータスを更新してください」と案内する。
+
+### STEP 2: 現在のgit状態チェック（必須ゲート）
 
 ```bash
 git branch --show-current
@@ -29,19 +54,19 @@ git status --short
 |------|------|
 | mainブランチ以外にいる | 「現在 `[branch]` ブランチにいます。別タスクが進行中ですか？」と確認してから続行 |
 | 未コミット変更がある | 「未コミットの変更があります。コミットしてからタスクを開始してください」と警告して中断 |
-| mainブランチ + 変更なし | 正常。STEP 0.5 へ進む |
+| mainブランチ + 変更なし | 正常。STEP 3 へ進む |
 
-### STEP 0.5: 未クローズの進行中タスク検出（必須）
+### STEP 3: 未クローズの進行中タスク検出（必須）
 
 `tasks/task-list.md` を読み込み、ステータスが「🏃 進行中」のタスクを列挙する。
 
 ```
 ⚠️ 以下のタスクが「進行中」のままです:
-  TASK-038  [BE] 9ボックス評価 API
-  TASK-039  [BE] 9ボックスマップ API
+  TASK-038  [BE] 9ボックス評価 API（#52）
+  TASK-039  [BE] 9ボックスマップ API（#53）
 
 これらは実際に完了していますか？
-  A) 完了している → task-list.md を ✅ done に更新してから続行
+  A) 完了している → task-list.md を ✅ done に更新し、GitHub Issue をクローズしてから続行
   B) まだ未完了   → そのタスクを先に完了させてください（/task-done）
   C) 無視して続行 → 説明を入力してください（記録用）
 ```
@@ -52,9 +77,9 @@ git status --short
 - 判断できない場合 → `git log --oneline -20` でマージ済みかを確認
 
 > このチェックにより「進行中」ステータスの放置を防ぐ。
-> 進行中タスクがなければ STEP 1 へ進む。
+> 進行中タスクがなければ STEP 4 へ進む。
 
-### STEP 1: タスクの選択
+### STEP 4: タスクの選択
 
 引数でタスク ID が指定された場合はそのタスクを使用する。
 `/task-start TASK-001` のように呼び出す。
@@ -63,34 +88,82 @@ git status --short
 
 ```
 📋 未着手のタスク:
-  TASK-001  ログイン API エンドポイント実装  SP:3  [SPEC-AUTH-001]
-  TASK-002  ログイン画面 UI 実装             SP:2  [SPEC-AUTH-001]  ※ TASK-001 に依存
-  TASK-004  アカウントロック機能実装          SP:3  [SPEC-AUTH-001]
+  TASK-001  ログイン API エンドポイント実装  SP:3  [SPEC-AUTH-001]  #42
+  TASK-002  ログイン画面 UI 実装             SP:2  [SPEC-AUTH-001]  #43  ※ TASK-001 に依存
+  TASK-004  アカウントロック機能実装          SP:3  [SPEC-AUTH-001]  #45
 
 どのタスクを開始しますか？
 ```
 
 依存タスクが完了していない場合は「TASK-002 は TASK-001 が完了してから開始できます」と警告する。
 
-### STEP 2: 関連ファイルの読み込み
+### STEP 5: アサインの確認（必須）
+
+選択したタスクの GitHub Issue にアサイン済みメンバーがいるか確認する。
+Issue 番号が `tasks/task-list.md` に記載されている場合:
+
+```bash
+gh issue view <issue番号> --json assignees --jq '.assignees[].login'
+```
+
+現在の GitHub ユーザーを取得して照合する:
+
+```bash
+CURRENT_USER=$(gh api user --jq '.login')
+```
+
+| アサイン状態 | 対応 |
+|------------|------|
+| アサインなし | 正常。自分をアサインしてから続行する |
+| 自分がアサイン済み | 正常。そのまま続行する |
+| **自分以外がアサイン済み** | **確認を取る（下記）** |
+
+**自分以外がアサイン済みの場合、以下を表示して必ず確認する:**
+
+```
+⚠️ このタスクはすでに @<assignee> にアサインされています。
+
+  TASK-001: ログイン API エンドポイント実装（#42）
+  アサイン: @<assignee>
+
+このタスクを進めてよいですか？
+  Y) はい → @<assignee> に連絡済み、または引き継ぎを確認した
+  N) いいえ → 別のタスクを選ぶ
+```
+
+**N の場合は中断し、タスク選択（STEP 4）に戻る。**
+**Y の場合のみ続行する。** アサインを自分に変更するかも確認する:
+
+```
+アサインを自分（@<current_user>）に変更しますか？
+  Y) 変更する → gh issue edit <番号> --add-assignee @me --remove-assignee @<assignee>
+  N) そのまま（@<assignee> のままにする）
+```
+
+GitHub Issue がない場合（`tasks/task-list.md` に Issue 番号なし）は、
+`tasks/task-list.md` の担当列を確認し、空でなければ同様に確認を取る。
+
+> このチェックは「タスクは誰でも進められる」という前提を維持しつつ、
+> アサイン済みメンバーの作業との衝突・二重対応を防ぐために存在する。
+> ユーザーが「スキップして」と言っても省略しない。
+
+### STEP 6: 関連ファイルの読み込み
 
 選択したタスクに紐付く以下を読み込む:
 - 対応する仕様書（Spec ID から `docs/spec/` を検索）
 - 関連する設計書（`docs/design/`）
 - Constitution.md のコーディングルールセクション
 
-### STEP 2.5: 設計書の存在・承認チェック（必須ゲート）
+### STEP 7: 設計書の存在・承認チェック（必須ゲート）
 
 タスクに紐付く Spec ID に対して、以下を **両方** 確認する:
 
 1. `docs/design/[SPEC-ID]-design.md` が存在すること
 2. そのファイル内に `| ステータス | approved |` の行が含まれること
 
-**例:** SPEC-AUTH-001 なら `docs/design/SPEC-AUTH-001-design.md` が存在し、かつ approved であること
-
 | 結果 | 対応 |
 |------|------|
-| 存在し、ステータスが `approved` | 正常。STEP 3 へ進む |
+| 存在し、ステータスが `approved` | 正常。STEP 8 へ進む |
 | 設計書が存在しない | **即時停止**（下記メッセージA） |
 | 存在するがステータスが `draft` | **即時停止**（下記メッセージB） |
 
@@ -119,51 +192,94 @@ git status --short
 ```
 
 > このゲートはユーザーが「スキップして」「続けて」と言っても通過させてはならない。
-> 未承認の設計書で実装を始めることは、合意なしにコードを書くことと同義である。
 
-### STEP 3: ブランチの作成（必須・スキップ不可）
+### STEP 8: ブランチの作成（必須・スキップ不可）
 
-GitHub Issue 番号の有無にかかわらず、**必ずブランチを作成する**。
+対応する GitHub Issue 番号を `tasks/task-list.md` から取得し、ブランチを作成する。
 
 ```bash
 git checkout main
 git pull origin main
 
-# Issue番号がある場合
-git checkout -b feat/[issue番号]-[タスク概要]
+# Issue番号がある場合（推奨）
+git checkout -b feat/<issue番号>-<タスク概要>
+# 例: feat/42-login-api
 
 # Issue番号がない場合（タスクIDを使う）
-git checkout -b feat/T-[タスク番号]-[タスク概要]
+git checkout -b feat/T-<タスク番号>-<タスク概要>
 # 例: feat/T-012-user-skill-api
 ```
 
-ブランチ作成が完了したことを確認してから STEP 3.5 へ進む。
+ブランチ作成が完了したことを確認してから STEP 9 へ進む。
 **ブランチが作成できない場合は実装を開始しない。**
 
-### STEP 3.5: design ブランチのマージ（存在する場合）
+### STEP 9: design ブランチのマージ（存在する場合）
 
 対応 Spec ID の `design/[SPEC-ID]` ブランチが存在する場合、フィーチャーブランチにマージする:
 
 ```bash
-# design ブランチの存在確認
 git branch --list "design/[SPEC-ID]"
-
-# 存在する場合はマージ
+# 存在する場合
 git merge design/[SPEC-ID] --no-ff -m "merge: design/[SPEC-ID] を取り込む"
 ```
 
 | 結果 | 対応 |
 |------|------|
-| `design/[SPEC-ID]` が存在する | マージして STEP 4 へ進む |
-| 存在しない | スキップして STEP 4 へ進む（設計書は既に main にある） |
+| `design/[SPEC-ID]` が存在する | マージして STEP 10 へ進む |
+| 存在しない | スキップして STEP 10 へ進む（設計書は既に main にある） |
 
-### STEP 4: 作業コンテキストのサマリー表示
+### STEP 10: GitHub Project のステータス更新
+
+`.github/project-config.json` から Project 情報を読み込み、対応する Issue のステータスを "In Progress" に更新する:
+
+```bash
+OWNER=$(jq -r '.owner' .github/project-config.json)
+PROJECT_NUMBER=$(jq -r '.project_number' .github/project-config.json)
+PROJECT_ID=$(jq -r '.project_id' .github/project-config.json)
+STATUS_FIELD_ID=$(jq -r '.fields.status.id' .github/project-config.json)
+IN_PROGRESS_ID=$(jq -r '.fields.status.options.in_progress' .github/project-config.json)
+
+# Project 内の対応 Item ID を取得
+ITEM_ID=$(gh project item-list $PROJECT_NUMBER --owner $OWNER --format json \
+  | jq -r '.items[] | select(.content.number == <issue番号>) | .id')
+
+# ステータスを "In Progress" に更新
+gh api graphql -f query='
+  mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+    updateProjectV2ItemFieldValue(input: {
+      projectId: $projectId
+      itemId: $itemId
+      fieldId: $fieldId
+      value: { singleSelectOptionId: $optionId }
+    }) {
+      projectV2Item { id }
+    }
+  }
+' -f projectId="$PROJECT_ID" \
+  -f itemId="$ITEM_ID" \
+  -f fieldId="$STATUS_FIELD_ID" \
+  -f optionId="$IN_PROGRESS_ID"
+```
+
+### STEP 11: GitHub Issue へコメント追加
+
+実装開始を記録するコメントを Issue に追加する:
+
+```bash
+gh issue comment <issue番号> \
+  --body "🏃 実装開始: ブランチ \`feat/<issue番号>-<タスク概要>\` を作成しました。"
+```
+
+### STEP 12: 作業コンテキストのサマリー表示
 
 ```markdown
 ## タスク開始: TASK-001
 
 ### 作業ブランチ
-feat/T-001-login-api（作成済み）
+feat/42-login-api（作成済み）
+
+### GitHub Issue
+#42: https://github.com/<owner>/<repo>/issues/42
 
 ### 対応仕様書
 SPEC-AUTH-001: ログイン機能（docs/spec/auth/spec-auth-001-login.md）
@@ -180,17 +296,9 @@ docs/design/SPEC-AUTH-001-design.md（確認済み）
 Given: 正しいメールアドレスとパスワードが入力された
 When:  POST /api/auth/login を実行する
 Then:  HTTP 200 と JWT トークンが返る
-
-Given: 誤ったパスワードが入力された
-When:  POST /api/auth/login を実行する
-Then:  HTTP 401 と "認証に失敗しました" メッセージが返る
-
-### 注意事項
-- パスワードは bcrypt でハッシュ化すること（Constitution.md: セキュリティ原則）
-- エラーメッセージは仕様書の文言を使用すること
 ```
 
-### STEP 5: task-list.md のステータス自動更新
+### STEP 13: task-list.md のステータス自動更新
 
 確認なしに `tasks/task-list.md` の該当タスクのステータスを「未着手」→「🏃 進行中」に更新する。
 
@@ -206,4 +314,3 @@ Then:  HTTP 401 と "認証に失敗しました" メッセージが返る
 ```
 
 > ⛔ `/test-write` をスキップして `/task-done` を実行することはできない。
-> `task-done` はE2Eテストファイルの存在を確認し、なければ停止する。

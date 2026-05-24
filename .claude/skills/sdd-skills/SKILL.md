@@ -25,9 +25,11 @@ SDD ハーネスで使えるスキルを工程別に一覧表示し、現在の�
 ### 🚀 導入・セットアップ
 | スキル | 使う場面 |
 |--------|---------|
-| `/sdd-start` | 新プロジェクトへのSDD導入ウィザード（最初の一回） |
+| `/sdd-start` | 新プロジェクトへのSDD導入ウィザード（最初の一回、GitHubリポジトリ+Project作成を含む） |
+| `/github-project-init` | **既存プロジェクト**に GitHub Project を後付けセットアップ（途中から移行するとき） |
 | `/sdd-health` | SDD遵守状況の健全性チェック（定期実行推奨） |
 | `/sdd-skills` | このスキル一覧を表示 |
+| `/onboard-member` | 既存プロジェクトに新メンバーを追加オンボーディング |
 
 ### 工程1: 原則決定（Constitution）
 | スキル | 使う場面 |
@@ -52,16 +54,20 @@ SDD ハーネスで使えるスキルを工程別に一覧表示し、現在の�
 ### 工程4: タスク分割（Tasks）
 | スキル | 使う場面 |
 |--------|---------|
-| `/tasks-plan` | 承認済み仕様書からスプリントタスクを分割する |
-| `/task-board` | タスクの進捗状況を確認する（朝会・進捗確認） |
+| `/tasks-plan` | 承認済み仕様書からスプリントタスクを分割し、GitHub Issues を作成する |
+| `/sprint-start` | 新スプリントを開始し、GitHub Project Iteration を設定する |
+| `/sprint-end` | スプリントを終了し、未完了 Issue を整理する |
+| `/task-board` | GitHub Project からタスクの進捗を確認する（朝会・進捗確認） |
 
 ### 工程5: 実装（Implement）
 | スキル | 使う場面 |
 |--------|---------|
-| `/task-start` | タスクを選んで実装を開始する（ブランチ作成） |
+| `/task-start` | タスクを選んで実装を開始する（ブランチ作成・GitHub Project 更新） |
 | `/impl-guide` | 実装ガイダンスを取得する（仕様書・設計書の読み込み） |
 | `/impl-check` | 実装が受入基準を満たしているか確認する（PR前） |
-| `/task-done` | タスク完了・PR作成・レビュー依頼 |
+| `/task-done` | タスク完了・PR作成・GitHub Issue クローズ |
+| `/pr-review` | PRをSDD観点でレビューする（仕様書・設計書・テストとの整合チェック） |
+| `/bug-triage` | バグを分類し修正パスを決定する（実装バグ / 仕様書バグ / 仕様書未定義） |
 
 ### 工程5→6: テスト自動化（Test）
 | スキル | 使う場面 |
@@ -88,14 +94,6 @@ SDD ハーネスで使えるスキルを工程別に一覧表示し、現在の�
 |--------|---------|
 | `/review-learn` | マージ済みPRのレビュー指摘を自動抽出してパターンDBに蓄積 |
 | `/review-patterns` | 蓄積パターンの閲覧・検索（仕様書・設計書作成前に参照） |
-
-### 🖥️ PM ツール（Web プロジェクト管理）
-| スキル | 使う場面 |
-|--------|---------|
-| `/pm-setup` | SDD PM ツールの初期設定（プロジェクト開始時） |
-| `/sprint-start` | 新スプリントの開始（ゴール・タスク設定） |
-| `/sprint-end` | スプリント完了・ふりかえりへの引継ぎ |
-| `/pm-sync` | PM ツール ↔ プロジェクトファイル双方向同期 |
 
 ---
 
@@ -124,15 +122,20 @@ SDD ハーネスで使えるスキルを工程別に一覧表示し、現在の�
 ## クイックリファレンス
 
 ```
-最初の一回:           /sdd-start
+最初の一回:           /sdd-start  （GitHubリポジトリ+Project も作成）
+途中からGitHub移行:  /github-project-init  （既存プロジェクトに後付け）
+新メンバー追加:       /onboard-member
 仕様書を書く:         /spec-write → /spec-review
-タスクを管理する:     /tasks-plan → /task-start → /task-done
-実装を進める:         /impl-guide → /impl-check
+タスクを計画する:     /tasks-plan （GitHub Issues を自動作成）
+スプリントを管理する: /sprint-start → /sprint-end → /retro-run
+タスクを進める:       /task-start → /task-done （GitHub Project が自動更新）
+実装を確認する:       /impl-guide → /impl-check
+PR レビュー:          /pr-review
+バグ対応:             /bug-triage → fix/[issue]-[名前] ブランチ
 テスト自動化:         /test-write → /test-run → /test-report
 リリース準備:         /accept-run → /spec-trace → /release-prep
 振り返り:             /retro-run
 継続学習:             /review-learn → /review-patterns
 困ったとき:           /sdd-health
-
-PM ツール:            /pm-setup → /sprint-start → /sprint-end → /retro-run
+進捗確認:             /task-board  （GitHub Project を参照）
 ```
