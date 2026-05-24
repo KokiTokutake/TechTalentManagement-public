@@ -63,3 +63,46 @@ export interface SkillMap {
   users: SkillMapUser[]
   categories: SkillMapCategory[]
 }
+
+export interface SkillLevelDefinitionItem {
+  level: number
+  description: string
+  examples: string | null
+  isFallback: boolean
+}
+
+export interface SkillLevelDefinitions {
+  skillItemId: string
+  levelDefinitions: SkillLevelDefinitionItem[]
+}
+
+export type CompetencyCategory = 'Technology' | 'Methodology' | 'BusinessIndustry' | 'Common'
+
+export interface CompetencyMaster {
+  id: string
+  category: CompetencyCategory
+  name: string
+  description: string | null
+  displayOrder: number
+}
+
+export interface EvaluationDetail {
+  level: number
+  comment: string | null
+  updatedAt: string
+}
+
+export interface CompetencyEvaluationResult {
+  competencyId: string
+  competencyName: string
+  category: CompetencyCategory
+  selfEvaluation: EvaluationDetail | null
+  managerEvaluation: EvaluationDetail | null
+  gap: number | null
+}
+
+export interface CompetencyEvaluationsResponse {
+  talentId: string
+  periodId: string
+  evaluations: CompetencyEvaluationResult[]
+}

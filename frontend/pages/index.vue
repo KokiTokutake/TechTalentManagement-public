@@ -74,6 +74,10 @@
               <span>スキル管理</span>
               <span class="feature-arrow">→</span>
             </NuxtLink>
+            <NuxtLink to="/skills/competency" class="feature-item">
+              <span>コンピテンシー評価</span>
+              <span class="feature-arrow">→</span>
+            </NuxtLink>
           </div>
         </div>
 

@@ -32,9 +32,18 @@
               </select>
             </div>
             <div class="form-group form-group-sm">
-              <label class="label">レベル</label>
-              <select v-model.number="addForm.level" class="select" required>
-                <option v-for="n in 5" :key="n" :value="n">{{ n }} — {{ levelLabel(n) }}</option>
+              <label class="label">
+                レベル
+                <SkillLevelTooltip
+                  v-if="addForm.skillItemId"
+                  :skill-item-id="addForm.skillItemId"
+                  :skill-item-name="availableItems.find(i => i.id === addForm.skillItemId)?.name ?? ''"
+                  :current-level="addForm.level"
+                  style="margin-left:0.3rem"
+                />
+              </label>
+              <select v-model.number="addForm.level" class="select" data-testid="skill-level-select" required>
+                <option v-for="n in 7" :key="n" :value="n">{{ n }} — {{ levelLabel(n) }}</option>
               </select>
             </div>
           </div>
@@ -87,9 +96,14 @@
             <template v-else>
               <div class="edit-row">
                 <span class="skill-name">{{ skill.skillItemName }}</span>
-                <select v-model.number="editForm.level" class="select select-sm">
-                  <option v-for="n in 5" :key="n" :value="n">Lv.{{ n }} — {{ levelLabel(n) }}</option>
+                <select v-model.number="editForm.level" class="select select-sm" data-testid="skill-level-select">
+                  <option v-for="n in 7" :key="n" :value="n">Lv.{{ n }} — {{ levelLabel(n) }}</option>
                 </select>
+                <SkillLevelTooltip
+                  :skill-item-id="skill.skillItemId"
+                  :skill-item-name="skill.skillItemName"
+                  :current-level="editForm.level"
+                />
               </div>
               <input v-model="editForm.comment" class="input" placeholder="補足コメント（任意）" style="margin:0.5rem 0" />
               <div class="skill-actions">
@@ -188,7 +202,15 @@ async function execDelete() {
 }
 
 function levelLabel(n: number) {
-  return ['知識あり', '学習中', '実務可', '指導可', 'エキスパート'][n - 1] ?? ''
+  return [
+    '概念的理解',
+    '基礎（補助あり）',
+    '単独実務可',
+    '複雑業務・後輩指導',
+    '高度専門・PJリード',
+    '組織横断・標準策定',
+    '業界最高水準',
+  ][n - 1] ?? ''
 }
 
 function statusLabel(status: string) {
