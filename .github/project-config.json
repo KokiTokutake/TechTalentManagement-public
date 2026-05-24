@@ -1,0 +1,27 @@
+{
+  "_comment": "GitHub Projects V2 の設定。スキルから参照されます。",
+  "owner": "KokiTokutake",
+  "repo": "TechTalentManagement",
+  "project_number": 1,
+  "project_id": "PVT_kwHOAskoLs4BYorz",
+  "fields": {
+    "status": {
+      "id": "PVTSSF_lAHOAskoLs4BYorzzhTtGD0",
+      "options": {
+        "todo": "f75ad846",
+        "in_progress": "47fc9ee4",
+        "in_review": "",
+        "done": "98236657"
+      }
+    },
+    "sprint": {
+      "id": "PVTIF_lAHOAskoLs4BYorzzhTtGMw"
+    },
+    "story_points": {
+      "id": "PVTF_lAHOAskoLs4BYorzzhTtGMo"
+    },
+    "spec_id": {
+      "id": "PVTF_lAHOAskoLs4BYorzzhTtGMs"
+    }
+  }
+}
