@@ -21,6 +21,7 @@ using TechTalentManagement.Application.SkillLevelDefinition;
 using TechTalentManagement.Application.SkillMaster;
 using TechTalentManagement.Application.SkillMap;
 using TechTalentManagement.Application.SkillMigration;
+using TechTalentManagement.Application.Succession;
 using TechTalentManagement.Application.UserSkills;
 using TechTalentManagement.Infrastructure.Persistence;
 using TechTalentManagement.Infrastructure.Persistence.Repositories;
@@ -77,6 +78,8 @@ builder.Services.AddScoped<ISkillGapRepository, SkillGapRepository>();
 builder.Services.AddScoped<ISkillGapService, SkillGapService>();
 builder.Services.AddScoped<ISkillMigrationRepository, SkillMigrationRepository>();
 builder.Services.AddScoped<ISkillMigrationService, SkillMigrationService>();
+builder.Services.AddScoped<ICriticalPositionRepository, CriticalPositionRepository>();
+builder.Services.AddScoped<ICriticalPositionService, CriticalPositionService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
