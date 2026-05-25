@@ -39,6 +39,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<CompetencyMaster> CompetencyMasters => Set<CompetencyMaster>();
     public DbSet<CompetencyEvaluation> CompetencyEvaluations => Set<CompetencyEvaluation>();
     public DbSet<SkillLevelMigrationLog> SkillLevelMigrationLogs => Set<SkillLevelMigrationLog>();
+    public DbSet<CriticalPosition> CriticalPositions => Set<CriticalPosition>();
+    public DbSet<SuccessionCandidate> SuccessionCandidates => Set<SuccessionCandidate>();
+    public DbSet<SuccessionDevelopmentAction> SuccessionDevelopmentActions => Set<SuccessionDevelopmentAction>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

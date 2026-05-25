@@ -1,6 +1,6 @@
 ﻿# タスク一覧
 
-> 最終更新: 2026-05-20 （/tasks-plan SPEC-MDC-002 + SPEC-1ON1-001 により更新）
+> 最終更新: 2026-05-25 （/tasks-plan SPEC-MDC-005 により更新）
 
 ---
 
@@ -222,14 +222,29 @@
 | TASK-073 | [FE] スキルギャップ比較ページ（gap.vue）＋ スキルマップ コンピテンシータブ（map.vue 拡張）＋ 管理者ツール 3ページ（レベル定義・コンピテンシーマスタ・移行ツール） | ✅ done | @KokiTokutake | 5 | SPEC-SKILL-002 | #90 | #96 | feat/90-skill-gap-map-admin-ui |
 | TASK-074 | [TEST] SPEC-SKILL-002 結合テスト・受入確認（AC-01-01〜AC-05-01 全9件） | ✅ done | @KokiTokutake | 3 | SPEC-SKILL-002 | #91 | — | feat/91-spec-skill-002-integration-test |
 
+## Sprint 17 ⬜ 未着手
+
+- **ゴール**: 後継者計画（サクセッションプラン）全実装
+- **期間**: 未定
+- **進捗**: 0 / 23 SP
+
+| ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
+|----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
+| TASK-075 | [DB] CriticalPosition・SuccessionCandidate・SuccessionDevelopmentAction スキーマ＋マイグレーション | 🔵 レビュー中 | @KokiTokutake | 2 | SPEC-MDC-005 | #98 | #104 | feat/98-succession-plan-schema |
+| TASK-076 | [BE] 重要ポジション CRUD API（GET一覧/POST/PUT）＋タレント別候補ポジション API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-005 | #99 | — | — |
+| TASK-077 | [BE] 後継者候補 CRUD API（GET/POST/PUT/DELETE）＋サクセッションマップ API＋9ボックスサジェスト API | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-005 | #100 | — | — |
+| TASK-078 | [FE] 重要ポジション管理ページ（positions.vue）＋ポジション詳細・候補者管理ページ（[positionId].vue） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-005 | #101 | — | — |
+| TASK-079 | [FE] サクセッションマップページ（index.vue）＋9ボックス連動サジェストダイアログ＋育成アクション管理 | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-005 | #102 | — | — |
+| TASK-080 | [TEST] SPEC-MDC-005 結合テスト・受入確認（AC-01-01〜AC-04-02 全8件） | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-005 | #103 | — | — |
+
 ---
 
 ## サマリー
 
 | 項目 | 値 |
 |------|----|
-| 総タスク数 | 74 |
+| 総タスク数 | 80 |
 | 完了 | 67 |
 | 進行中 | 0 |
-| 未着手 | 7 |
+| 未着手 | 13 |
 | レビュー中 | 0 |

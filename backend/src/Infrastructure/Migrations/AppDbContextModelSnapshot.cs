@@ -275,6 +275,50 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.ToTable("CompetencyMasters");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CriticalPosition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrentHolderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Importance")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PositionName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("RequiredSkills")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("CurrentHolderId");
+
+                    b.HasIndex("Importance", "IsActive");
+
+                    b.ToTable("CriticalPositions");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.DevelopmentPlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1069,6 +1113,88 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.ToTable("SkillLevelMigrationLogs");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SuccessionCandidate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DevelopmentActions")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DevelopmentGap")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTimeOffset>("NominatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("NominatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PositionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Readiness")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NominatedBy");
+
+                    b.HasIndex("TalentId");
+
+                    b.HasIndex("PositionId", "Readiness");
+
+                    b.HasIndex("PositionId", "TalentId")
+                        .IsUnique();
+
+                    b.ToTable("SuccessionCandidates");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SuccessionDevelopmentAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CandidateId", "Status");
+
+                    b.ToTable("SuccessionDevelopmentActions");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.TalentManagerComment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1398,6 +1524,24 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.Navigation("Talent");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CriticalPosition", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "CurrentHolder")
+                        .WithMany()
+                        .HasForeignKey("CurrentHolderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("CurrentHolder");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.DevelopmentPlan", b =>
                 {
                     b.HasOne("TechTalentManagement.Domain.Entities.User", null)
@@ -1707,6 +1851,44 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.Navigation("Executor");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SuccessionCandidate", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Nominator")
+                        .WithMany()
+                        .HasForeignKey("NominatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.CriticalPosition", "Position")
+                        .WithMany("Candidates")
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Nominator");
+
+                    b.Navigation("Position");
+
+                    b.Navigation("Talent");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SuccessionDevelopmentAction", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.SuccessionCandidate", "Candidate")
+                        .WithMany("DevelopmentActionItems")
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.TalentManagerComment", b =>
                 {
                     b.HasOne("TechTalentManagement.Domain.Entities.User", null)
@@ -1800,6 +1982,11 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.Navigation("Participants");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.CriticalPosition", b =>
+                {
+                    b.Navigation("Candidates");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.EvaluationPeriod", b =>
                 {
                     b.Navigation("Goals");
@@ -1845,6 +2032,11 @@ namespace TechTalentManagement.Infrastructure.Migrations
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.SkillCategory", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.SuccessionCandidate", b =>
+                {
+                    b.Navigation("DevelopmentActionItems");
                 });
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.User", b =>
