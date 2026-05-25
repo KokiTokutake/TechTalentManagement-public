@@ -80,6 +80,8 @@ builder.Services.AddScoped<ISkillMigrationRepository, SkillMigrationRepository>(
 builder.Services.AddScoped<ISkillMigrationService, SkillMigrationService>();
 builder.Services.AddScoped<ICriticalPositionRepository, CriticalPositionRepository>();
 builder.Services.AddScoped<ICriticalPositionService, CriticalPositionService>();
+builder.Services.AddScoped<ISuccessionCandidateRepository, SuccessionCandidateRepository>();
+builder.Services.AddScoped<ISuccessionCandidateService, SuccessionCandidateService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
