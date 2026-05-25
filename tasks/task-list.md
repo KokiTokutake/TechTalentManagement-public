@@ -230,7 +230,7 @@
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
-| TASK-075 | [DB] CriticalPosition・SuccessionCandidate・SuccessionDevelopmentAction スキーマ＋マイグレーション | 🔵 レビュー中 | @KokiTokutake | 2 | SPEC-MDC-005 | #98 | #104 | feat/98-succession-plan-schema |
+| TASK-075 | [DB] CriticalPosition・SuccessionCandidate・SuccessionDevelopmentAction スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-MDC-005 | #98 | #104 | feat/98-succession-plan-schema |
 | TASK-076 | [BE] 重要ポジション CRUD API（GET一覧/POST/PUT）＋タレント別候補ポジション API | ⬜ pending | @KokiTokutake | 3 | SPEC-MDC-005 | #99 | — | — |
 | TASK-077 | [BE] 後継者候補 CRUD API（GET/POST/PUT/DELETE）＋サクセッションマップ API＋9ボックスサジェスト API | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-005 | #100 | — | — |
 | TASK-078 | [FE] 重要ポジション管理ページ（positions.vue）＋ポジション詳細・候補者管理ページ（[positionId].vue） | ⬜ pending | @KokiTokutake | 5 | SPEC-MDC-005 | #101 | — | — |
