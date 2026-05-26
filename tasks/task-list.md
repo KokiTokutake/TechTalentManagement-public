@@ -141,11 +141,11 @@
 | TASK-046 | [FE] 9ボックスマップ画面 UI（グリッド・ポップオーバー・期間切替・フィルタ） | ✅ done | @KokiTokutake | 5 | SPEC-MDC-002 | #47 | PR#61 | feat/47-nine-box-map-ui |
 | TASK-047 | [FE] キャリブレーション画面 UI（評価分布・統計表示） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #48 | PR#62 | feat/48-nine-box-calibration-ui |
 
-## Sprint 11 ⬜ 未着手
+## Sprint 11 ✅ 完了
 
 - **ゴール**: 1on1全画面 UI＋結合テスト → スプリントゴール達成
-- **期間**: 未定
-- **進捗**: 0 / 13 SP
+- **期間**: 2026-05-26
+- **進捗**: 13 / 13 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -155,11 +155,11 @@
 | TASK-051 | [TEST] 9ボックス評価 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-MDC-002 | #52 | — | feat/52-nine-box-integration-test |
 | TASK-052 | [TEST] 1on1面談記録 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-1ON1-001 | #53 | PR#67 | feat/53-one-on-one-integration-test |
 
-## Sprint 12 ⬜ 未着手
+## Sprint 12 ✅ 完了
 
 - **ゴール**: タレントプロファイル（委員会事前資料）全実装
-- **期間**: 未定
-- **進捗**: 0 / 14 SP
+- **期間**: 2026-05-26
+- **進捗**: 14 / 14 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -168,11 +168,11 @@
 | TASK-055 | [FE] タレントプロファイル画面 UI（集約ビュー・育成コメント入力・重点管理フラグ） | ✅ done | @KokiTokutake | 5 | SPEC-MDC-003 | — | #70 | feat/T-055-talent-profile-ui |
 | TASK-056 | [TEST] タレントプロファイル 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-MDC-003 | — | #71 | feat/T-056-talent-profile-test |
 
-## Sprint 13 ⬜ 未着手
+## Sprint 13 ✅ 完了
 
 - **ゴール**: 委員会議事録の構造化（決定事項・アクションアイテム管理）全実装
-- **期間**: 未定
-- **進捗**: 0 / 10 SP
+- **期間**: 2026-05-26
+- **進捗**: 10 / 10 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -181,11 +181,11 @@
 | TASK-059 | [FE] MDCセッション詳細 UI 拡張（決定事項・アクションアイテム・前回積み残し） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-004 | — | [#74](https://github.com/KokiTokutake/TechTalentManagement/pull/74) | feat/T-059-mdc-session-detail-ui |
 | TASK-060 | [TEST] 委員会議事録 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-MDC-004 | — | [#75](https://github.com/KokiTokutake/TechTalentManagement/pull/75) | feat/T-060-mdc-integration-test |
 
-## Sprint 14 ⬜ 未着手
+## Sprint 14 ✅ 完了
 
 - **ゴール**: Will-Can-Must深化（時間軸分割・Can強み/課題・やりがい）全実装
-- **期間**: 未定
-- **進捗**: 0 / 12 SP
+- **期間**: 2026-05-26
+- **進捗**: 12 / 12 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -194,11 +194,11 @@
 | TASK-063 | [FE] キャリアプランページ UI 拡張（3軸Will・強み/課題Can・価値観セクション） | ✅ done | @KokiTokutake | 5 | SPEC-CAREER-002 | — | #78 | feat/T-063-wcm-ui |
 | TASK-064 | [TEST] WCM深化 結合テスト・受入確認 | ✅ done | @KokiTokutake | 2 | SPEC-CAREER-002 | — | #79 | feat/T-064-wcm-integration-test |
 
-## Sprint 15 ⬜ 未着手
+## Sprint 15 ✅ 完了
 
 - **ゴール**: Mustの定量KPI・中間振り返り・フィードバック面談記録 全実装
-- **期間**: 未定
-- **進捗**: 0 / 15 SP
+- **期間**: 2026-05-26
+- **進捗**: 15 / 15 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
@@ -207,11 +207,11 @@
 | TASK-067 | [FE] KPI入力・チェックイン・フィードバック面談 UI | ✅ done | @KokiTokutake | 5 | SPEC-EVAL-002 | — | #83 | feat/T-067-kpi-checkin-feedback-ui |
 | TASK-068 | [TEST] KPI・チェックイン・フィードバック面談 結合テスト・受入確認 | ✅ done | @KokiTokutake | 3 | SPEC-EVAL-002 | — | — | feat/T-068-kpi-checkin-integration-test |
 
-## Sprint 16 ⬜ 未着手
+## Sprint 16 ✅ 完了
 
 - **ゴール**: スキルレベル定義拡充（ITSS準拠）・コンピテンシー評価 全実装
-- **期間**: 未定
-- **進捗**: 0 / 23 SP
+- **期間**: 2026-05-26
+- **進捗**: 23 / 23 SP 完了
 
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
