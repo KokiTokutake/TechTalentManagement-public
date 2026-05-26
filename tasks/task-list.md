@@ -235,7 +235,7 @@
 | TASK-077 | [BE] 後継者候補 CRUD API（GET/POST/PUT/DELETE）＋サクセッションマップ API＋9ボックスサジェスト API | ✅ done | @KokiTokutake | 5 | SPEC-MDC-005 | #100 | — | feat/100-succession-candidate-api |
 | TASK-078 | [FE] 重要ポジション管理ページ（positions.vue）＋ポジション詳細・候補者管理ページ（[positionId].vue） | ✅ done | @KokiTokutake | 5 | SPEC-MDC-005 | #101 | — | — |
 | TASK-079 | [FE] サクセッションマップページ（index.vue）＋9ボックス連動サジェストダイアログ＋育成アクション管理 | ✅ done | @KokiTokutake | 5 | SPEC-MDC-005 | #102 | — | — |
-| TASK-080 | [TEST] SPEC-MDC-005 結合テスト・受入確認（AC-01-01〜AC-04-02 全8件） | 🔵 レビュー中 | @KokiTokutake | 3 | SPEC-MDC-005 | #103 | #109 | — |
+| TASK-080 | [TEST] SPEC-MDC-005 結合テスト・受入確認（AC-01-01〜AC-04-02 全8件） | ✅ done | @KokiTokutake | 3 | SPEC-MDC-005 | #103 | #109 | — |
 
 ---
 
