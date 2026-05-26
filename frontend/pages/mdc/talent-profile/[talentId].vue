@@ -49,6 +49,14 @@
         :decisions="decisionStore.talentDecisions"
         :loading="decisionStore.loading"
       />
+
+      <!-- プロジェクト履歴（SPEC-PROJ-001 REQ-06） -->
+      <TalentProfileProjectSection
+        :assignments="projectStore.assignments"
+        :loading="projectStore.loading"
+        :can-comment="canEditComment"
+        @comment="onProjectComment"
+      />
     </template>
 
     <div v-else-if="store.error" class="error-state" data-testid="talent-profile-error">
@@ -65,6 +73,7 @@ import TalentProfileSkills from '~/components/talent-profile/TalentProfileSkills
 import TalentProfileMeetings from '~/components/talent-profile/TalentProfileMeetings.vue'
 import TalentProfileManagerComment from '~/components/talent-profile/TalentProfileManagerComment.vue'
 import TalentProfileMdcDecisions from '~/components/talent-profile/TalentProfileMdcDecisions.vue'
+import TalentProfileProjectSection from '~/components/project/TalentProfileProjectSection.vue'
 import CareerValuesSection from '~/components/career/CareerValuesSection.vue'
 import type { UpsertManagerCommentRequest } from '~/types/talentProfile'
 
@@ -75,6 +84,7 @@ const store = useTalentProfileStore()
 const auth = useAuthStore()
 const decisionStore = useMdcDecisionStore()
 const valuesStore = useCareerValuesStore()
+const projectStore = useProjectStore()
 
 const periods = ref<{ id: string; name: string }[]>([])
 
@@ -90,6 +100,7 @@ onMounted(async () => {
   await Promise.all([
     store.fetchProfile(talentId),
     decisionStore.fetchTalentDecisions(talentId),
+    projectStore.fetchAssignments(talentId, auth.currentUser?.id ?? talentId),
   ])
   if (store.profile && auth.currentUser) {
     periods.value = [{ id: store.profile.periodId, name: store.profile.periodName }]
@@ -101,6 +112,7 @@ onUnmounted(() => {
   store.$reset()
   decisionStore.$reset()
   valuesStore.$reset()
+  projectStore.$reset()
 })
 
 async function onPeriodChange(periodId: string) {
@@ -120,6 +132,11 @@ async function onSaveComment(data: UpsertManagerCommentRequest) {
 
 function onCopyPrev() {
   // 前期コピーは将来実装
+}
+
+async function onProjectComment(id: string, comment: string) {
+  if (!auth.currentUser?.id) return
+  await projectStore.saveManagerComment(id, auth.currentUser.id, talentId, { comment })
 }
 </script>
 
