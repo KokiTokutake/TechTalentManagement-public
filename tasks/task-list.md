@@ -248,7 +248,7 @@
 | ID | タイトル | ステータス | 担当者 | SP | 仕様書 | Issue | PR | ブランチ |
 |----|---------|-----------|--------|:--:|--------|-------|:--:|----------|
 | TASK-081 | [DB] ProjectAssignment・ProjectAssignmentSkill スキーマ＋マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-PROJ-001 | #110 | #119 | feat/110-project-assignment-schema |
-| TASK-082 | [BE] プロジェクト履歴 CRUD API（一覧/登録/更新/削除）＋上長コメント API | 🏃 進行中 | @KokiTokutake | 3 | SPEC-PROJ-001 | #111 | — | — |
+| TASK-082 | [BE] プロジェクト履歴 CRUD API（一覧/登録/更新/削除）＋上長コメント API | ✅ done | @KokiTokutake | 3 | SPEC-PROJ-001 | #111 | #120 | feat/111-project-assignment-api |
 | TASK-083 | [FE] プロジェクト履歴ページ（/profile/projects）＋タレントプロファイル統合 | ⬜ 未着手 | @KokiTokutake | 5 | SPEC-PROJ-001 | #112 | — | — |
 | TASK-084 | [TEST] SPEC-PROJ-001 結合テスト・受入確認（AC-01-01〜AC-08-01） | ⬜ 未着手 | @KokiTokutake | 3 | SPEC-PROJ-001 | #113 | — | — |
 | TASK-085 | [DB] Notification スキーマ＋EF Core マイグレーション | ⬜ 未着手 | @KokiTokutake | 2 | SPEC-NOTIF-001 | #114 | — | — |
