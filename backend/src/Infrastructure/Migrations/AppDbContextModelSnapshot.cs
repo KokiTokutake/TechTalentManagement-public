@@ -932,6 +932,84 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.ToTable("OneOnOneMeetings");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ProjectAssignment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateOnly?>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("ManagerComment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset?>("ManagerCommentedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("ManagerCommentedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("TalentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerCommentedById");
+
+                    b.HasIndex("TalentId", "EndDate");
+
+                    b.HasIndex("TalentId", "StartDate");
+
+                    b.ToTable("ProjectAssignments");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ProjectAssignmentSkill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssignmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SkillItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SkillItemId");
+
+                    b.HasIndex("AssignmentId", "SkillItemId")
+                        .IsUnique();
+
+                    b.ToTable("ProjectAssignmentSkills");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1780,6 +1858,43 @@ namespace TechTalentManagement.Infrastructure.Migrations
                     b.Navigation("Talent");
                 });
 
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ProjectAssignment", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "ManagerCommentedBy")
+                        .WithMany()
+                        .HasForeignKey("ManagerCommentedById")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.User", "Talent")
+                        .WithMany()
+                        .HasForeignKey("TalentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ManagerCommentedBy");
+
+                    b.Navigation("Talent");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ProjectAssignmentSkill", b =>
+                {
+                    b.HasOne("TechTalentManagement.Domain.Entities.ProjectAssignment", "Assignment")
+                        .WithMany("Skills")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechTalentManagement.Domain.Entities.SkillItem", "SkillItem")
+                        .WithMany()
+                        .HasForeignKey("SkillItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Assignment");
+
+                    b.Navigation("SkillItem");
+                });
+
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>
                 {
                     b.HasOne("TechTalentManagement.Domain.Entities.EvaluationPeriod", "EvaluationPeriod")
@@ -2018,6 +2133,11 @@ namespace TechTalentManagement.Infrastructure.Migrations
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.OneOnOneMeeting", b =>
                 {
                     b.Navigation("ActionItems");
+                });
+
+            modelBuilder.Entity("TechTalentManagement.Domain.Entities.ProjectAssignment", b =>
+                {
+                    b.Navigation("Skills");
                 });
 
             modelBuilder.Entity("TechTalentManagement.Domain.Entities.SelfEvaluation", b =>

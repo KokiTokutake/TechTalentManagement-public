@@ -42,6 +42,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<CriticalPosition> CriticalPositions => Set<CriticalPosition>();
     public DbSet<SuccessionCandidate> SuccessionCandidates => Set<SuccessionCandidate>();
     public DbSet<SuccessionDevelopmentAction> SuccessionDevelopmentActions => Set<SuccessionDevelopmentAction>();
+    public DbSet<ProjectAssignment> ProjectAssignments => Set<ProjectAssignment>();
+    public DbSet<ProjectAssignmentSkill> ProjectAssignmentSkills => Set<ProjectAssignmentSkill>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
