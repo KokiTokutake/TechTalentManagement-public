@@ -1,5 +1,7 @@
 ﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
 namespace TechTalentManagement.Application.ManagerEvaluations;
 
@@ -18,7 +20,7 @@ public interface IManagerEvaluationRepository
     Task SaveChangesAsync(CancellationToken ct);
 }
 
-public class ManagerEvaluationService(IManagerEvaluationRepository repo) : IManagerEvaluationService
+public class ManagerEvaluationService(IManagerEvaluationRepository repo, INotificationService notificationService) : IManagerEvaluationService
 {
     public async Task<Result<ManagerEvaluationDto>> GetAsync(Guid managerId, Guid selfEvaluationId, CancellationToken ct = default)
     {
@@ -86,6 +88,14 @@ public class ManagerEvaluationService(IManagerEvaluationRepository repo) : IMana
 
         evaluation.Confirm();
         await repo.SaveChangesAsync(ct);
+
+        // NT-05: タレントに評価承認を通知
+        await notificationService.CreateAsync(
+            selfEvaluation.UserId,
+            NotificationType.EvaluationApproved,
+            "上長評価が確定されました",
+            "あなたの自己評価に対する上長評価が確定されました。",
+            ct: ct);
 
         return Result<ManagerEvaluationDto>.Ok(ToDto(evaluation));
     }

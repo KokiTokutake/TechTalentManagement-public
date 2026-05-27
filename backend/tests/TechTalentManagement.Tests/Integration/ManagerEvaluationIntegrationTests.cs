@@ -1,5 +1,7 @@
-﻿using TechTalentManagement.Application.Goals;
+﻿using NSubstitute;
+using TechTalentManagement.Application.Goals;
 using TechTalentManagement.Application.ManagerEvaluations;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Application.SelfEvaluations;
 using TechTalentManagement.Domain.Enums;
 using TechTalentManagement.Infrastructure.Persistence.Repositories;
@@ -16,8 +18,8 @@ public class ManagerEvaluationIntegrationTests : IntegrationTestBase
     public ManagerEvaluationIntegrationTests()
     {
         _goalService = new GoalService(new GoalRepository(Db));
-        _selfEvalService = new SelfEvaluationService(new SelfEvaluationRepository(Db));
-        _sut = new ManagerEvaluationService(new ManagerEvaluationRepository(Db));
+        _selfEvalService = new SelfEvaluationService(new SelfEvaluationRepository(Db), Substitute.For<INotificationService>());
+        _sut = new ManagerEvaluationService(new ManagerEvaluationRepository(Db), Substitute.For<INotificationService>());
     }
 
     private async Task<(Guid userId, Guid selfEvalId)> SetupSubmittedSelfEval(Guid periodId)

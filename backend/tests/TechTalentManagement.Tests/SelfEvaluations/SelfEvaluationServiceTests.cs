@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Application.SelfEvaluations;
 using TechTalentManagement.Domain.Entities;
 
@@ -7,9 +8,10 @@ namespace TechTalentManagement.Tests.SelfEvaluations;
 public class SelfEvaluationServiceTests
 {
     private readonly ISelfEvaluationRepository _repo = Substitute.For<ISelfEvaluationRepository>();
+    private readonly INotificationService _notificationService = Substitute.For<INotificationService>();
     private readonly SelfEvaluationService _sut;
 
-    public SelfEvaluationServiceTests() => _sut = new SelfEvaluationService(_repo);
+    public SelfEvaluationServiceTests() => _sut = new SelfEvaluationService(_repo, _notificationService);
 
     private static EvaluationPeriod OpenPeriod()
     {

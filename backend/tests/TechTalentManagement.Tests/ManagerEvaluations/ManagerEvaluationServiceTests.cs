@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using TechTalentManagement.Application.ManagerEvaluations;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Domain.Entities;
 using TechTalentManagement.Domain.Enums;
 
@@ -8,9 +9,10 @@ namespace TechTalentManagement.Tests.ManagerEvaluations;
 public class ManagerEvaluationServiceTests
 {
     private readonly IManagerEvaluationRepository _repo = Substitute.For<IManagerEvaluationRepository>();
+    private readonly INotificationService _notificationService = Substitute.For<INotificationService>();
     private readonly ManagerEvaluationService _sut;
 
-    public ManagerEvaluationServiceTests() => _sut = new ManagerEvaluationService(_repo);
+    public ManagerEvaluationServiceTests() => _sut = new ManagerEvaluationService(_repo, _notificationService);
 
     private static SelfEvaluation SubmittedSelfEvaluation(Guid userId, Guid periodId)
     {

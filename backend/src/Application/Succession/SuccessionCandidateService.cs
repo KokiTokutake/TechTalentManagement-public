@@ -1,4 +1,5 @@
 using TechTalentManagement.Application.Common;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Domain.Entities;
 using TechTalentManagement.Domain.Enums;
 
@@ -33,7 +34,7 @@ public interface ISuccessionCandidateRepository
     Task SaveChangesAsync(CancellationToken ct);
 }
 
-public class SuccessionCandidateService(ISuccessionCandidateRepository repo) : ISuccessionCandidateService
+public class SuccessionCandidateService(ISuccessionCandidateRepository repo, INotificationService notificationService) : ISuccessionCandidateService
 {
     private static readonly HashSet<UserRole> AllowedRoles = [UserRole.Senior, UserRole.Executive, UserRole.Admin];
 
@@ -70,6 +71,14 @@ public class SuccessionCandidateService(ISuccessionCandidateRepository repo) : I
         var candidate = SuccessionCandidate.Create(positionId, req.TalentId, req.Readiness, req.DevelopmentGap, req.DevelopmentActions, nominatedBy);
         await repo.AddCandidateAsync(candidate, ct);
         await repo.SaveChangesAsync(ct);
+
+        // NT-09: タレントに後継者候補追加を通知
+        await notificationService.CreateAsync(
+            req.TalentId,
+            NotificationType.SuccessionCandidateAdded,
+            "後継者候補に追加されました",
+            $"「{position!.PositionName}」の後継者候補として登録されました。",
+            ct: ct);
 
         // 追加後にナビゲーションプロパティ付きで再取得
         var saved = await repo.FindCandidateAsync(candidate.Id, ct);

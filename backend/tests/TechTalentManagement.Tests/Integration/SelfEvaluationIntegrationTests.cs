@@ -1,4 +1,6 @@
-﻿using TechTalentManagement.Application.SelfEvaluations;
+﻿using NSubstitute;
+using TechTalentManagement.Application.Notification;
+using TechTalentManagement.Application.SelfEvaluations;
 using TechTalentManagement.Domain.Enums;
 using TechTalentManagement.Infrastructure.Persistence.Repositories;
 
@@ -11,7 +13,7 @@ public class SelfEvaluationIntegrationTests : IntegrationTestBase
 
     public SelfEvaluationIntegrationTests()
     {
-        _sut = new SelfEvaluationService(new SelfEvaluationRepository(Db));
+        _sut = new SelfEvaluationService(new SelfEvaluationRepository(Db), Substitute.For<INotificationService>());
     }
 
     // 評価期間中は目標登録期間が終了しているため、DBに直接シードするヘルパー

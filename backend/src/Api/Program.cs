@@ -23,6 +23,7 @@ using TechTalentManagement.Application.SkillMap;
 using TechTalentManagement.Application.SkillMigration;
 using TechTalentManagement.Application.Succession;
 using TechTalentManagement.Application.ProjectAssignment;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Application.UserSkills;
 using TechTalentManagement.Infrastructure.Persistence;
 using TechTalentManagement.Infrastructure.Persistence.Repositories;
@@ -85,6 +86,8 @@ builder.Services.AddScoped<ISuccessionCandidateRepository, SuccessionCandidateRe
 builder.Services.AddScoped<ISuccessionCandidateService, SuccessionCandidateService>();
 builder.Services.AddScoped<IProjectAssignmentRepository, ProjectAssignmentRepository>();
 builder.Services.AddScoped<IProjectAssignmentService, ProjectAssignmentService>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()

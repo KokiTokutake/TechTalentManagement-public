@@ -19,6 +19,9 @@ public class SelfEvaluationRepository(AppDbContext db) : ISelfEvaluationReposito
             .Include(e => e.Items)
             .FirstOrDefaultAsync(e => e.UserId == userId && e.EvaluationPeriodId == periodId, ct);
 
+    public Task<User?> FindUserAsync(Guid userId, CancellationToken ct) =>
+        db.Users.FindAsync([userId], ct).AsTask();
+
     public async Task AddAsync(SelfEvaluation evaluation, CancellationToken ct) =>
         await db.SelfEvaluations.AddAsync(evaluation, ct);
 

@@ -1,5 +1,7 @@
 ﻿using TechTalentManagement.Application.Common;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Domain.Entities;
+using TechTalentManagement.Domain.Enums;
 
 namespace TechTalentManagement.Application.SelfEvaluations;
 
@@ -15,11 +17,12 @@ public interface ISelfEvaluationRepository
     Task<EvaluationPeriod?> FindPeriodAsync(Guid periodId, CancellationToken ct);
     Task<IReadOnlyList<Goal>> GetGoalsByUserAndPeriodAsync(Guid userId, Guid periodId, CancellationToken ct);
     Task<SelfEvaluation?> FindAsync(Guid userId, Guid periodId, CancellationToken ct);
+    Task<User?> FindUserAsync(Guid userId, CancellationToken ct);
     Task AddAsync(SelfEvaluation evaluation, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
 }
 
-public class SelfEvaluationService(ISelfEvaluationRepository repo) : ISelfEvaluationService
+public class SelfEvaluationService(ISelfEvaluationRepository repo, INotificationService notificationService) : ISelfEvaluationService
 {
     public async Task<Result<SelfEvaluationDto>> GetAsync(Guid userId, Guid periodId, CancellationToken ct = default)
     {
@@ -92,6 +95,18 @@ public class SelfEvaluationService(ISelfEvaluationRepository repo) : ISelfEvalua
 
         evaluation.Submit();
         await repo.SaveChangesAsync(ct);
+
+        // NT-03: マネージャーに自己評価提出を通知
+        var submitter = await repo.FindUserAsync(userId, ct);
+        if (submitter?.ManagerId is Guid managerId)
+        {
+            await notificationService.CreateAsync(
+                managerId,
+                NotificationType.SelfEvaluationSubmitted,
+                "自己評価が提出されました",
+                $"{submitter.DisplayName} が自己評価を提出しました。",
+                ct: ct);
+        }
 
         return Result<SelfEvaluationDto>.Ok(ToDto(evaluation));
     }

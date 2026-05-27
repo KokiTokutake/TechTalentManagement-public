@@ -1,6 +1,7 @@
 ﻿using TechTalentManagement.Application.Common;
 using TechTalentManagement.Application.NineBox.Requests;
 using TechTalentManagement.Application.NineBox.Responses;
+using TechTalentManagement.Application.Notification;
 using TechTalentManagement.Domain.Entities;
 using TechTalentManagement.Domain.Enums;
 
@@ -35,7 +36,7 @@ public interface INineBoxRepository
     Task SaveChangesAsync(CancellationToken ct);
 }
 
-public class NineBoxService(INineBoxRepository repo) : INineBoxService
+public class NineBoxService(INineBoxRepository repo, INotificationService notificationService) : INineBoxService
 {
     public async Task<Result<NineBoxAssessmentResponse>> CreateAssessmentAsync(
         Guid assessorId,
@@ -290,6 +291,14 @@ public class NineBoxService(INineBoxRepository repo) : INineBoxService
             var keyPerson = Domain.Entities.KeyPerson.Create(talentId, requesterId, "9ボックス評価によるHighPotential候補の自動推薦");
             await repo.AddKeyPersonAsync(keyPerson, ct);
             changeCount++;
+
+            // NT-07: タレントにキーパーソン候補登録を通知
+            await notificationService.CreateAsync(
+                talentId,
+                NotificationType.NineBoxKeyPersonCandidate,
+                "重点管理人物候補に選出されました",
+                "9ボックス評価の結果、あなたが重点管理人物候補に選出されました。",
+                ct: ct);
         }
 
         // 候補から外れたタレントのフラグを解除
