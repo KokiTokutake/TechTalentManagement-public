@@ -44,6 +44,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<SuccessionDevelopmentAction> SuccessionDevelopmentActions => Set<SuccessionDevelopmentAction>();
     public DbSet<ProjectAssignment> ProjectAssignments => Set<ProjectAssignment>();
     public DbSet<ProjectAssignmentSkill> ProjectAssignmentSkills => Set<ProjectAssignmentSkill>();
+    public DbSet<Notification> Notifications => Set<Notification>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
