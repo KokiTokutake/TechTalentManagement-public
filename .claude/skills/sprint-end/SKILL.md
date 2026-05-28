@@ -195,6 +195,32 @@ gh issue create --title "[Retro Action] PR テンプレートにカバレッジ�
 
 ---
 
+### STEP 4.5: task-list.md と GitHub Project の同期チェック
+
+GitHub Project の "Done" 件数と `tasks/task-list.md` の `✅ done` 件数に乖離がないか確認する:
+
+```bash
+# task-list.md の done 件数
+grep -c "✅ done" tasks/task-list.md 2>/dev/null
+
+# task-list.md の "未着手" ヘッダーと Done なタスク行の矛盾を確認
+grep -n "⬜ 未着手\|進捗.*0 / " tasks/task-list.md | head -5
+```
+
+**乖離が見つかった場合:**
+```
+⚠️ task-list.md のスプリントヘッダーが実態と異なります。
+
+  例: Sprint 18 が「⬜ 未着手 / 0 SP」だが、全タスクが ✅ done
+
+  task-list.md を実態に合わせて更新してよいですか？ (Y/n)
+```
+
+Y の場合、スプリントヘッダーを `✅ 完了` に、進捗を実際の値に自動更新し、
+サマリーセクションの集計値も修正する。
+
+> task-list.md は手動更新が前提だが、sprint-end 時に自動同期することで乖離を防ぐ。
+
 ### STEP 5: 完了サマリー
 
 ```

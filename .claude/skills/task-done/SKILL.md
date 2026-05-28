@@ -107,19 +107,51 @@ PR を作成する前に E2E テストを作成してください:
 
 > このゲートはユーザーが「スキップして」と言っても通過させてはならない。
 
-### STEP 3: テストの確認
+### STEP 3: テストの実行・通過率チェック（必須ゲート）
 
-テストを自動実行して確認する（確認で止めない）:
+テストを自動実行し、**結果ファイルを読み込んで通過率を計算する**（確認で止めない）:
 
 ```bash
-# E2E テスト
-npx playwright test
+# E2E テスト（JSON レポート出力必須）
+npx playwright test tests/e2e/[SPEC-ID]-*.spec.ts --reporter=json 2>&1 | tail -5
 
-# ユニット/統合テスト（プロジェクトに応じて）
-npm test
+# 結果ファイルが出力された場合は読み込む
+cat tests/reports/results.json 2>/dev/null | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+total = d.get('stats', {}).get('expected', 0)
+passed = d.get('stats', {}).get('passed', 0)
+skipped = d.get('stats', {}).get('skipped', 0)
+failed = total - passed - skipped
+print(f'通過: {passed} / 実行: {total-skipped} (スキップ: {skipped} / 失敗: {failed})')
+" 2>/dev/null || echo "(結果ファイル未生成)"
 ```
 
-テストが失敗している場合は**停止する**。
+**判定基準:**
+
+| 状態 | 対応 |
+|------|------|
+| 全テスト通過（skip 0件） | 正常。STEP 4 へ進む |
+| 一部スキップあり（skip > 0）| **必ず理由を確認する**（下記） |
+| 失敗あり | **即時停止**。テストを修正してから再実行 |
+
+**`test.skip()` が存在する場合の必須確認:**
+```
+⚠️ スキップされたテストが X 件あります。
+
+スキップ理由を確認してください:
+  A) 外部サービス（Azure Functions 等）が不要 → 適切。理由をコメントに記録して続行
+  B) シードデータ未整備 → シードデータを追加してからテストを再実行
+  C) 実装未完了 → 実装を完了してからテストを再実行
+  D) テスト設計の問題 → テストを修正してから再実行
+
+理由を教えてください（記録用）:
+```
+
+スキップ理由が「外部サービス不可避」以外の場合は**停止する**。
+`test.skip()` にはスキップ理由を第2引数として必ず記録させる（例: `test.skip(true, 'Azure Functions TimerTrigger: E2E不可')`）。
+
+> このゲートはユーザーが「スキップして」と言っても通過させてはならない。
 
 ### STEP 4: コードの最終確認
 

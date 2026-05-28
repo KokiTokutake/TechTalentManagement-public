@@ -113,6 +113,51 @@ jobs:
         run: npm run build
 
   # ──────────────────────────────────────────
+  # E2E テスト（スキップ率チェック）
+  # ──────────────────────────────────────────
+  e2e-check:
+    name: E2E テスト品質チェック
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: テストファイルのスキップ率確認
+        run: |
+          echo "=== E2E テスト スキップ率チェック ==="
+          if [ ! -d "tests/e2e" ]; then
+            echo "⚠️  tests/e2e/ ディレクトリが見つかりません"
+            exit 0
+          fi
+          TOTAL=$(grep -r "^test(" tests/e2e/*.spec.ts 2>/dev/null | wc -l || echo 0)
+          SKIPPED=$(grep -r "test\.skip" tests/e2e/*.spec.ts 2>/dev/null | wc -l || echo 0)
+          if [ "$TOTAL" -gt 0 ]; then
+            SKIP_RATE=$(( SKIPPED * 100 / TOTAL ))
+            echo "総テスト数: $TOTAL / スキップ: $SKIPPED（スキップ率: $SKIP_RATE%）"
+            if [ "$SKIP_RATE" -gt 50 ]; then
+              echo "⚠️  スキップ率が 50% を超えています。テスト品質を確認してください。"
+              echo "    スキップは外部サービス不可避の場合のみ許容されます（理由コメント必須）"
+              # 警告のみ（exit 1 しない）— CI は通過させるが可視化する
+            else
+              echo "✅ スキップ率は許容範囲内です"
+            fi
+          fi
+
+      - name: test.skip に理由記述があるか確認
+        run: |
+          echo "=== test.skip の理由記述チェック ==="
+          # 理由なし（第2引数なし）の test.skip を検出
+          NO_REASON=$(grep -rn "test\.skip()" tests/e2e/*.spec.ts 2>/dev/null || true)
+          if [ -n "$NO_REASON" ]; then
+            echo "⚠️  理由のない test.skip() が見つかりました:"
+            echo "$NO_REASON"
+            echo "    test.skip(true, '理由') の形式で理由を記載してください"
+          else
+            echo "✅ 全ての test.skip に理由が記載されています"
+          fi
+
+  # ──────────────────────────────────────────
   # PR 品質チェック
   # ──────────────────────────────────────────
   pr-check:

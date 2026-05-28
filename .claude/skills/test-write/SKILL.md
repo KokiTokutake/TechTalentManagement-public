@@ -135,6 +135,25 @@ await page.click('[data-testid="login-button"]');
 3. `text("ログイン")` — テキスト
 4. CSS クラス — 最終手段（変更リスクが高い）
 
+### STEP 5.5: テストタイプ別のベース URL 設定
+
+テストを生成する前に、テストタイプに応じた URL を明示する:
+
+| テストタイプ | baseURL | 使用変数 |
+|------------|---------|---------|
+| UI テスト（page.goto 等） | `http://localhost:3000`（フロントエンド） | `const UI_BASE = 'http://localhost:3000'` |
+| API テスト（request.get 等） | `http://localhost:5108`（バックエンド） | `const API_BASE = 'http://localhost:5108/api'` |
+
+**生成するテストコードの先頭に必ず明示する:**
+
+```typescript
+// URL 設定（CLAUDE.md の設定に従う）
+const UI_BASE = process.env.PLAYWRIGHT_UI_BASE ?? 'http://localhost:3000';
+const API_BASE = process.env.PLAYWRIGHT_API_BASE ?? 'http://localhost:5108';
+```
+
+UI テストで `page.goto('/path')` を使う場合は `playwright.config.ts` の `baseURL` を **フロントエンドポート（3000）** に設定し、API テストは URL を明示的に組み立てること。
+
 ### STEP 6: playwright.config の確認・生成
 
 `playwright.config.ts` が存在しない場合は生成を提案する:
@@ -143,19 +162,31 @@ await page.click('[data-testid="login-button"]');
 // playwright.config.ts（提案）
 import { defineConfig } from '@playwright/test';
 
+// フロントエンド（UI テスト）とバックエンド（API テスト）の URL を分離
+// UI テスト: page.goto('/path') → baseURL（フロントエンド）を使用
+// API テスト: 各テストファイルで API_BASE を直接指定（playwright.config の baseURL は使わない）
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: false,
   retries: 1,
-  reporter: [['html', { outputFolder: 'tests/reports/html' }], ['json', { outputFile: 'tests/reports/results.json' }]],
+  reporter: [
+    ['html', { outputFolder: 'tests/reports/html', open: 'never' }],
+    ['json', { outputFile: 'tests/reports/results.json' }],
+    ['list'],
+  ],
   use: {
-    baseURL: 'http://localhost:3000', // 環境に合わせて変更
+    baseURL: process.env.PLAYWRIGHT_UI_BASE ?? 'http://localhost:3000', // フロントエンド
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'on-first-retry',
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
   },
 });
 ```
+
+> ⚠️ `baseURL` を バックエンドポート（例: 5108）に設定してはならない。
+> UI テストの `page.goto()` はフロントエンドを対象とする。API テストは各ファイルで URL を直接指定する。
 
 ### STEP 7: 生成結果の確認
 
