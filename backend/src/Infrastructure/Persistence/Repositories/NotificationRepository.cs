@@ -22,14 +22,15 @@ public class NotificationRepository(AppDbContext db) : INotificationRepository
 
     public async Task<int> MarkAllAsReadAsync(Guid userId, CancellationToken ct)
     {
-        var now = DateTimeOffset.UtcNow;
-        return await db.Notifications
+        var notifications = await db.Notifications
             .Where(n => n.UserId == userId && !n.IsRead)
-            .ExecuteUpdateAsync(s => s
-                .SetProperty(n => n.IsRead, true)
-                .SetProperty(n => n.ReadAt, now)
-                .SetProperty(n => n.ExpiresAt, now.AddDays(90)),
-                ct);
+            .ToListAsync(ct);
+
+        foreach (var n in notifications)
+            n.MarkAsRead();
+
+        await db.SaveChangesAsync(ct);
+        return notifications.Count;
     }
 
     public async Task AddAsync(Domain.Entities.Notification notification, CancellationToken ct) =>
