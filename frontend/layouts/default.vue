@@ -140,9 +140,15 @@
     </aside>
 
     <!-- Main content area -->
-    <main class="main-content">
-      <NuxtPage />
-    </main>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-spacer" />
+        <NotificationBell />
+      </header>
+      <main class="main-content">
+        <NuxtPage />
+      </main>
+    </div>
   </div>
 </template>
 
@@ -343,7 +349,29 @@ async function handleLogout() {
   border-color: var(--nav-muted);
 }
 
-/* ── Main content ── */
+/* ── Main area ── */
+.main-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem 1.25rem;
+  height: 3rem;
+  min-height: 3rem;
+  background: var(--surface, #fff);
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  flex-shrink: 0;
+}
+
+.topbar-spacer { flex: 1; }
+
 .main-content {
   flex: 1;
   min-width: 0;
