@@ -31,7 +31,7 @@
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5000:8080"
+      - "5108:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: >-
@@ -50,7 +50,7 @@
       - "3000:3000"
     environment:
       NUXT_API_BASE_URL: "http://backend:8080"
-      NUXT_PUBLIC_API_BASE_URL: "http://localhost:5000"
+      NUXT_PUBLIC_API_BASE_URL: "http://localhost:5108"
     depends_on:
       - backend
 
