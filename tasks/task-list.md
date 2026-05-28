@@ -253,8 +253,8 @@
 | TASK-084 | [TEST] SPEC-PROJ-001 結合テスト・受入確認（AC-01-01〜AC-08-01） | ✅ done | @KokiTokutake | 3 | SPEC-PROJ-001 | #113 | #122 | feat/113-project-assignment-test |
 | TASK-085 | [DB] Notification スキーマ＋EF Core マイグレーション | ✅ done | @KokiTokutake | 2 | SPEC-NOTIF-001 | #114 | #123 | feat/114-notification-schema |
 | TASK-086 | [BE] 通知 CRUD API（一覧/未読数/既読化/一括既読）＋通知生成サービス（10トリガー） | ✅ done | @KokiTokutake | 5 | SPEC-NOTIF-001 | #115 | #124 | feat/115-notification-api |
-| TASK-087 | [FE] 通知センター UI（ヘッダーベル・ドロップダウン・通知一覧ページ） | 🏃 進行中 | @KokiTokutake | 5 | SPEC-NOTIF-001 | #116 | — | feat/116-notification-ui |
-| TASK-088 | [TEST] SPEC-NOTIF-001 結合テスト・受入確認（AC-01-01〜AC-04-03） | ⬜ 未着手 | @KokiTokutake | 3 | SPEC-NOTIF-001 | #117 | — | — |
+| TASK-087 | [FE] 通知センター UI（ヘッダーベル・ドロップダウン・通知一覧ページ） | ✅ done | @KokiTokutake | 5 | SPEC-NOTIF-001 | #116 | #125 | feat/116-notification-ui |
+| TASK-088 | [TEST] SPEC-NOTIF-001 結合テスト・受入確認（AC-01-01〜AC-04-03） | 🏃 進行中 | @KokiTokutake | 3 | SPEC-NOTIF-001 | #117 | — | feat/117-notification-integration-test |
 
 ---
 
