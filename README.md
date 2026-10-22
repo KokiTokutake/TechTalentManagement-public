@@ -16,6 +16,22 @@ IT エンジニア組織向けのタレントマネジメントシステム（�
 | 1on1 | テンプレート、前回面談の引き継ぎ、アクションアイテム |
 | 通知 | 通知センター |
 
+## 画面
+
+シードデータ（架空）で起動した状態の画面です。ユーザーのロールごとに、見られる画面が変わります。
+
+| 画面 | ロール | 画像 |
+|---|---|---|
+| ログイン（ユーザーと考課期間の選択） | — | [01-login.png](docs/screenshots/01-login.png) |
+| 9ボックス評価マップ | 管理職 | [02-nine-box-map.png](docs/screenshots/02-nine-box-map.png) |
+| 9ボックス キャリブレーション（チーム別の評価分布） | 管理職 | [03-nine-box-calibration.png](docs/screenshots/03-nine-box-calibration.png) |
+| 重点管理人物 | 幹部 | [04-key-persons.png](docs/screenshots/04-key-persons.png) |
+| 委員会サマリー（Will・Can・Must の俯瞰） | 幹部 | [05-committee-summary.png](docs/screenshots/05-committee-summary.png) |
+| 組織スキルマップ | 管理職 | [06-skill-map.png](docs/screenshots/06-skill-map.png) |
+| コンピテンシー評価 | タレント | [07-competency.png](docs/screenshots/07-competency.png) |
+| 目標設定（Will・Can・Must） | タレント | [08-goals.png](docs/screenshots/08-goals.png) |
+| キャリアプラン | タレント | [09-will-can-must.png](docs/screenshots/09-will-can-must.png) |
+
 ## 構成
 
 ASP.NET Core 8 の Web API（Api / Application / Domain / Infrastructure の4層）と、Nuxt 3 のフロントエンドで構成します。DB は SQL Server 2022 です。
@@ -59,6 +75,7 @@ CI（GitHub Actions）では、仕様書のステータスと書式の確認、.
 ## 制約
 
 - **認証は未実装です。** 画面で選んだユーザーの ID を `X-User-Id` ヘッダーで渡すデモ用の仕組みです。ロールに応じた認可（配下のタレントだけ評価できる、など）は実装しています。
+- ロール制限のある画面（重点管理人物、委員会サマリー）は、URL を直接開くとホームに戻されます。サーバー側の描画時にはログイン状態を読めず、ロール判定が先に走るためです。メニューから開くと表示されます。
 - Azure への配備、Entra ID による認証、監視は構想のみです。
 - フロントエンドの単体テストは、現状は Pinia ストアに限られます。
 - 大量データでの性能検証は行っていません。
