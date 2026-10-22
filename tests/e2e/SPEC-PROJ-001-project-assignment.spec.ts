@@ -31,18 +31,18 @@ test('AC-01-01: プロジェクトを登録すると一覧に追加される', a
 
   // When
   await page.click('[data-testid="project-add-button"]');
-  await page.fill('[data-testid="project-name-input"]', '次世代バンキングシステム_UI_01');
+  await page.fill('[data-testid="project-name-input"]', '社内ポータル刷新_UI_01');
   await page.fill('[data-testid="project-role-input"]', 'バックエンドテックリード');
   await page.fill('[data-testid="project-start-date-input"]', '2024-04-01');
   await page.click('[data-testid="project-save-button"]');
 
   // Then
-  await expect(page.locator('[data-testid^="project-row-"]').filter({ hasText: '次世代バンキングシステム_UI_01' })).toBeVisible();
+  await expect(page.locator('[data-testid^="project-row-"]').filter({ hasText: '社内ポータル刷新_UI_01' })).toBeVisible();
 
   // クリーンアップ
   const listRes = await request.get(`${API}/project-assignments?talentId=${talentId}`, { headers: { 'X-User-Id': talentId } });
   const list: Array<{ id: string; projectName: string }> = await listRes.json();
-  const created = list.find(a => a.projectName === '次世代バンキングシステム_UI_01');
+  const created = list.find(a => a.projectName === '社内ポータル刷新_UI_01');
   if (created) await request.delete(`${API}/project-assignments/${created.id}`, { headers: { 'X-User-Id': talentId } });
 });
 

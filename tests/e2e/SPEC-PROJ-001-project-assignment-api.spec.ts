@@ -56,18 +56,18 @@ test.describe('AC-01: プロジェクト履歴 CRUD', () => {
   test('AC-01-01: タレントが自身のプロジェクトを登録できる（201）', async ({ request }) => {
     const res = await request.post(`${API}/project-assignments`, {
       data: {
-        projectName: '次世代バンキングシステム',
+        projectName: '社内ポータル刷新',
         role: 'バックエンドテックリード',
         startDate: '2024-04-01',
         endDate: null,
-        description: 'コアバンキング刷新プロジェクト',
+        description: '社内ポータル刷新プロジェクト',
         skillItemIds: [skillItemId],
       },
       headers: { 'X-User-Id': talentId },
     });
     expect(res.status()).toBe(201);
     const body = await res.json();
-    expect(body.projectName).toBe('次世代バンキングシステム');
+    expect(body.projectName).toBe('社内ポータル刷新');
     expect(body.role).toBe('バックエンドテックリード');
     expect(body.startDate).toBe('2024-04-01');
     expect(body.endDate).toBeNull();
@@ -88,7 +88,7 @@ test.describe('AC-01: プロジェクト履歴 CRUD', () => {
     expect(Array.isArray(body)).toBe(true);
     const found = body.find(a => a.id === assignmentId);
     expect(found).toBeDefined();
-    expect(found!.projectName).toBe('次世代バンキングシステム');
+    expect(found!.projectName).toBe('社内ポータル刷新');
   });
 
   // AC-01-02: プロジェクトの編集
@@ -96,18 +96,18 @@ test.describe('AC-01: プロジェクト履歴 CRUD', () => {
     if (!assignmentId) test.skip(true, 'assignmentId が未取得');
     const res = await request.put(`${API}/project-assignments/${assignmentId}`, {
       data: {
-        projectName: '次世代バンキングシステム（改）',
+        projectName: '社内ポータル刷新（改）',
         role: 'バックエンドテックリード',
         startDate: '2024-04-01',
         endDate: null,
-        description: 'コアバンキング刷新プロジェクト（フェーズ2込み）',
+        description: '社内ポータル刷新プロジェクト（フェーズ2込み）',
         skillItemIds: [skillItemId],
       },
       headers: { 'X-User-Id': talentId },
     });
     expect(res.status()).toBe(200);
     const body = await res.json();
-    expect(body.projectName).toBe('次世代バンキングシステム（改）');
+    expect(body.projectName).toBe('社内ポータル刷新（改）');
   });
 
   // 他のタレントが更新しようとすると 403

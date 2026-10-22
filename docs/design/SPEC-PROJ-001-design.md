@@ -77,7 +77,7 @@
   "assignments": [
     {
       "id": "guid",
-      "projectName": "次世代バンキングシステム",
+      "projectName": "社内ポータル刷新",
       "role": "バックエンドテックリード",
       "startDate": "2024-04-01",
       "endDate": null,
@@ -119,7 +119,7 @@
 **リクエストボディ:**
 ```json
 {
-  "projectName": "次世代バンキングシステム",
+  "projectName": "社内ポータル刷新",
   "role": "バックエンドテックリード",
   "startDate": "2024-04-01",
   "endDate": null,
